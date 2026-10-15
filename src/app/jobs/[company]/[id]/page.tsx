@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import { companies, getPosting, getRoles } from "@/lib/jobs";
 import { formatDate, postingHref } from "@/lib/roles";
+import Footer from "@/components/Footer";
 
 type Params = Promise<{ company: string; id: string }>;
 
@@ -92,7 +93,7 @@ export default async function JobPage({ params }: { params: Params }) {
             </>
           )}
         </div>
-        <footer>Sourced from public Greenhouse, Lever and Ashby boards</footer>
+        <Footer />
       </article>
     </>
   );
