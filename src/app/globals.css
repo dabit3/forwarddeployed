@@ -466,6 +466,10 @@ footer .built-by {
     gap: var(--unit-lg);
     align-content: start;
   }
+  .side > .sticky-column {
+    position: sticky;
+    align-self: start;
+  }
   article {
     position: absolute;
     left: 50%;

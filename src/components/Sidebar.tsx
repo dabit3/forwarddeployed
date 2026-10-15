@@ -2,6 +2,7 @@ import type { Company } from "@/lib/ats";
 import { countBy, filterRoles, type Filters, type Role } from "@/lib/roles";
 import FilterLink from "./FilterLink";
 import SearchBox from "./SearchBox";
+import StickyColumn from "./StickyColumn";
 
 const MAX_PLACES = 10;
 
@@ -41,7 +42,7 @@ export default function Sidebar({
 
   return (
     <header className="side">
-      <div>
+      <StickyColumn>
         <FilterLink to={{}} onSelect={onSelect} className="item">
           <h1>
             <span>Forward Deployed</span>
@@ -72,7 +73,7 @@ export default function Sidebar({
         <p className="note">
           Every forward deployed engineering opening from {companies.length} company job boards, refreshed hourly.
         </p>
-      </div>
+      </StickyColumn>
       <nav className="companies" aria-label="Companies">
         <div className="label">Companies</div>
         <ul className="lines">
