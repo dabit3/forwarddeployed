@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import type { Job } from "./ats.ts";
-import { filterRoles, formatDate, groupByCompany, groupRoles } from "./roles.ts";
+import { filterRoles, filtersFromSearch, filtersHref, formatDate, groupByCompany, groupRoles } from "./roles.ts";
 
 const job = (o: Partial<Job>): Job => ({
   id: "a/1",
@@ -27,7 +27,8 @@ test("groups per-city postings into one role", () => {
   assert.equal(roles.length, 2);
   const acme = roles.find((r) => r.companySlug === "acme")!;
   assert.deepEqual(acme.places, ["London", "Paris"]);
-  assert.equal(acme.postings.length, 2);
+  assert.ok(acme.href.startsWith("/jobs/acme/"));
+  assert.ok(acme.search.includes("paris"));
   assert.equal(acme.postedAt, "2026-10-05T00:00:00Z");
 });
 
@@ -56,7 +57,8 @@ test("groups roles by company, companies A-Z", () => {
     places: [],
     remote: false,
     postedAt: null,
-    postings: [],
+    href: "",
+    search: "",
   });
   const groups = groupByCompany([role("b", "FDE"), role("a", "FDE"), role("b", "Senior FDE")]);
   assert.deepEqual(
@@ -66,4 +68,11 @@ test("groups roles by company, companies A-Z", () => {
       ["B", ["FDE", "Senior FDE"]],
     ],
   );
+});
+
+test("round-trips filters through the URL", () => {
+  const f = { place: "New York", company: "acme", q: "staff" };
+  assert.deepEqual(filtersFromSearch(filtersHref(f).slice(1)), f);
+  assert.equal(filtersHref({}), "/");
+  assert.deepEqual(filtersFromSearch("?q=%20"), { place: undefined, company: undefined, q: undefined });
 });

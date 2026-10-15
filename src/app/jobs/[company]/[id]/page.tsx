@@ -8,6 +8,13 @@ import Footer from "@/components/Footer";
 
 type Params = Promise<{ company: string; id: string }>;
 
+// Job pages are built on first visit and then served from cache, refreshed hourly.
+export const revalidate = 3600;
+
+export function generateStaticParams(): { company: string; id: string }[] {
+  return [];
+}
+
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { company, id } = await params;
   const detail = await getPosting(decodeURIComponent(company), decodeURIComponent(id)).catch(() => null);
@@ -16,7 +23,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
 export default async function JobPage({ params }: { params: Params }) {
   const { company, id } = await params;
-  const [detail, { roles }] = await Promise.all([
+  const [detail, roles] = await Promise.all([
     getPosting(decodeURIComponent(company), decodeURIComponent(id)).catch(() => null),
     getRoles(),
   ]);

@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import sanitizeHtml from "sanitize-html";
@@ -37,7 +38,7 @@ async function mapPool<T, R>(items: T[], limit: number, fn: (item: T) => Promise
   return out;
 }
 
-export const getRoles = cache(async (): Promise<{ roles: Role[]; updatedAt: string }> => {
+async function buildRoles(): Promise<Role[]> {
   const boards = await mapPool(companies, CONCURRENCY, async (c) => {
     try {
       return await getBoard(c);
@@ -46,7 +47,19 @@ export const getRoles = cache(async (): Promise<{ roles: Role[]; updatedAt: stri
       return [];
     }
   });
-  return { roles: groupRoles(boards.flat()), updatedAt: new Date().toISOString() };
+  return groupRoles(boards.flat());
+}
+
+// Reading every board takes seconds, so pages share one cached role index. The key changes with the
+// company list, and the title filter is re-applied after the read so stricter rules show at once.
+const COMPANIES_KEY = createHash("sha1").update(JSON.stringify(companies)).digest("hex").slice(0, 12);
+
+export const getRoles = cache(async (): Promise<Role[]> => {
+  const roles = await unstable_cache(buildRoles, ["roles-v1", COMPANIES_KEY], {
+    revalidate: REVALIDATE_SECONDS,
+    tags: ["jobs"],
+  })();
+  return roles.filter((r) => isForwardDeployedEngineer(r.title));
 });
 
 const getGreenhouseDescription = (company: Company, id: string) =>

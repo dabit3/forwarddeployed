@@ -1,24 +1,13 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-export default function SearchBox() {
+/** On the list page the parent filters as you type; elsewhere, submitting opens the list with the query. */
+export default function SearchBox({ value, onSearch }: { value?: string; onSearch?: (q: string) => void }) {
   const router = useRouter();
-  const pathname = usePathname();
-  const params = useSearchParams();
-  const [value, setValue] = useState(params.get("q") ?? "");
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => setValue(params.get("q") ?? ""), [params]);
-
-  function go(q: string) {
-    const next = new URLSearchParams(pathname === "/" ? params.toString() : "");
-    if (q.trim()) next.set("q", q.trim());
-    else next.delete("q");
-    const qs = next.toString();
-    router.replace(qs ? `/?${qs}` : "/", { scroll: false });
-  }
+  const [draft, setDraft] = useState("");
+  const current = onSearch ? (value ?? "") : draft;
 
   return (
     <form
@@ -27,23 +16,20 @@ export default function SearchBox() {
       action="/"
       onSubmit={(e) => {
         e.preventDefault();
-        go(value);
+        if (onSearch) return;
+        const q = draft.trim();
+        router.push(q ? `/?${new URLSearchParams({ q })}` : "/");
       }}
     >
       <input
         type="search"
         name="q"
-        value={value}
+        value={current}
         placeholder="Search"
         aria-label="Search roles"
         autoComplete="off"
         spellCheck={false}
-        onChange={(e) => {
-          const q = e.target.value;
-          setValue(q);
-          if (timer.current) clearTimeout(timer.current);
-          if (pathname === "/") timer.current = setTimeout(() => go(q), 180);
-        }}
+        onChange={(e) => (onSearch ? onSearch(e.target.value) : setDraft(e.target.value))}
       />
     </form>
   );

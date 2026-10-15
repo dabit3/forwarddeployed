@@ -1,7 +1,5 @@
 import type { Job } from "./ats.ts";
 
-export type Posting = Omit<Job, "descriptionHtml">;
-
 export interface Role {
   key: string;
   title: string;
@@ -10,7 +8,10 @@ export interface Role {
   places: string[];
   remote: boolean;
   postedAt: string | null;
-  postings: Posting[];
+  /** Detail page of the first posting. */
+  href: string;
+  /** Lowercased text that search matches against. */
+  search: string;
 }
 
 export interface Filters {
@@ -31,11 +32,10 @@ function newest(a: string | null, b: string | null): string | null {
 
 /** Companies often post one listing per city; fold those into a single role. */
 export function groupRoles(jobs: Job[]): Role[] {
-  const roles = new Map<string, Role>();
+  const roles = new Map<string, Role & { text: string[] }>();
   for (const job of jobs) {
-    const { descriptionHtml: _omit, ...posting } = job;
-    void _omit;
     const key = `${job.companySlug}:${titleKey(job.title)}`;
+    const text = `${job.location} ${job.team ?? ""}`;
     const role = roles.get(key);
     if (!role) {
       roles.set(key, {
@@ -46,18 +46,23 @@ export function groupRoles(jobs: Job[]): Role[] {
         places: [...job.places],
         remote: job.remote,
         postedAt: job.postedAt,
-        postings: [posting],
+        href: postingHref(job),
+        search: "",
+        text: [text],
       });
       continue;
     }
-    role.postings.push(posting);
+    role.text.push(text);
     role.remote ||= job.remote;
     role.postedAt = newest(role.postedAt, job.postedAt);
     for (const p of job.places) if (!role.places.includes(p)) role.places.push(p);
   }
-  return [...roles.values()].sort(
-    (a, b) => (b.postedAt ? Date.parse(b.postedAt) : 0) - (a.postedAt ? Date.parse(a.postedAt) : 0) || a.title.localeCompare(b.title),
-  );
+  return [...roles.values()]
+    .map(({ text, ...r }) => ({ ...r, search: `${r.title} ${r.company} ${r.places.join(" ")} ${text.join(" ")}`.toLowerCase() }))
+    .sort(
+      (a, b) =>
+        (b.postedAt ? Date.parse(b.postedAt) : 0) - (a.postedAt ? Date.parse(a.postedAt) : 0) || a.title.localeCompare(b.title),
+    );
 }
 
 export function filterRoles(roles: Role[], f: Filters): Role[] {
@@ -65,10 +70,23 @@ export function filterRoles(roles: Role[], f: Filters): Role[] {
   return roles.filter((r) => {
     if (f.company && r.companySlug !== f.company) return false;
     if (f.place && !r.places.includes(f.place)) return false;
-    if (!words.length) return true;
-    const hay = `${r.title} ${r.company} ${r.places.join(" ")} ${r.postings.map((p) => `${p.location} ${p.team ?? ""}`).join(" ")}`.toLowerCase();
-    return words.every((w) => hay.includes(w));
+    return words.every((w) => r.search.includes(w));
   });
+}
+
+export function filtersHref(f: Filters): string {
+  const p = new URLSearchParams();
+  if (f.place) p.set("place", f.place);
+  if (f.company) p.set("company", f.company);
+  if (f.q) p.set("q", f.q);
+  const qs = p.toString();
+  return qs ? `/?${qs}` : "/";
+}
+
+export function filtersFromSearch(search: string): Filters {
+  const p = new URLSearchParams(search);
+  const one = (k: string) => p.get(k)?.trim() || undefined;
+  return { place: one("place"), company: one("company"), q: one("q") };
 }
 
 export function countBy(roles: Role[], keys: (r: Role) => string[]): [string, number][] {
