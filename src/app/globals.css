@@ -371,6 +371,38 @@ footer {
   color: var(--color-light-text-dim);
 }
 
+footer p {
+  margin: 0 0 var(--unit-xs);
+}
+
+footer a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-light-border);
+  text-underline-offset: 0.2em;
+}
+
+footer a:hover {
+  color: var(--color-light-accent);
+}
+
+footer .built-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  text-decoration: none;
+}
+
+/* The lockup is white on transparent; masking lets it take the footer's text color. */
+.devin-logo {
+  display: inline-block;
+  height: 1.6rem;
+  aspect-ratio: 2984 / 1024;
+  background-color: currentColor;
+  mask: url("/devin-logo.png") center / contain no-repeat;
+  -webkit-mask: url("/devin-logo.png") center / contain no-repeat;
+}
+
 /* - Media queries ------------------------------------------------- */
 
 @media (max-width: 999px) {

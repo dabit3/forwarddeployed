@@ -2,6 +2,7 @@ import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
 import { companies, getCompany, getRoles } from "@/lib/jobs";
 import { filterRoles, formatDate, groupByCompany, postingHref, summarizePlaces, type Filters } from "@/lib/roles";
+import Footer from "@/components/Footer";
 
 type Search = Promise<Record<string, string | string[] | undefined>>;
 
@@ -72,7 +73,7 @@ export default async function Home({ searchParams }: { searchParams: Search }) {
             </p>
           )}
         </div>
-        <footer>Sourced from public Greenhouse, Lever and Ashby boards</footer>
+        <Footer />
       </article>
     </>
   );
