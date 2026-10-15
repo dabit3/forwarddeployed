@@ -5,7 +5,7 @@ A job board that lists forward deployed engineering roles and nothing else. The 
 ## How it works
 
 - `data/companies.json` lists company job boards on Greenhouse, Lever, and Ashby.
-- `src/lib/jobs.ts` fetches each board's public API on the server, caches the results for an hour, and keeps only titles that pass `isForwardDeployedEngineer` in `src/lib/ats.ts`.
+- `src/lib/jobs.ts` fetches each board's public API on the server, caches the results for an hour, and keeps only titles that pass `isForwardDeployedEngineer` in `src/lib/ats.ts`. Besides forward deployed engineer titles, that includes other names for the same role, such as Deployed Engineer, Applied AI Engineer, AI Deployment Engineer and Deployment Strategist.
 - `src/lib/roles.ts` groups the same role posted in several cities into one entry.
 - Detail pages show the sanitized description and link to the original application page.
 
@@ -20,7 +20,7 @@ npm run dev
 
 ## Find more companies
 
-`npm run discover` uses xAI web search to find Greenhouse, Lever, and Ashby boards that are not yet in `data/companies.json`.
+`npm run discover` uses xAI web search, run once for each of those titles, to find Greenhouse, Lever, and Ashby boards that are not yet in `data/companies.json`.
 It checks each candidate board's public API and adds a company only if the board has a matching forward deployed engineering role.
 
 ```sh

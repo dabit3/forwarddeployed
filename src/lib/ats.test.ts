@@ -13,9 +13,36 @@ test("keeps forward deployed engineering titles", () => {
   ]) assert.ok(isForwardDeployedEngineer(t), t);
 });
 
+test("keeps other names for the deployed engineer role", () => {
+  for (const t of [
+    "Deployed Engineer - Europe",
+    "Partner Deployed Engineer - APAC",
+    "Applied AI Engineer",
+    "Delta Engineer",
+    "Forward Deployed AI Engineer",
+    "Forward Deployed ML Engineer",
+    "Forward Deployed Research Engineer",
+    "AI Deployment Engineer",
+    "AI Implementation Engineer",
+    "AI Integration Engineer",
+    "Applied AI Architect",
+    "Applied AI Specialist",
+    "AI Field Engineer",
+    "Embedded AI Engineer",
+    "Customer AI Engineer",
+    "Agent Deployment Engineer",
+    "Applied Research Engineer, Customer Facing",
+    "Deployment Strategist",
+  ]) assert.ok(isForwardDeployedEngineer(t), t);
+});
+
 test("drops non-engineering forward deployed titles", () => {
   for (const t of [
-    "Deployment Strategist - Japan Forward Deployed",
+    "Forward Deployed Strategist",
+    "Applied AI Transformation Manager",
+    "Applied Research Engineer",
+    "Deployment Engineer",
+    "Embedded AI Engineer – Android Automotive (On-Device Intelligence)",
     "Software Engineer, Backend",
     "Recruiter, Forward Deployed Engineering",
     "Account Executive",

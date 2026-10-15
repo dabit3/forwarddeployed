@@ -1,4 +1,4 @@
-// Finds companies hiring forward deployed engineers with xAI web search,
+// Finds companies hiring forward deployed engineers (or the same role under another name) with xAI web search,
 // verifies each board against its public ATS API, and adds new ones to data/companies.json.
 import { readFile, writeFile } from "node:fs/promises";
 import { fetchBoard, isInvestorBoard, parseBoardUrl, type Company } from "../src/lib/ats.ts";
@@ -17,6 +17,31 @@ const ANGLES = [
   "companies based in Asia-Pacific, India and the Middle East",
   "seed and Series A startups hiring their first forward deployed engineers",
   "enterprise SaaS and later-stage companies",
+];
+
+const TITLES = [
+  "Deployed Engineer",
+  "Applied AI Engineer",
+  "Delta Engineer",
+  "Forward Deployed AI Engineer",
+  "Forward Deployed ML Engineer",
+  "Forward Deployed Research Engineer",
+  "AI Deployment Engineer",
+  "AI Implementation Engineer",
+  "AI Integration Engineer",
+  "Applied AI Architect",
+  "Applied AI Specialist",
+  "AI Field Engineer",
+  "Embedded AI Engineer",
+  "Customer AI Engineer",
+  "Agent Deployment Engineer",
+  "customer-facing Applied Research Engineer",
+  "Deployment Strategist",
+];
+
+const QUERIES = [
+  ...ANGLES.map((angle) => `Forward Deployed Engineer job postings at ${angle}`),
+  ...TITLES.map((title) => `"${title}" job postings at any company`),
 ];
 
 const SCHEMA = {
@@ -41,11 +66,11 @@ interface Found {
   url: string;
 }
 
-async function search(angle: string, known: string[]): Promise<Found[]> {
+async function search(query: string, known: string[]): Promise<Found[]> {
   const key = process.env.XAI_API_KEY;
   if (!key) throw new Error("XAI_API_KEY is not set");
   const prompt = [
-    `Search the web for open Forward Deployed Engineer job postings at ${angle}.`,
+    `Search the web for open ${query}.`,
     "Only include postings hosted on jobs.ashbyhq.com, job-boards.greenhouse.io, boards.greenhouse.io or jobs.lever.co.",
     "Return up to 30 postings, one per company, with the exact posting URL. Skip venture capital portfolio job boards.",
     `Skip these companies, which are already known: ${known.join(", ")}.`,
@@ -68,17 +93,28 @@ async function search(angle: string, known: string[]): Promise<Found[]> {
     .flatMap((o) => o.content ?? [])
     .map((c) => c.text ?? "")
     .join("");
-  return (JSON.parse(text) as { postings: Found[] }).postings;
+  return (parseFirstJson(text) as { postings: Found[] }).postings;
+}
+
+// The model sometimes appends a second copy after the JSON; keep the first value.
+function parseFirstJson(text: string): unknown {
+  try {
+    return JSON.parse(text);
+  } catch (err) {
+    const at = /after JSON at position (\d+)/.exec(String(err))?.[1];
+    if (!at) throw err;
+    return JSON.parse(text.slice(0, Number(at)));
+  }
 }
 
 const existing = JSON.parse(await readFile(FILE, "utf8")) as Company[];
 const seen = new Set(existing.map((c) => `${c.ats}:${c.slug.toLowerCase()}`));
 const knownNames = existing.map((c) => c.name);
 
-const results = await Promise.allSettled(ANGLES.map((a) => search(a, knownNames)));
+const results = await Promise.allSettled(QUERIES.map((q) => search(q, knownNames)));
 const candidates = new Map<string, Company>();
 results.forEach((r, i) => {
-  if (r.status === "rejected") return console.warn(`search "${ANGLES[i]}" failed: ${r.reason}`);
+  if (r.status === "rejected") return console.warn(`search "${QUERIES[i]}" failed: ${r.reason}`);
   for (const f of r.value) {
     const board = parseBoardUrl(f.url);
     if (!board || isInvestorBoard(board.slug) || isInvestorBoard(f.company)) continue;
