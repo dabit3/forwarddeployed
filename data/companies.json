@@ -20,6 +20,11 @@
     "name": "Air"
   },
   {
+    "ats": "greenhouse",
+    "slug": "aircallioinc",
+    "name": "Aircall"
+  },
+  {
     "ats": "ashby",
     "slug": "aistudio",
     "name": "AiStudio Artificial Intelligence Technologies"
@@ -28,6 +33,16 @@
     "slug": "alloy",
     "ats": "greenhouse",
     "name": "Alloy"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "altanaai",
+    "name": "Altana"
+  },
+  {
+    "ats": "ashby",
+    "slug": "alterion",
+    "name": "Alterion"
   },
   {
     "ats": "ashby",
@@ -60,6 +75,21 @@
     "name": "Apollo Research"
   },
   {
+    "ats": "greenhouse",
+    "slug": "appian",
+    "name": "Appian"
+  },
+  {
+    "ats": "ashby",
+    "slug": "applied",
+    "name": "Applied Intuition"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "arizeai",
+    "name": "Arize AI"
+  },
+  {
     "slug": "asana",
     "ats": "greenhouse",
     "name": "Asana"
@@ -70,6 +100,11 @@
     "name": "Ascend"
   },
   {
+    "ats": "ashby",
+    "slug": "ascertain",
+    "name": "Ascertain"
+  },
+  {
     "slug": "assorthealth",
     "ats": "ashby",
     "name": "Assort Health"
@@ -78,6 +113,21 @@
     "slug": "attio",
     "ats": "ashby",
     "name": "Attio"
+  },
+  {
+    "ats": "ashby",
+    "slug": "auctor",
+    "name": "Auctor"
+  },
+  {
+    "ats": "ashby",
+    "slug": "august",
+    "name": "August"
+  },
+  {
+    "ats": "lever",
+    "slug": "auxia",
+    "name": "Auxia"
   },
   {
     "ats": "ashby",
@@ -98,6 +148,26 @@
     "slug": "basis-ai",
     "ats": "ashby",
     "name": "Basis"
+  },
+  {
+    "ats": "ashby",
+    "slug": "bjakcareer",
+    "name": "Bjak"
+  },
+  {
+    "ats": "ashby",
+    "slug": "blp-digital",
+    "name": "BLP Digital AG"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "bluefishai",
+    "name": "Bluefish AI"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "braze",
+    "name": "Braze"
   },
   {
     "ats": "ashby",
@@ -135,6 +205,21 @@
     "name": "Caylent"
   },
   {
+    "ats": "greenhouse",
+    "slug": "celigo",
+    "name": "Celigo"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "celonis",
+    "name": "Celonis"
+  },
+  {
+    "ats": "ashby",
+    "slug": "chainalysis-careers",
+    "name": "Chainalysis"
+  },
+  {
     "ats": "ashby",
     "slug": "chalk",
     "name": "Chalk"
@@ -143,6 +228,11 @@
     "ats": "ashby",
     "slug": "cinder",
     "name": "Cinder"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "clear",
+    "name": "CLEAR"
   },
   {
     "slug": "cloudflare",
@@ -155,9 +245,19 @@
     "name": "Clutch"
   },
   {
+    "ats": "ashby",
+    "slug": "coderabbit",
+    "name": "CodeRabbit"
+  },
+  {
     "slug": "cognite",
     "ats": "greenhouse",
     "name": "Cognite"
+  },
+  {
+    "slug": "cognition",
+    "ats": "ashby",
+    "name": "Cognition"
   },
   {
     "slug": "cohere",
@@ -175,14 +275,29 @@
     "name": "Coinbase"
   },
   {
+    "ats": "ashby",
+    "slug": "Coinflow",
+    "name": "Coinflow"
+  },
+  {
     "slug": "commure",
     "ats": "ashby",
     "name": "Commure"
   },
   {
+    "ats": "ashby",
+    "slug": "context",
+    "name": "Context"
+  },
+  {
     "slug": "coreweave",
     "ats": "greenhouse",
     "name": "CoreWeave"
+  },
+  {
+    "ats": "ashby",
+    "slug": "credal",
+    "name": "Credal"
   },
   {
     "slug": "cresta",
@@ -208,6 +323,16 @@
     "ats": "greenhouse",
     "slug": "datarails",
     "name": "Datarails"
+  },
+  {
+    "ats": "ashby",
+    "slug": "david-ai",
+    "name": "David AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "decagon",
+    "name": "Decagon"
   },
   {
     "slug": "deepgram",
@@ -245,14 +370,34 @@
     "name": "Doppel"
   },
   {
+    "ats": "greenhouse",
+    "slug": "dropzoneai",
+    "name": "Dropzone AI"
+  },
+  {
     "ats": "ashby",
     "slug": "dryft",
     "name": "Dryft"
   },
   {
+    "ats": "greenhouse",
+    "slug": "dscout",
+    "name": "Dscout"
+  },
+  {
+    "ats": "ashby",
+    "slug": "duna",
+    "name": "Duna"
+  },
+  {
     "ats": "ashby",
     "slug": "duvo",
     "name": "Duvo"
+  },
+  {
+    "ats": "ashby",
+    "slug": "eagle",
+    "name": "Eagle"
   },
   {
     "ats": "ashby",
@@ -268,6 +413,16 @@
     "slug": "ema",
     "ats": "ashby",
     "name": "Ema"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "emergentlabsinc",
+    "name": "Emergent Labs"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "encora10",
+    "name": "Encora"
   },
   {
     "ats": "ashby",
@@ -305,9 +460,19 @@
     "name": "FieldAI"
   },
   {
+    "ats": "ashby",
+    "slug": "fieldguide",
+    "name": "Fieldguide"
+  },
+  {
     "slug": "figma",
     "ats": "greenhouse",
     "name": "Figma"
+  },
+  {
+    "ats": "ashby",
+    "slug": "first-resonance",
+    "name": "First Resonance"
   },
   {
     "slug": "flexport",
@@ -318,6 +483,26 @@
     "ats": "ashby",
     "slug": "flowengineering",
     "name": "Flow Engineering"
+  },
+  {
+    "ats": "ashby",
+    "slug": "forerunner",
+    "name": "Forerunner"
+  },
+  {
+    "ats": "ashby",
+    "slug": "forgd-ai",
+    "name": "forgd"
+  },
+  {
+    "ats": "ashby",
+    "slug": "foundry-robotics",
+    "name": "Foundry Robotics"
+  },
+  {
+    "ats": "ashby",
+    "slug": "friendliai",
+    "name": "FriendliAI"
   },
   {
     "ats": "ashby",
@@ -340,14 +525,44 @@
     "name": "Giga"
   },
   {
+    "ats": "greenhouse",
+    "slug": "gitlab",
+    "name": "GitLab"
+  },
+  {
     "slug": "gleanwork",
     "ats": "greenhouse",
     "name": "Glean"
   },
   {
+    "ats": "ashby",
+    "slug": "glimpse",
+    "name": "Glimpse"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "goodfire",
+    "name": "Goodfire"
+  },
+  {
+    "ats": "ashby",
+    "slug": "GovSignals",
+    "name": "GovSignals"
+  },
+  {
+    "ats": "ashby",
+    "slug": "Gray Swan AI",
+    "name": "Gray Swan AI"
+  },
+  {
     "slug": "greptile",
     "ats": "ashby",
     "name": "Greptile"
+  },
+  {
+    "ats": "lever",
+    "slug": "gushwork",
+    "name": "Gushwork"
   },
   {
     "ats": "ashby",
@@ -371,6 +586,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "hark",
+    "name": "Hark"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "harnessinc",
     "name": "Harness"
   },
@@ -386,13 +606,38 @@
   },
   {
     "ats": "ashby",
+    "slug": "hebbia-ai",
+    "name": "Hebbia"
+  },
+  {
+    "ats": "ashby",
     "slug": "heidihealth.com.au",
     "name": "Heidi"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "heygen",
+    "name": "HeyGen"
+  },
+  {
+    "ats": "ashby",
+    "slug": "higharc",
+    "name": "Higharc"
+  },
+  {
+    "ats": "ashby",
+    "slug": "hilberts",
+    "name": "Hilbert's AI"
   },
   {
     "ats": "ashby",
     "slug": "Hippocratic AI",
     "name": "Hippocratic AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "iceye",
+    "name": "ICEYE"
   },
   {
     "ats": "greenhouse",
@@ -405,9 +650,29 @@
     "name": "Innodata"
   },
   {
+    "ats": "greenhouse",
+    "slug": "intellishoredk",
+    "name": "Intellishore"
+  },
+  {
     "slug": "intercom",
     "ats": "greenhouse",
     "name": "Intercom"
+  },
+  {
+    "ats": "lever",
+    "slug": "istaridigital.ai",
+    "name": "Istari Digital"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "jazzx-ai",
+    "name": "JazzX AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "judgmentlabs",
+    "name": "Judgment Labs"
   },
   {
     "slug": "kastle",
@@ -425,6 +690,16 @@
     "name": "Labelbox"
   },
   {
+    "ats": "ashby",
+    "slug": "langchain",
+    "name": "LangChain"
+  },
+  {
+    "ats": "ashby",
+    "slug": "laurel",
+    "name": "Laurel"
+  },
+  {
     "slug": "legora",
     "ats": "ashby",
     "name": "Legora"
@@ -440,6 +715,11 @@
     "name": "Liatrio"
   },
   {
+    "ats": "greenhouse",
+    "slug": "llrpartnersjobs",
+    "name": "LLR Partners"
+  },
+  {
     "slug": "lovable",
     "ats": "ashby",
     "name": "Lovable"
@@ -450,6 +730,36 @@
     "name": "Lyrebird Health"
   },
   {
+    "ats": "lever",
+    "slug": "mactores",
+    "name": "Mactores"
+  },
+  {
+    "ats": "ashby",
+    "slug": "magentic",
+    "name": "Magentic"
+  },
+  {
+    "ats": "ashby",
+    "slug": "magical",
+    "name": "Magical"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "manifoldai",
+    "name": "Manifold"
+  },
+  {
+    "ats": "lever",
+    "slug": "matillion",
+    "name": "Matillion"
+  },
+  {
+    "ats": "ashby",
+    "slug": "maybern",
+    "name": "Maybern"
+  },
+  {
     "ats": "greenhouse",
     "slug": "medeloop",
     "name": "Medeloop"
@@ -458,6 +768,11 @@
     "slug": "mesh",
     "ats": "greenhouse",
     "name": "Mesh"
+  },
+  {
+    "ats": "ashby",
+    "slug": "metal",
+    "name": "Metal"
   },
   {
     "ats": "ashby",
@@ -490,9 +805,29 @@
     "name": "Modal"
   },
   {
+    "ats": "ashby",
+    "slug": "moment",
+    "name": "Moment"
+  },
+  {
     "slug": "mongodb",
     "ats": "greenhouse",
     "name": "MongoDB"
+  },
+  {
+    "ats": "ashby",
+    "slug": "montecarlodata",
+    "name": "Monte Carlo"
+  },
+  {
+    "ats": "ashby",
+    "slug": "monumental",
+    "name": "Monumental"
+  },
+  {
+    "ats": "ashby",
+    "slug": "mosaic",
+    "name": "Mosaic"
   },
   {
     "ats": "greenhouse",
@@ -516,8 +851,33 @@
   },
   {
     "ats": "ashby",
+    "slug": "netic",
+    "name": "Netic"
+  },
+  {
+    "ats": "ashby",
+    "slug": "nevis",
+    "name": "Nevis Wealth"
+  },
+  {
+    "ats": "ashby",
+    "slug": "nexxa",
+    "name": "Nexxa.AI"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "nice",
+    "name": "NICE"
+  },
+  {
+    "ats": "ashby",
     "slug": "noda-ai",
     "name": "NODA AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "nooks",
+    "name": "Nooks"
   },
   {
     "ats": "ashby",
@@ -530,9 +890,24 @@
     "name": "Notion"
   },
   {
+    "ats": "greenhouse",
+    "slug": "onestream",
+    "name": "OneStream"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "opaquesystems",
+    "name": "Opaque Systems"
+  },
+  {
     "slug": "openai",
     "ats": "ashby",
     "name": "OpenAI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "openrouter",
+    "name": "OpenRouter"
   },
   {
     "slug": "oscilar",
@@ -550,9 +925,24 @@
     "name": "Palantir"
   },
   {
+    "ats": "greenhouse",
+    "slug": "pallet",
+    "name": "Pallet"
+  },
+  {
+    "ats": "ashby",
+    "slug": "parallel",
+    "name": "Parallel Web Systems"
+  },
+  {
     "slug": "parloa",
     "ats": "greenhouse",
     "name": "Parloa"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "peregrinetechnologies",
+    "name": "Peregrine Technologies"
   },
   {
     "ats": "ashby",
@@ -591,13 +981,33 @@
   },
   {
     "ats": "ashby",
+    "slug": "prior-labs",
+    "name": "Prior Labs"
+  },
+  {
+    "ats": "ashby",
+    "slug": "probook",
+    "name": "Probook"
+  },
+  {
+    "ats": "ashby",
     "slug": "profound",
     "name": "Profound"
   },
   {
     "ats": "ashby",
+    "slug": "Promise",
+    "name": "Promise"
+  },
+  {
+    "ats": "ashby",
     "slug": "protege",
     "name": "Protege"
+  },
+  {
+    "ats": "lever",
+    "slug": "provectus",
+    "name": "Provectus"
   },
   {
     "ats": "greenhouse",
@@ -620,9 +1030,19 @@
     "name": "Ramp"
   },
   {
+    "ats": "greenhouse",
+    "slug": "rebuildmanufacturing",
+    "name": "Re:Build Manufacturing"
+  },
+  {
     "ats": "ashby",
     "slug": "realfast",
     "name": "realfast.ai"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "redapt",
+    "name": "Redapt"
   },
   {
     "ats": "ashby",
@@ -645,6 +1065,11 @@
     "name": "Replit"
   },
   {
+    "ats": "ashby",
+    "slug": "roboflow",
+    "name": "Roboflow"
+  },
+  {
     "slug": "rogo",
     "ats": "ashby",
     "name": "Rogo"
@@ -658,6 +1083,16 @@
     "slug": "runpod",
     "ats": "ashby",
     "name": "RunPod"
+  },
+  {
+    "ats": "ashby",
+    "slug": "SalesPatriot",
+    "name": "SalesPatriot"
+  },
+  {
+    "ats": "ashby",
+    "slug": "salient",
+    "name": "Salient"
   },
   {
     "ats": "greenhouse",
@@ -675,6 +1110,11 @@
     "name": "Saronic"
   },
   {
+    "ats": "ashby",
+    "slug": "sarvam",
+    "name": "Sarvam"
+  },
+  {
     "ats": "greenhouse",
     "slug": "sayari",
     "name": "Sayari"
@@ -690,14 +1130,49 @@
     "name": "Scaled Cognition"
   },
   {
+    "ats": "greenhouse",
+    "slug": "schonfeld",
+    "name": "Schonfeld"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "scoutai",
+    "name": "Scout AI"
+  },
+  {
     "ats": "ashby",
     "slug": "seamflow",
     "name": "Seamflow"
   },
   {
+    "ats": "ashby",
+    "slug": "sema4.ai",
+    "name": "Sema4.ai"
+  },
+  {
+    "ats": "ashby",
+    "slug": "sequen-ai",
+    "name": "Sequen AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "Serval",
+    "name": "Serval"
+  },
+  {
+    "ats": "lever",
+    "slug": "shakudo",
+    "name": "Shakudo"
+  },
+  {
     "slug": "shieldai",
     "ats": "lever",
     "name": "Shield AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "sieve",
+    "name": "Sieve"
   },
   {
     "ats": "ashby",
@@ -720,6 +1195,11 @@
     "name": "Sitreps"
   },
   {
+    "ats": "lever",
+    "slug": "snaplogic",
+    "name": "SnapLogic"
+  },
+  {
     "slug": "snorkelai",
     "ats": "greenhouse",
     "name": "Snorkel AI"
@@ -740,9 +1220,24 @@
     "name": "Socure"
   },
   {
+    "ats": "ashby",
+    "slug": "Solvd",
+    "name": "Solvd"
+  },
+  {
+    "ats": "ashby",
+    "slug": "span.app",
+    "name": "Span"
+  },
+  {
     "slug": "speakeasy",
     "ats": "ashby",
     "name": "Speakeasy"
+  },
+  {
+    "ats": "ashby",
+    "slug": "sphere",
+    "name": "Sphere"
   },
   {
     "slug": "stabilityai",
@@ -761,6 +1256,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "stratum-ai",
+    "name": "Stratum AI"
+  },
+  {
+    "ats": "ashby",
     "slug": "strider-technologies",
     "name": "Strider Technologies"
   },
@@ -768,6 +1268,11 @@
     "slug": "stripe",
     "ats": "greenhouse",
     "name": "Stripe"
+  },
+  {
+    "ats": "ashby",
+    "slug": "swans",
+    "name": "Swans"
   },
   {
     "ats": "ashby",
@@ -800,9 +1305,19 @@
     "name": "TeleTracking Technologies"
   },
   {
+    "ats": "ashby",
+    "slug": "tenex",
+    "name": "TENEX.AI"
+  },
+  {
     "slug": "tennr",
     "ats": "ashby",
     "name": "Tennr"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "tensordyne",
+    "name": "Tensordyne"
   },
   {
     "slug": "tenstorrent",
@@ -813,6 +1328,11 @@
     "ats": "ashby",
     "slug": "bettermoney",
     "name": "The Better Money Company"
+  },
+  {
+    "ats": "ashby",
+    "slug": "generalintelligencecompany",
+    "name": "The General Intelligence Company of New York"
   },
   {
     "slug": "tines",
@@ -835,14 +1355,39 @@
     "name": "Tomorrow.io"
   },
   {
+    "ats": "greenhouse",
+    "slug": "perform-careers",
+    "name": "Total Performance Consulting"
+  },
+  {
     "ats": "ashby",
     "slug": "trig",
     "name": "Trig"
   },
   {
+    "ats": "ashby",
+    "slug": "trm-labs",
+    "name": "TRM Labs"
+  },
+  {
+    "ats": "lever",
+    "slug": "turgon-ai",
+    "name": "Turgon AI"
+  },
+  {
     "slug": "turing",
     "ats": "greenhouse",
     "name": "Turing"
+  },
+  {
+    "ats": "ashby",
+    "slug": "twenty",
+    "name": "Twenty"
+  },
+  {
+    "ats": "lever",
+    "slug": "valdera",
+    "name": "Valdera"
   },
   {
     "ats": "ashby",
@@ -860,6 +1405,11 @@
     "name": "Vapi"
   },
   {
+    "ats": "ashby",
+    "slug": "Varick-Agents",
+    "name": "Varick Agents"
+  },
+  {
     "slug": "vercel",
     "ats": "greenhouse",
     "name": "Vercel"
@@ -870,14 +1420,59 @@
     "name": "Virtru"
   },
   {
+    "ats": "ashby",
+    "slug": "vitalize",
+    "name": "Vitalize"
+  },
+  {
+    "ats": "ashby",
+    "slug": "vooma",
+    "name": "Vooma"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "weave",
+    "name": "Weave"
+  },
+  {
+    "ats": "ashby",
+    "slug": "webAI",
+    "name": "webAI"
+  },
+  {
     "ats": "lever",
     "slug": "weride",
     "name": "WeRide"
   },
   {
+    "ats": "greenhouse",
+    "slug": "withcoverage",
+    "name": "WithCoverage"
+  },
+  {
     "ats": "ashby",
     "slug": "wonderful",
     "name": "Wonderful"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "workato",
+    "name": "Workato"
+  },
+  {
+    "ats": "ashby",
+    "slug": "workos",
+    "name": "WorkOS"
+  },
+  {
+    "ats": "ashby",
+    "slug": "writer",
+    "name": "Writer"
+  },
+  {
+    "ats": "ashby",
+    "slug": "xdof",
+    "name": "XDOF"
   },
   {
     "ats": "ashby",

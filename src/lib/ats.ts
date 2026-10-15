@@ -23,11 +23,33 @@ export interface Job {
 
 const FORWARD_DEPLOYED = /forward[\s-]*deploy|\bFDEs?\b/i;
 const ENGINEERING = /engineer|engineering|\bFDEs?\b|developer|builder|software|technical staff/i;
+// Other names companies use for the same customer-embedded engineering role.
+const SIMILAR_TITLE = new RegExp(
+  [
+    String.raw`\bdeployed (ai |ml |software )?engineer`,
+    String.raw`\bdelta engineer`,
+    String.raw`\bapplied ai (engineer|architect|specialist)`,
+    String.raw`\b(ai|agent) (deployment|implementation|integration|field) engineer`,
+    String.raw`\bcustomer ai engineer`,
+    String.raw`\bdeployment strategist`,
+  ].join("|"),
+  "i",
+);
+const APPLIED_RESEARCH = /\bapplied research engineer/i;
+// "Embedded AI Engineer" also names on-device roles; keep only the customer-embedded kind.
+const EMBEDDED_AI = /\bembedded ai engineer/i;
+const ON_DEVICE = /on-device|firmware|automotive|android|edge|hardware/i;
+const CUSTOMER_FACING = /customer|client|field|deploy/i;
 const NOT_ENGINEERING =
-  /strategist|account (executive|manager)|recruit|talent|sales|marketing|(product|program|project|engagement|delivery|partner|partnerships) manager|customer success|designer|operations|\bops\b/i;
+  /(?<!deployment )strategist|account (executive|manager)|recruit|talent|sales|marketing|(product|program|project|engagement|delivery|partner|partnerships) manager|customer success|designer|operations|\bops\b/i;
 
 export function isForwardDeployedEngineer(title: string): boolean {
-  return FORWARD_DEPLOYED.test(title) && ENGINEERING.test(title) && !NOT_ENGINEERING.test(title);
+  const matches =
+    (FORWARD_DEPLOYED.test(title) && ENGINEERING.test(title)) ||
+    SIMILAR_TITLE.test(title) ||
+    (APPLIED_RESEARCH.test(title) && CUSTOMER_FACING.test(title)) ||
+    (EMBEDDED_AI.test(title) && !ON_DEVICE.test(title));
+  return matches && !NOT_ENGINEERING.test(title);
 }
 
 const PLACE_ALIASES: [RegExp, string][] = [
