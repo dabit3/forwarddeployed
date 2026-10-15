@@ -1,0 +1,91 @@
+import { unstable_cache } from "next/cache";
+import { cache } from "react";
+import sanitizeHtml from "sanitize-html";
+import companiesData from "../../data/companies.json";
+import { fetchBoard, fetchGreenhouseDescription, isForwardDeployedEngineer, type Company, type Job } from "./ats";
+import { groupRoles, type Role } from "./roles";
+
+export const REVALIDATE_SECONDS = 3600;
+const CONCURRENCY = 16;
+
+export const companies = companiesData as Company[];
+
+export function getCompany(slug: string): Company | undefined {
+  return companies.find((c) => c.slug === slug);
+}
+
+// Re-filter after the cache so title rule changes apply without waiting for revalidation.
+async function getBoard(company: Company): Promise<Job[]> {
+  const jobs = await unstable_cache(() => fetchBoard(company), ["board-v1", company.ats, company.slug], {
+    revalidate: REVALIDATE_SECONDS,
+    tags: ["jobs"],
+  })();
+  return jobs.filter((j) => isForwardDeployedEngineer(j.title));
+}
+
+async function mapPool<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
+  const out: R[] = new Array(items.length);
+  let next = 0;
+  await Promise.all(
+    Array.from({ length: Math.min(limit, items.length) }, async () => {
+      while (next < items.length) {
+        const i = next++;
+        out[i] = await fn(items[i]);
+      }
+    }),
+  );
+  return out;
+}
+
+export const getRoles = cache(async (): Promise<{ roles: Role[]; updatedAt: string }> => {
+  const boards = await mapPool(companies, CONCURRENCY, async (c) => {
+    try {
+      return await getBoard(c);
+    } catch (err) {
+      console.error(`board ${c.ats}/${c.slug} failed:`, err instanceof Error ? err.message : err);
+      return [];
+    }
+  });
+  return { roles: groupRoles(boards.flat()), updatedAt: new Date().toISOString() };
+});
+
+const getGreenhouseDescription = (company: Company, id: string) =>
+  unstable_cache(() => fetchGreenhouseDescription(company, id), ["gh-desc-v1", company.slug, id], {
+    revalidate: REVALIDATE_SECONDS * 6,
+  })();
+
+function clean(html: string): string {
+  return sanitizeHtml(html, {
+    allowedTags: ["p", "br", "ul", "ol", "li", "strong", "b", "em", "i", "a", "h3", "h4", "blockquote"],
+    allowedAttributes: { a: ["href"] },
+    allowedSchemes: ["http", "https", "mailto"],
+    transformTags: {
+      h1: "h3",
+      h2: "h3",
+      h5: "h4",
+      h6: "h4",
+      div: "p",
+      a: sanitizeHtml.simpleTransform("a", { target: "_blank", rel: "noopener noreferrer" }),
+    },
+    exclusiveFilter: (frame) => ["p", "li", "h3", "h4", "strong", "b"].includes(frame.tag) && !frame.text.trim() && !frame.mediaChildren.length,
+  });
+}
+
+export interface PostingDetail {
+  job: Job;
+  html: string;
+  siblings: Job[];
+}
+
+export async function getPosting(companySlug: string, id: string): Promise<PostingDetail | null> {
+  const company = getCompany(companySlug);
+  if (!company) return null;
+  const board = await getBoard(company);
+  const job = board.find((j) => j.id === `${companySlug}/${id}`);
+  if (!job) return null;
+  let raw = job.descriptionHtml;
+  if (!raw && company.ats === "greenhouse") raw = await getGreenhouseDescription(company, id).catch(() => undefined);
+  const key = job.title.toLowerCase().replace(/\s+/g, " ").trim();
+  const siblings = board.filter((j) => j.id !== job.id && j.title.toLowerCase().replace(/\s+/g, " ").trim() === key);
+  return { job, html: raw ? clean(raw) : "", siblings };
+}
