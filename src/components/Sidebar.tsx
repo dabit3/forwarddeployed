@@ -1,25 +1,29 @@
-import Link from "next/link";
-import { Suspense } from "react";
 import type { Company } from "@/lib/ats";
 import { countBy, filterRoles, type Filters, type Role } from "@/lib/roles";
+import FilterLink from "./FilterLink";
 import SearchBox from "./SearchBox";
 
 const MAX_PLACES = 10;
-
-function href(f: Filters): string {
-  const p = new URLSearchParams();
-  if (f.place) p.set("place", f.place);
-  if (f.company) p.set("company", f.company);
-  if (f.q) p.set("q", f.q);
-  const qs = p.toString();
-  return qs ? `/?${qs}` : "/";
-}
 
 function plural(n: number, word: string): string {
   return `${n} ${word}${n === 1 ? "" : "s"}`;
 }
 
-export default function Sidebar({ roles, companies, filters }: { roles: Role[]; companies: Company[]; filters: Filters }) {
+export default function Sidebar({
+  roles,
+  companies,
+  filters,
+  onSelect,
+  query,
+  onSearch,
+}: {
+  roles: Role[];
+  companies: Pick<Company, "slug" | "name">[];
+  filters: Filters;
+  onSelect?: (f: Filters) => void;
+  query?: string;
+  onSearch?: (q: string) => void;
+}) {
   const forPlaces = filterRoles(roles, { ...filters, place: undefined });
   const forCompanies = filterRoles(roles, { ...filters, company: undefined });
   const places = countBy(forPlaces, (r) => r.places);
@@ -38,42 +42,31 @@ export default function Sidebar({ roles, companies, filters }: { roles: Role[]; 
   return (
     <header className="side">
       <div>
-        <Link href="/" className="item">
+        <FilterLink to={{}} onSelect={onSelect} className="item">
           <h1>
             <span>Forward Deployed</span>
             Engineering roles, nothing else
           </h1>
-        </Link>
-        <Suspense>
-          <SearchBox />
-        </Suspense>
+        </FilterLink>
+        <SearchBox value={query} onSearch={onSearch} />
         <nav className="places" aria-label="Places">
-          <Link href={href({ ...filters, place: undefined })} className="item" aria-current={!filters.place || undefined}>
+          <FilterLink to={{ ...filters, place: undefined }} onSelect={onSelect} className="item" current={!filters.place}>
             <span>Everywhere</span>
             <small>
               {plural(forPlaces.length, "role")} at {plural(companyCount, "company").replace("companys", "companies")}
             </small>
-          </Link>
+          </FilterLink>
           {remote && (
-            <Link
-              href={href({ ...filters, place: "Remote" })}
-              className="item"
-              aria-current={filters.place === "Remote" || undefined}
-            >
+            <FilterLink to={{ ...filters, place: "Remote" }} onSelect={onSelect} className="item" current={filters.place === "Remote"}>
               <span>Remote</span>
               <small>{plural(remote[1], "role")}</small>
-            </Link>
+            </FilterLink>
           )}
           {cities.map(([place, n]) => (
-            <Link
-              key={place}
-              href={href({ ...filters, place })}
-              className="item"
-              aria-current={filters.place === place || undefined}
-            >
+            <FilterLink key={place} to={{ ...filters, place }} onSelect={onSelect} className="item" current={filters.place === place}>
               <span>{place}</span>
               <small>{plural(n, "role")}</small>
-            </Link>
+            </FilterLink>
           ))}
         </nav>
         <p className="note">
@@ -84,24 +77,16 @@ export default function Sidebar({ roles, companies, filters }: { roles: Role[]; 
         <div className="label">Companies</div>
         <ul className="lines">
           <li>
-            <Link
-              href={href({ ...filters, company: undefined })}
-              className="line"
-              aria-current={!filters.company || undefined}
-            >
+            <FilterLink to={{ ...filters, company: undefined }} onSelect={onSelect} className="line" current={!filters.company}>
               <span>All companies</span>
-            </Link>
+            </FilterLink>
           </li>
           {companyList.map((slug) => (
             <li key={slug}>
-              <Link
-                href={href({ ...filters, company: slug })}
-                className="line"
-                aria-current={filters.company === slug || undefined}
-              >
+              <FilterLink to={{ ...filters, company: slug }} onSelect={onSelect} className="line" current={filters.company === slug}>
                 <span>{names.get(slug) ?? slug}</span>
                 <small>{companyCounts.get(slug)}</small>
-              </Link>
+              </FilterLink>
             </li>
           ))}
         </ul>
