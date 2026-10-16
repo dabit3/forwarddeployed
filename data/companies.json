@@ -296,6 +296,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "concourse",
+    "name": "Concourse"
+  },
+  {
+    "ats": "ashby",
     "slug": "context",
     "name": "Context"
   },
@@ -566,6 +571,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "govwell",
+    "name": "GovWell"
+  },
+  {
+    "ats": "ashby",
     "slug": "Gray Swan AI",
     "name": "Gray Swan AI"
   },
@@ -735,9 +745,19 @@
     "name": "Liatrio"
   },
   {
+    "ats": "greenhouse",
+    "slug": "lilasciences",
+    "name": "Lila Sciences"
+  },
+  {
     "ats": "ashby",
     "slug": "lio",
     "name": "Lio"
+  },
+  {
+    "ats": "ashby",
+    "slug": "litellm",
+    "name": "LiteLLM"
   },
   {
     "ats": "greenhouse",
@@ -748,6 +768,11 @@
     "slug": "lovable",
     "ats": "ashby",
     "name": "Lovable"
+  },
+  {
+    "ats": "ashby",
+    "slug": "luminai",
+    "name": "Luminai"
   },
   {
     "ats": "lever",
@@ -783,6 +808,11 @@
     "ats": "ashby",
     "slug": "maybern",
     "name": "Maybern"
+  },
+  {
+    "ats": "ashby",
+    "slug": "mecka.ai",
+    "name": "Mecka"
   },
   {
     "ats": "greenhouse",
@@ -883,6 +913,11 @@
     "ats": "ashby",
     "slug": "netic",
     "name": "Netic"
+  },
+  {
+    "ats": "lever",
+    "slug": "neuron7",
+    "name": "Neuron7"
   },
   {
     "ats": "ashby",
@@ -1280,6 +1315,11 @@
     "name": "Solvd"
   },
   {
+    "ats": "greenhouse",
+    "slug": "sonatus",
+    "name": "Sonatus"
+  },
+  {
     "ats": "ashby",
     "slug": "span.app",
     "name": "Span"
@@ -1293,6 +1333,11 @@
     "ats": "ashby",
     "slug": "spear-ai",
     "name": "Spear AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "specter",
+    "name": "Specter"
   },
   {
     "ats": "ashby",
@@ -1451,6 +1496,11 @@
   },
   {
     "ats": "lever",
+    "slug": "upscale-ai",
+    "name": "Upscale"
+  },
+  {
+    "ats": "lever",
     "slug": "valdera",
     "name": "Valdera"
   },
@@ -1480,6 +1530,11 @@
     "name": "Varick Agents"
   },
   {
+    "ats": "greenhouse",
+    "slug": "veeamsoftware",
+    "name": "Veeam"
+  },
+  {
     "slug": "vercel",
     "ats": "greenhouse",
     "name": "Vercel"
@@ -1498,6 +1553,11 @@
     "ats": "ashby",
     "slug": "vooma",
     "name": "Vooma"
+  },
+  {
+    "ats": "lever",
+    "slug": "wmg",
+    "name": "Warner Music Group"
   },
   {
     "ats": "greenhouse",
