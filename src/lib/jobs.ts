@@ -3,7 +3,7 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import sanitizeHtml from "sanitize-html";
 import companiesData from "../../data/companies.json";
-import { fetchBoard, fetchGreenhouseDescription, isForwardDeployedEngineer, type Company, type Job } from "./ats";
+import { fetchBoard, fetchGreenhouseDescription, isForwardDeployedEngineer, splitPlaces, type Company, type Job } from "./ats";
 import { groupRoles, type Role } from "./roles";
 
 export const REVALIDATE_SECONDS = 3600;
@@ -15,13 +15,15 @@ export function getCompany(slug: string): Company | undefined {
   return companies.find((c) => c.slug === slug);
 }
 
-// Re-filter after the cache so title rule changes apply without waiting for revalidation.
+// Re-filter and re-place after the cache so rule changes apply without waiting for revalidation.
 async function getBoard(company: Company): Promise<Job[]> {
   const jobs = await unstable_cache(() => fetchBoard(company), ["board-v1", company.ats, company.slug], {
     revalidate: REVALIDATE_SECONDS,
     tags: ["jobs"],
   })();
-  return jobs.filter((j) => isForwardDeployedEngineer(j.title));
+  return jobs
+    .filter((j) => isForwardDeployedEngineer(j.title))
+    .map((j) => ({ ...j, places: splitPlaces([j.location], j.remote) }));
 }
 
 async function mapPool<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
@@ -55,7 +57,7 @@ async function buildRoles(): Promise<Role[]> {
 const COMPANIES_KEY = createHash("sha1").update(JSON.stringify(companies)).digest("hex").slice(0, 12);
 
 export const getRoles = cache(async (): Promise<Role[]> => {
-  const roles = await unstable_cache(buildRoles, ["roles-v1", COMPANIES_KEY], {
+  const roles = await unstable_cache(buildRoles, ["roles-v2", COMPANIES_KEY], {
     revalidate: REVALIDATE_SECONDS,
     tags: ["jobs"],
   })();

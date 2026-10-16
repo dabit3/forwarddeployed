@@ -53,11 +53,15 @@ test("drops non-engineering forward deployed titles", () => {
 });
 
 test("normalizes places", () => {
-  assert.deepEqual(splitPlaces(["San Francisco, CA; New York City, NY"], false), ["San Francisco", "New York"]);
-  assert.deepEqual(splitPlaces(["Remote - US"], false), ["Remote"]);
-  assert.deepEqual(splitPlaces(["London, United Kingdom"], true), ["London", "Remote"]);
-  assert.deepEqual(splitPlaces(["Maryland; Virginia; Washington, D.C."], false), ["Washington, DC"]);
-  assert.deepEqual(splitPlaces(["US-CA-Menlo Park"], false), ["San Francisco"]);
+  assert.deepEqual(splitPlaces(["San Francisco, CA; New York City, NY"], false), ["San Francisco", "United States", "New York"]);
+  assert.deepEqual(splitPlaces(["Remote - US"], false), ["Remote", "United States"]);
+  assert.deepEqual(splitPlaces(["London, United Kingdom"], true), ["London", "United Kingdom", "Remote"]);
+  assert.deepEqual(splitPlaces(["Maryland; Virginia; Washington, D.C."], false), ["Washington, DC", "United States"]);
+  assert.deepEqual(splitPlaces(["US-CA-Menlo Park"], false), ["San Francisco", "United States"]);
+  assert.deepEqual(splitPlaces(["Austin"], false), ["Austin", "United States"]);
+  assert.deepEqual(splitPlaces(["Munich, Bavaria, Germany"], false), ["Munich", "Germany"]);
+  assert.deepEqual(splitPlaces(["Remote - India"], false), ["Remote", "India"]);
+  assert.deepEqual(splitPlaces(["Singapore"], false), ["Singapore"]);
   assert.deepEqual(splitPlaces(["Hybrid"], false), []);
 });
 
