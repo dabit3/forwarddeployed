@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import type { Job } from "./ats.ts";
-import { filterRoles, filtersFromSearch, filtersHref, formatDate, groupByCompany, groupRoles } from "./roles.ts";
+import { filterRoles, filtersFromSearch, filtersHref, formatDate, groupByCompany, groupRoles, localPlaces } from "./roles.ts";
 
 const job = (o: Partial<Job>): Job => ({
   id: "a/1",
@@ -75,4 +75,10 @@ test("round-trips filters through the URL", () => {
   assert.deepEqual(filtersFromSearch(filtersHref(f).slice(1)), f);
   assert.equal(filtersHref({}), "/");
   assert.deepEqual(filtersFromSearch("?q=%20"), { place: undefined, company: undefined, q: undefined });
+});
+
+test("localPlaces shows cities ahead of their countries", () => {
+  assert.deepEqual(localPlaces(["United States", "New York", "San Francisco", "Remote"]), ["New York", "San Francisco", "Remote"]);
+  assert.deepEqual(localPlaces(["Canada", "CANADA", "Mexico"]), ["Canada", "Mexico"]);
+  assert.deepEqual(localPlaces(["United States", "Remote"]), ["United States", "Remote"]);
 });

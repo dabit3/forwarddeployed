@@ -17,6 +17,7 @@ export default function Sidebar({
   onSelect,
   query,
   onSearch,
+  hideOnMobile,
 }: {
   roles: Role[];
   companies: Pick<Company, "slug" | "name">[];
@@ -24,6 +25,7 @@ export default function Sidebar({
   onSelect?: (f: Filters) => void;
   query?: string;
   onSearch?: (q: string) => void;
+  hideOnMobile?: boolean;
 }) {
   const forPlaces = filterRoles(roles, { ...filters, place: undefined });
   const forCompanies = filterRoles(roles, { ...filters, company: undefined });
@@ -41,7 +43,7 @@ export default function Sidebar({
   const companyCount = new Set(forPlaces.map((r) => r.companySlug)).size;
 
   return (
-    <header className="side">
+    <header className={hideOnMobile ? "side desktop-only" : "side"}>
       <StickyColumn>
         <FilterLink to={{}} onSelect={onSelect} className="item">
           <h1>
