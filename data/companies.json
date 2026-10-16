@@ -26,6 +26,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "airops",
+    "name": "AirOps"
+  },
+  {
+    "ats": "ashby",
     "slug": "aistudio",
     "name": "AiStudio Artificial Intelligence Technologies"
   },
@@ -58,6 +63,11 @@
     "slug": "amplitude",
     "ats": "ashby",
     "name": "Amplitude"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "andurilindustries",
+    "name": "Anduril Industries"
   },
   {
     "slug": "anthropic",
@@ -515,6 +525,11 @@
     "name": "FurtherAI"
   },
   {
+    "ats": "greenhouse",
+    "slug": "future",
+    "name": "Future"
+  },
+  {
     "ats": "ashby",
     "slug": "gc-ai",
     "name": "GC AI"
@@ -558,6 +573,11 @@
     "slug": "greptile",
     "ats": "ashby",
     "name": "Greptile"
+  },
+  {
+    "ats": "ashby",
+    "slug": "guild",
+    "name": "Guild"
   },
   {
     "ats": "lever",
@@ -715,6 +735,11 @@
     "name": "Liatrio"
   },
   {
+    "ats": "ashby",
+    "slug": "lio",
+    "name": "Lio"
+  },
+  {
     "ats": "greenhouse",
     "slug": "llrpartnersjobs",
     "name": "LLR Partners"
@@ -836,6 +861,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "natera",
+    "name": "Natera"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "nearform",
     "name": "Nearform"
   },
@@ -950,6 +980,11 @@
     "name": "Periodic Labs"
   },
   {
+    "ats": "greenhouse",
+    "slug": "phasev",
+    "name": "PhaseV"
+  },
+  {
     "ats": "ashby",
     "slug": "phoebe-work",
     "name": "Phoebe"
@@ -963,6 +998,11 @@
     "ats": "ashby",
     "slug": "picogrid",
     "name": "Picogrid"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "planetlabs",
+    "name": "Planet"
   },
   {
     "ats": "ashby",
@@ -1055,6 +1095,11 @@
     "name": "Reflection"
   },
   {
+    "ats": "lever",
+    "slug": "regal.ai",
+    "name": "Regal"
+  },
+  {
     "slug": "render",
     "ats": "ashby",
     "name": "Render"
@@ -1063,6 +1108,11 @@
     "slug": "replit",
     "ats": "ashby",
     "name": "Replit"
+  },
+  {
+    "ats": "ashby",
+    "slug": "revin",
+    "name": "Revin"
   },
   {
     "ats": "ashby",
@@ -1156,6 +1206,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "seqholdings",
+    "name": "Sequence Holdings"
+  },
+  {
+    "ats": "ashby",
     "slug": "Serval",
     "name": "Serval"
   },
@@ -1236,6 +1291,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "spear-ai",
+    "name": "Spear AI"
+  },
+  {
+    "ats": "ashby",
     "slug": "sphere",
     "name": "Sphere"
   },
@@ -1248,6 +1308,11 @@
     "ats": "ashby",
     "slug": "stack-ai",
     "name": "StackAI"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "stacklok",
+    "name": "Stacklok"
   },
   {
     "ats": "ashby",
@@ -1388,6 +1453,11 @@
     "ats": "lever",
     "slug": "valdera",
     "name": "Valdera"
+  },
+  {
+    "ats": "ashby",
+    "slug": "Valon",
+    "name": "Valon Tech"
   },
   {
     "ats": "ashby",
