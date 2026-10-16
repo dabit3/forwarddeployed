@@ -478,6 +478,10 @@ footer .built-by {
     -webkit-appearance: none;
     text-overflow: ellipsis;
   }
+  .pickers option {
+    color: var(--color-light-text);
+    background: var(--color-light-bg);
+  }
   .company + .company {
     margin-top: 0;
   }
