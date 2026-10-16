@@ -403,12 +403,125 @@ footer .built-by {
   -webkit-mask: url("/devin-logo.png") center / contain no-repeat;
 }
 
+/* - Phone layout -------------------------------------------------- */
+
+.mobile-head,
+.mobile-bar,
+.company .toggle {
+  display: none;
+}
+
 /* - Media queries ------------------------------------------------- */
 
 @media (max-width: 999px) {
   body {
     display: flex;
     flex-direction: column;
+  }
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-head {
+    display: block;
+    padding: var(--unit-lg) var(--unit-lg) var(--unit-sm);
+    font-size: var(--font-sm);
+  }
+  .mobile-head a {
+    color: var(--color-dark-text-dim);
+    text-decoration: none;
+  }
+  .mobile-head h1 {
+    font-size: inherit;
+    font-weight: normal;
+    margin: 0;
+  }
+  .mobile-head h1 span {
+    display: block;
+    color: var(--color-dark-text);
+  }
+  .mobile-bar {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--color-dark-bg);
+    padding: var(--unit-sm) var(--unit-lg) var(--unit-base);
+    border-bottom: 1px solid var(--color-dark-border);
+  }
+  /* 16px keeps iOS from zooming in when a field gets focus. */
+  .mobile-bar .search {
+    max-width: none;
+    margin: 0 0 var(--unit-sm);
+  }
+  .mobile-bar .search input,
+  .pickers select {
+    font-size: 16px;
+  }
+  .pickers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--unit-base);
+  }
+  .pickers select {
+    width: 100%;
+    min-width: 0;
+    font-family: inherit;
+    color: var(--color-dark-text);
+    background: transparent
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23717d78'/%3E%3C/svg%3E")
+      right center / 10px 6px no-repeat;
+    border: none;
+    border-bottom: 1px solid var(--color-dark-border);
+    border-radius: 0;
+    padding: var(--unit-xs) 1.25em var(--unit-xs) 0;
+    appearance: none;
+    -webkit-appearance: none;
+    text-overflow: ellipsis;
+  }
+  .company + .company {
+    margin-top: 0;
+  }
+  .company {
+    border-top: 1px solid var(--color-light-border);
+  }
+  .company:last-child {
+    border-bottom: 1px solid var(--color-light-border);
+  }
+  .company h4 {
+    margin: 0;
+  }
+  .company .toggle {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: first baseline;
+    gap: var(--unit-base);
+    padding: 0.75rem 0;
+    background: none;
+    border: none;
+    font: inherit;
+    font-weight: bold;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .company .toggle .meta {
+    display: block;
+    font-weight: normal;
+    font-size: var(--font-sm);
+    color: var(--color-light-text-dim);
+  }
+  .company .toggle small {
+    white-space: nowrap;
+  }
+  .company.collapsed .roles {
+    display: none;
+  }
+  .company:not(.collapsed) {
+    padding-bottom: var(--unit-lg);
+  }
+  .company .roles {
+    border-bottom: none;
   }
   .side {
     display: contents;
@@ -426,7 +539,7 @@ footer .built-by {
     min-height: 0;
   }
   article > header {
-    padding: var(--unit-xl) 0;
+    padding: var(--unit-lg) 0 var(--unit-xl);
   }
   .side .places {
     display: flex;

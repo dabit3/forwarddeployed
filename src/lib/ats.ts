@@ -97,6 +97,12 @@ const COUNTRIES: [RegExp, string][] = [
   [/^(portugal|lisbon)$/i, "Portugal"],
 ];
 
+const COUNTRY_NAMES = new Set(["united states", "united kingdom", ...COUNTRIES.map(([, name]) => name.toLowerCase())]);
+
+export function isCountry(place: string): boolean {
+  return COUNTRY_NAMES.has(place.toLowerCase());
+}
+
 /** The country a location is in, so a country filter also covers its cities. */
 export function countryOf(raw: string, place: string | null): string | null {
   if (/^US-[A-Z]{2}-/.test(raw)) return "United States";

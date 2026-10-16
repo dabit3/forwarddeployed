@@ -1,4 +1,4 @@
-import type { Job } from "./ats.ts";
+import { isCountry, type Job } from "./ats.ts";
 
 export interface Role {
   key: string;
@@ -107,6 +107,14 @@ export function formatDate(iso: string | null): string {
 export function summarizePlaces(places: string[], max = 3): string {
   const shown = places.slice(0, max).join(", ");
   return places.length > max ? `${shown} +${places.length - max}` : shown;
+}
+
+/** Cities ahead of the countries derived from them, for short summaries. */
+export function localPlaces(places: string[]): string[] {
+  const seen = new Set<string>();
+  const unique = places.filter((p) => !seen.has(p.toLowerCase()) && seen.add(p.toLowerCase()));
+  const local = unique.filter((p) => !isCountry(p));
+  return local.some((p) => p !== "Remote") ? local : unique;
 }
 
 export function postingHref(p: { companySlug: string; id: string }): string {
