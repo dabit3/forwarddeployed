@@ -73,6 +73,47 @@ export function normalizePlace(raw: string): string | null {
   return head.replace(/\b(office|hq)\b/gi, "").trim();
 }
 
+const US_STATE =
+  /^(al|ak|az|ar|ca|co|ct|fl|ga|hi|id|il|ia|ks|ky|la|md|ma|mi|mn|ms|mo|mt|ne|nv|nh|nj|nm|ny|nc|nd|oh|ok|or|pa|ri|sc|sd|tn|tx|ut|vt|va|wa|wv|wi|wy|dc|d\.c\.|alabama|alaska|arizona|arkansas|california|colorado|connecticut|delaware|florida|georgia|hawaii|idaho|illinois|indiana|iowa|kansas|kentucky|louisiana|maine|maryland|massachusetts|michigan|minnesota|mississippi|missouri|montana|nebraska|nevada|new hampshire|new jersey|new mexico|new york|north carolina|north dakota|ohio|oklahoma|oregon|pennsylvania|rhode island|south carolina|south dakota|tennessee|texas|utah|vermont|virginia|washington|west virginia|wisconsin|wyoming|united states|usa|us|u\.s\.a?\.?|america)$/i;
+const US_CITY =
+  /^(san francisco|sf|sunnyvale|new york|nyc|brooklyn|washington, dc|seattle|los angeles|austin|chicago|boston|san diego|honolulu|atlanta|denver|dallas|houston|miami|philadelphia|pittsburgh|phoenix|salt lake city|portland|detroit|nashville|raleigh|minneapolis|san jose|oakland|cambridge, ma)$/i;
+const UK = /^(uk|united kingdom|england|scotland|wales|london|manchester|edinburgh|bristol)$/i;
+const COUNTRIES: [RegExp, string][] = [
+  [/^(canada|toronto|vancouver|montreal|ottawa)$/i, "Canada"],
+  [/^(germany|deutschland|berlin|munich|münchen|hamburg|frankfurt)$/i, "Germany"],
+  [/^(france|paris)$/i, "France"],
+  [/^(japan|tokyo)$/i, "Japan"],
+  [/^(south korea|korea|republic of korea|seoul)$/i, "South Korea"],
+  [/^(india|bengaluru|bangalore|mumbai|hyderabad|new delhi|delhi|pune|chennai|gurgaon|gurugram)$/i, "India"],
+  [/^(australia|sydney|melbourne)$/i, "Australia"],
+  [/^(ireland|dublin)$/i, "Ireland"],
+  [/^(netherlands|amsterdam)$/i, "Netherlands"],
+  [/^(spain|madrid|barcelona)$/i, "Spain"],
+  [/^(switzerland|zurich|zürich|geneva)$/i, "Switzerland"],
+  [/^(poland|warsaw|krakow|kraków)$/i, "Poland"],
+  [/^(sweden|stockholm)$/i, "Sweden"],
+  [/^(brazil|são paulo|sao paulo)$/i, "Brazil"],
+  [/^(mexico|mexico city)$/i, "Mexico"],
+  [/^(portugal|lisbon)$/i, "Portugal"],
+];
+
+/** The country a location is in, so a country filter also covers its cities. */
+export function countryOf(raw: string, place: string | null): string | null {
+  if (/^US-[A-Z]{2}-/.test(raw)) return "United States";
+  const parts = raw
+    .replace(/\(.*?\)/g, "")
+    .split(/\s*,\s*|\s+-\s+/)
+    .map((p) => p.replace(/\b(office|hq|soc|remote|hybrid)\b/gi, "").trim())
+    .filter(Boolean);
+  if (place) parts.push(place);
+  for (const p of parts) {
+    if (US_STATE.test(p) || US_CITY.test(p)) return "United States";
+    if (UK.test(p)) return "United Kingdom";
+    for (const [re, name] of COUNTRIES) if (re.test(p)) return name;
+  }
+  return null;
+}
+
 export function splitPlaces(locations: string[], remote: boolean): string[] {
   const out = new Set<string>();
   for (const loc of locations) {
@@ -80,6 +121,8 @@ export function splitPlaces(locations: string[], remote: boolean): string[] {
       if (/remote/i.test(part)) out.add("Remote");
       const place = normalizePlace(part);
       if (place) out.add(place);
+      const country = countryOf(part, place);
+      if (country) out.add(country);
     }
   }
   if (remote) out.add("Remote");
