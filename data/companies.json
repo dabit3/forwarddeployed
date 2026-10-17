@@ -376,6 +376,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "dimensional",
+    "name": "Dimensional"
+  },
+  {
+    "ats": "ashby",
     "slug": "ditto",
     "name": "Ditto"
   },
@@ -501,6 +506,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "folio",
+    "name": "Folio"
+  },
+  {
+    "ats": "ashby",
     "slug": "forerunner",
     "name": "Forerunner"
   },
@@ -538,6 +548,11 @@
     "ats": "ashby",
     "slug": "gc-ai",
     "name": "GC AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "gecko-robotics",
+    "name": "Gecko Robotics"
   },
   {
     "slug": "gigaml",
@@ -806,6 +821,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "matter-intelligence",
+    "name": "Matter Intelligence"
+  },
+  {
+    "ats": "ashby",
     "slug": "maybern",
     "name": "Maybern"
   },
@@ -915,6 +935,11 @@
     "name": "Netic"
   },
   {
+    "ats": "greenhouse",
+    "slug": "neuraflash",
+    "name": "NeuraFlash"
+  },
+  {
     "ats": "lever",
     "slug": "neuron7",
     "name": "Neuron7"
@@ -1015,6 +1040,11 @@
     "name": "Periodic Labs"
   },
   {
+    "ats": "ashby",
+    "slug": "perplexity",
+    "name": "Perplexity"
+  },
+  {
     "ats": "greenhouse",
     "slug": "phasev",
     "name": "PhaseV"
@@ -1048,6 +1078,11 @@
     "ats": "ashby",
     "slug": "PointOne",
     "name": "PointOne"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "praxent",
+    "name": "Praxent"
   },
   {
     "ats": "greenhouse",
@@ -1158,6 +1193,11 @@
     "slug": "rogo",
     "ats": "ashby",
     "name": "Rogo"
+  },
+  {
+    "ats": "ashby",
+    "slug": "runetech",
+    "name": "Rune Technologies"
   },
   {
     "ats": "ashby",
