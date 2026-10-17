@@ -260,6 +260,11 @@
     "name": "CodeRabbit"
   },
   {
+    "ats": "ashby",
+    "slug": "cogent-security",
+    "name": "Cogent Security"
+  },
+  {
     "slug": "cognite",
     "ats": "greenhouse",
     "name": "Cognite"
@@ -415,6 +420,11 @@
     "name": "Duvo"
   },
   {
+    "ats": "greenhouse",
+    "slug": "dwelly",
+    "name": "Dwelly"
+  },
+  {
     "ats": "ashby",
     "slug": "eagle",
     "name": "Eagle"
@@ -495,6 +505,11 @@
     "name": "First Resonance"
   },
   {
+    "ats": "greenhouse",
+    "slug": "fleetio",
+    "name": "Fleetio"
+  },
+  {
     "slug": "flexport",
     "ats": "greenhouse",
     "name": "Flexport"
@@ -508,6 +523,11 @@
     "ats": "ashby",
     "slug": "folio",
     "name": "Folio"
+  },
+  {
+    "ats": "ashby",
+    "slug": "Fonio",
+    "name": "fonio"
   },
   {
     "ats": "ashby",
@@ -840,6 +860,11 @@
     "name": "Medeloop"
   },
   {
+    "ats": "ashby",
+    "slug": "mercura",
+    "name": "Mercura"
+  },
+  {
     "slug": "mesh",
     "ats": "greenhouse",
     "name": "Mesh"
@@ -908,6 +933,11 @@
     "ats": "greenhouse",
     "slug": "myto",
     "name": "Myto"
+  },
+  {
+    "ats": "ashby",
+    "slug": "Nash",
+    "name": "Nash"
   },
   {
     "ats": "greenhouse",
@@ -1028,6 +1058,11 @@
     "slug": "parloa",
     "ats": "greenhouse",
     "name": "Parloa"
+  },
+  {
+    "ats": "ashby",
+    "slug": "percepta",
+    "name": "Percepta"
   },
   {
     "ats": "greenhouse",
@@ -1196,6 +1231,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "rowspace",
+    "name": "Rowspace"
+  },
+  {
+    "ats": "ashby",
     "slug": "runetech",
     "name": "Rune Technologies"
   },
@@ -1288,6 +1328,11 @@
     "ats": "ashby",
     "slug": "Serval",
     "name": "Serval"
+  },
+  {
+    "ats": "ashby",
+    "slug": "sewer-ai",
+    "name": "SewerAI"
   },
   {
     "ats": "lever",
@@ -1453,6 +1498,11 @@
     "ats": "greenhouse",
     "slug": "teletrackingtechnologiesinc",
     "name": "TeleTracking Technologies"
+  },
+  {
+    "ats": "ashby",
+    "slug": "tenexlabs",
+    "name": "Tenex"
   },
   {
     "ats": "ashby",
