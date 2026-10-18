@@ -1,5 +1,10 @@
 [
   {
+    "ats": "greenhouse",
+    "slug": "66degrees",
+    "name": "66degrees"
+  },
+  {
     "slug": "abridge",
     "ats": "ashby",
     "name": "Abridge"
@@ -95,6 +100,11 @@
     "name": "Applied Intuition"
   },
   {
+    "ats": "lever",
+    "slug": "arcadia",
+    "name": "Arcadia"
+  },
+  {
     "ats": "greenhouse",
     "slug": "arizeai",
     "name": "Arize AI"
@@ -133,6 +143,11 @@
     "ats": "ashby",
     "slug": "august",
     "name": "August"
+  },
+  {
+    "ats": "ashby",
+    "slug": "automat",
+    "name": "Automat"
   },
   {
     "ats": "lever",
@@ -330,6 +345,11 @@
     "name": "Cursor"
   },
   {
+    "ats": "ashby",
+    "slug": "cyvl",
+    "name": "Cyvl"
+  },
+  {
     "slug": "databricks",
     "ats": "greenhouse",
     "name": "Databricks"
@@ -348,6 +368,11 @@
     "ats": "ashby",
     "slug": "david-ai",
     "name": "David AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "withdaydream",
+    "name": "daydream"
   },
   {
     "ats": "ashby",
@@ -438,6 +463,11 @@
     "slug": "elevenlabs",
     "ats": "ashby",
     "name": "ElevenLabs"
+  },
+  {
+    "ats": "ashby",
+    "slug": "eliseai",
+    "name": "EliseAI"
   },
   {
     "slug": "ema",
@@ -1076,6 +1106,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "permitflow",
+    "name": "PermitFlow"
+  },
+  {
+    "ats": "ashby",
     "slug": "perplexity",
     "name": "Perplexity"
   },
@@ -1490,6 +1525,11 @@
     "name": "Taktile"
   },
   {
+    "ats": "lever",
+    "slug": "tali-ai",
+    "name": "Tali AI"
+  },
+  {
     "slug": "tavus",
     "ats": "ashby",
     "name": "Tavus"
@@ -1585,6 +1625,11 @@
     "name": "Twenty"
   },
   {
+    "ats": "greenhouse",
+    "slug": "ujet",
+    "name": "UJET"
+  },
+  {
     "ats": "lever",
     "slug": "upscale-ai",
     "name": "Upscale"
@@ -1648,6 +1693,11 @@
     "ats": "lever",
     "slug": "wmg",
     "name": "Warner Music Group"
+  },
+  {
+    "ats": "ashby",
+    "slug": "warp",
+    "name": "Warp"
   },
   {
     "ats": "greenhouse",
