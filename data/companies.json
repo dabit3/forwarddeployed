@@ -160,6 +160,11 @@
     "name": "Avallon AI"
   },
   {
+    "ats": "ashby",
+    "slug": "avoca",
+    "name": "Avoca"
+  },
+  {
     "ats": "greenhouse",
     "slug": "banyansoftware",
     "name": "Banyan Software"
@@ -178,6 +183,11 @@
     "ats": "ashby",
     "slug": "bjakcareer",
     "name": "Bjak"
+  },
+  {
+    "ats": "ashby",
+    "slug": "bliro",
+    "name": "Bliro"
   },
   {
     "ats": "ashby",
@@ -308,6 +318,11 @@
     "ats": "ashby",
     "slug": "Coinflow",
     "name": "Coinflow"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "colabsoftware",
+    "name": "CoLab Software"
   },
   {
     "slug": "commure",
@@ -651,6 +666,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "growthprotocol",
+    "name": "Growth Protocol"
+  },
+  {
+    "ats": "ashby",
     "slug": "guild",
     "name": "Guild"
   },
@@ -761,6 +781,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "iterativehealth",
+    "name": "Iterative Health"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "jazzx-ai",
     "name": "JazzX AI"
   },
@@ -808,6 +833,11 @@
     "ats": "lever",
     "slug": "liatrio",
     "name": "Liatrio"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "liberate",
+    "name": "Liberate"
   },
   {
     "ats": "greenhouse",
@@ -963,6 +993,11 @@
     "ats": "greenhouse",
     "slug": "myto",
     "name": "Myto"
+  },
+  {
+    "ats": "ashby",
+    "slug": "nango",
+    "name": "Nango"
   },
   {
     "ats": "ashby",
