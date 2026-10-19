@@ -10,6 +10,11 @@
     "name": "Abridge"
   },
   {
+    "ats": "greenhouse",
+    "slug": "accenturefederalservices",
+    "name": "Accenture Federal Services"
+  },
+  {
     "slug": "adyen",
     "ats": "greenhouse",
     "name": "Adyen"
@@ -263,6 +268,11 @@
     "ats": "ashby",
     "slug": "chalk",
     "name": "Chalk"
+  },
+  {
+    "ats": "lever",
+    "slug": "zoyi",
+    "name": "Channel"
   },
   {
     "ats": "ashby",
@@ -525,6 +535,11 @@
     "name": "Extend"
   },
   {
+    "ats": "lever",
+    "slug": "extremenetworks",
+    "name": "Extreme Networks"
+  },
+  {
     "slug": "factory",
     "ats": "ashby",
     "name": "Factory"
@@ -593,6 +608,11 @@
     "ats": "ashby",
     "slug": "foundry-robotics",
     "name": "Foundry Robotics"
+  },
+  {
+    "ats": "ashby",
+    "slug": "foxglove",
+    "name": "Foxglove"
   },
   {
     "ats": "ashby",
@@ -1083,6 +1103,11 @@
     "slug": "notion",
     "ats": "ashby",
     "name": "Notion"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "omakaserobotics",
+    "name": "Omakase Robotics"
   },
   {
     "ats": "greenhouse",
@@ -1585,6 +1610,11 @@
     "name": "TeleTracking Technologies"
   },
   {
+    "ats": "greenhouse",
+    "slug": "telnyx54",
+    "name": "Telnyx"
+  },
+  {
     "ats": "ashby",
     "slug": "tenexlabs",
     "name": "Tenex"
@@ -1608,6 +1638,11 @@
     "slug": "tenstorrent",
     "ats": "greenhouse",
     "name": "Tenstorrent"
+  },
+  {
+    "ats": "ashby",
+    "slug": "tessera-labs",
+    "name": "Tessera Labs"
   },
   {
     "ats": "ashby",
@@ -1643,6 +1678,11 @@
     "ats": "greenhouse",
     "slug": "perform-careers",
     "name": "Total Performance Consulting"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "translucent",
+    "name": "Translucent"
   },
   {
     "ats": "ashby",
