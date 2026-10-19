@@ -235,6 +235,11 @@
     "name": "Cartesia"
   },
   {
+    "ats": "lever",
+    "slug": "catena-clearing",
+    "name": "Catena Clearing"
+  },
+  {
     "ats": "greenhouse",
     "slug": "caylent",
     "name": "Caylent"
@@ -703,6 +708,11 @@
     "ats": "greenhouse",
     "slug": "hark",
     "name": "Hark"
+  },
+  {
+    "ats": "ashby",
+    "slug": "harmattan-ai",
+    "name": "Harmattan AI"
   },
   {
     "ats": "greenhouse",
@@ -1768,6 +1778,11 @@
     "ats": "ashby",
     "slug": "workos",
     "name": "WorkOS"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "wpp",
+    "name": "WPP"
   },
   {
     "ats": "ashby",
