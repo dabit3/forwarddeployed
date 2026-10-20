@@ -5,6 +5,11 @@
     "name": "66degrees"
   },
   {
+    "ats": "greenhouse",
+    "slug": "8451",
+    "name": "84.51°"
+  },
+  {
     "slug": "abridge",
     "ats": "ashby",
     "name": "Abridge"
@@ -105,6 +110,11 @@
     "name": "Applied Intuition"
   },
   {
+    "ats": "ashby",
+    "slug": "arcadeai",
+    "name": "Arcade"
+  },
+  {
     "ats": "lever",
     "slug": "arcadia",
     "name": "Arcadia"
@@ -113,6 +123,11 @@
     "ats": "greenhouse",
     "slug": "arizeai",
     "name": "Arize AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "Armory",
+    "name": "Armory"
   },
   {
     "slug": "asana",
@@ -388,6 +403,11 @@
     "slug": "datadog",
     "ats": "greenhouse",
     "name": "Datadog"
+  },
+  {
+    "ats": "ashby",
+    "slug": "datafold",
+    "name": "Datafold"
   },
   {
     "ats": "greenhouse",
@@ -1368,6 +1388,11 @@
     "ats": "greenhouse",
     "slug": "sandtechholdingslimited",
     "name": "Sand Tech Holdings Limited"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "sapienceaicorporation",
+    "name": "Sapience AI"
   },
   {
     "slug": "sardine",
