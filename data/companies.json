@@ -1711,6 +1711,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "tribe-ai",
+    "name": "Tribe AI"
+  },
+  {
+    "ats": "ashby",
     "slug": "trig",
     "name": "Trig"
   },
