@@ -366,6 +366,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "condukt",
+    "name": "Condukt"
+  },
+  {
+    "ats": "ashby",
     "slug": "context",
     "name": "Context"
   },
@@ -1150,6 +1155,11 @@
     "name": "OpenRouter"
   },
   {
+    "ats": "greenhouse",
+    "slug": "ophelos",
+    "name": "Ophelos"
+  },
+  {
     "slug": "oscilar",
     "ats": "ashby",
     "name": "Oscilar"
@@ -1158,6 +1168,11 @@
     "slug": "outreach",
     "ats": "lever",
     "name": "Outreach"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "pagerduty",
+    "name": "PagerDuty"
   },
   {
     "slug": "palantir",
