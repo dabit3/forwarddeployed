@@ -390,6 +390,11 @@
     "name": "Cresta"
   },
   {
+    "ats": "lever",
+    "slug": "cruxocm",
+    "name": "CruxOCM"
+  },
+  {
     "slug": "cursor",
     "ats": "ashby",
     "name": "Cursor"
@@ -1365,6 +1370,11 @@
     "name": "Roboflow"
   },
   {
+    "ats": "greenhouse",
+    "slug": "robotsandpencils",
+    "name": "Robots and Pencils"
+  },
+  {
     "slug": "rogo",
     "ats": "ashby",
     "name": "Rogo"
@@ -1423,6 +1433,11 @@
     "ats": "ashby",
     "slug": "sarvam",
     "name": "Sarvam"
+  },
+  {
+    "ats": "ashby",
+    "slug": "savvy",
+    "name": "Savvy Wealth"
   },
   {
     "ats": "greenhouse",
@@ -1813,6 +1828,11 @@
     "ats": "ashby",
     "slug": "vitalize",
     "name": "Vitalize"
+  },
+  {
+    "ats": "ashby",
+    "slug": "voltai.careers",
+    "name": "Voltai"
   },
   {
     "ats": "ashby",
