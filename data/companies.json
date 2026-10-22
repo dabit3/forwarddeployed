@@ -555,6 +555,11 @@
     "name": "Eudia"
   },
   {
+    "ats": "greenhouse",
+    "slug": "purestorage",
+    "name": "Everpure"
+  },
+  {
     "ats": "ashby",
     "slug": "exa",
     "name": "Exa"
@@ -1143,6 +1148,11 @@
     "ats": "greenhouse",
     "slug": "onestream",
     "name": "OneStream"
+  },
+  {
+    "ats": "ashby",
+    "slug": "Opal",
+    "name": "Opal Security"
   },
   {
     "ats": "greenhouse",
