@@ -120,6 +120,11 @@
     "name": "Arcadia"
   },
   {
+    "ats": "ashby",
+    "slug": "Arch",
+    "name": "Arch"
+  },
+  {
     "ats": "greenhouse",
     "slug": "arizeai",
     "name": "Arize AI"
@@ -128,6 +133,11 @@
     "ats": "ashby",
     "slug": "Armory",
     "name": "Armory"
+  },
+  {
+    "ats": "ashby",
+    "slug": "aiuc",
+    "name": "Artificial Intelligence Underwriting Company"
   },
   {
     "slug": "asana",
@@ -911,6 +921,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "Linkup",
+    "name": "Linkup"
+  },
+  {
+    "ats": "ashby",
     "slug": "lio",
     "name": "Lio"
   },
@@ -918,6 +933,11 @@
     "ats": "ashby",
     "slug": "litellm",
     "name": "LiteLLM"
+  },
+  {
+    "ats": "ashby",
+    "slug": "livekit",
+    "name": "LiveKit"
   },
   {
     "ats": "greenhouse",
@@ -1183,6 +1203,11 @@
     "slug": "outreach",
     "ats": "lever",
     "name": "Outreach"
+  },
+  {
+    "ats": "ashby",
+    "slug": "withpace",
+    "name": "Pace"
   },
   {
     "ats": "greenhouse",
