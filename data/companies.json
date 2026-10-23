@@ -265,6 +265,11 @@
     "name": "Cartesia"
   },
   {
+    "ats": "ashby",
+    "slug": "casca",
+    "name": "Casca"
+  },
+  {
     "ats": "lever",
     "slug": "catena-clearing",
     "name": "Catena Clearing"
@@ -363,6 +368,11 @@
     "ats": "greenhouse",
     "slug": "colabsoftware",
     "name": "CoLab Software"
+  },
+  {
+    "ats": "ashby",
+    "slug": "column",
+    "name": "Column"
   },
   {
     "slug": "commure",
@@ -1668,6 +1678,11 @@
     "slug": "stripe",
     "ats": "greenhouse",
     "name": "Stripe"
+  },
+  {
+    "ats": "ashby",
+    "slug": "summation",
+    "name": "Summation"
   },
   {
     "ats": "ashby",
