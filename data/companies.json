@@ -566,6 +566,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "endeavorai",
+    "name": "Endeavor AI"
+  },
+  {
+    "ats": "ashby",
     "slug": "endgame",
     "name": "Endgame"
   },
@@ -953,6 +958,11 @@
     "ats": "greenhouse",
     "slug": "llrpartnersjobs",
     "name": "LLR Partners"
+  },
+  {
+    "ats": "ashby",
+    "slug": "lorikeet",
+    "name": "Lorikeet"
   },
   {
     "slug": "lovable",
@@ -1453,6 +1463,11 @@
     "slug": "runpod",
     "ats": "ashby",
     "name": "RunPod"
+  },
+  {
+    "ats": "ashby",
+    "slug": "sable",
+    "name": "Sable"
   },
   {
     "ats": "ashby",
