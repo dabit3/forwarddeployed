@@ -196,6 +196,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "baidu",
+    "name": "Baidu USA"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "banyansoftware",
     "name": "Banyan Software"
   },
@@ -243,6 +248,11 @@
     "slug": "brex",
     "ats": "greenhouse",
     "name": "Brex"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "buildkite",
+    "name": "Buildkite"
   },
   {
     "slug": "campfire",
@@ -470,6 +480,11 @@
     "name": "Defense Unicorns"
   },
   {
+    "ats": "ashby",
+    "slug": "depthfirst",
+    "name": "DepthFirst"
+  },
+  {
     "ats": "greenhouse",
     "slug": "devrev",
     "name": "DevRev"
@@ -573,6 +588,11 @@
     "ats": "ashby",
     "slug": "endgame",
     "name": "Endgame"
+  },
+  {
+    "ats": "ashby",
+    "slug": "Etched",
+    "name": "Etched"
   },
   {
     "slug": "eudia",
@@ -741,6 +761,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "granica",
+    "name": "Granica"
+  },
+  {
+    "ats": "ashby",
     "slug": "Gray Swan AI",
     "name": "Gray Swan AI"
   },
@@ -758,6 +783,11 @@
     "ats": "ashby",
     "slug": "guild",
     "name": "Guild"
+  },
+  {
+    "ats": "ashby",
+    "slug": "gumloop",
+    "name": "Gumloop"
   },
   {
     "ats": "lever",
