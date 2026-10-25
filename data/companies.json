@@ -250,6 +250,11 @@
     "name": "Brex"
   },
   {
+    "ats": "lever",
+    "slug": "brillio-2",
+    "name": "Brillio"
+  },
+  {
     "ats": "greenhouse",
     "slug": "buildkite",
     "name": "Buildkite"
@@ -1425,6 +1430,11 @@
     "name": "realfast.ai"
   },
   {
+    "ats": "ashby",
+    "slug": "realmalliance",
+    "name": "Realm"
+  },
+  {
     "ats": "greenhouse",
     "slug": "redapt",
     "name": "Redapt"
@@ -1888,6 +1898,11 @@
     "ats": "ashby",
     "slug": "twenty",
     "name": "Twenty"
+  },
+  {
+    "ats": "ashby",
+    "slug": "uipath",
+    "name": "UiPath"
   },
   {
     "ats": "greenhouse",
