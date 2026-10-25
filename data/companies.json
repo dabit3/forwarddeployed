@@ -1455,6 +1455,11 @@
     "name": "Replit"
   },
   {
+    "ats": "lever",
+    "slug": "revealtech",
+    "name": "Reveal Technology"
+  },
+  {
     "ats": "ashby",
     "slug": "revin",
     "name": "Revin"
@@ -1478,6 +1483,11 @@
     "ats": "ashby",
     "slug": "rowspace",
     "name": "Rowspace"
+  },
+  {
+    "ats": "ashby",
+    "slug": "Rox-Data-Corp",
+    "name": "Rox Data"
   },
   {
     "ats": "ashby",
@@ -1843,6 +1853,11 @@
     "ats": "greenhouse",
     "slug": "translucent",
     "name": "Translucent"
+  },
+  {
+    "ats": "ashby",
+    "slug": "treeswift",
+    "name": "Treeswift"
   },
   {
     "ats": "ashby",
