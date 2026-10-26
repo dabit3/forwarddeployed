@@ -155,6 +155,16 @@
     "name": "Ascertain"
   },
   {
+    "ats": "ashby",
+    "slug": "aslan",
+    "name": "Aslan"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "assemblyai",
+    "name": "AssemblyAI"
+  },
+  {
     "slug": "assorthealth",
     "ats": "ashby",
     "name": "Assort Health"
