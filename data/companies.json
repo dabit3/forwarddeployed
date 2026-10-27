@@ -125,6 +125,11 @@
     "name": "Arch"
   },
   {
+    "ats": "ashby",
+    "slug": "arini",
+    "name": "Arini"
+  },
+  {
     "ats": "greenhouse",
     "slug": "arizeai",
     "name": "Arize AI"
@@ -433,6 +438,11 @@
     "slug": "cresta",
     "ats": "greenhouse",
     "name": "Cresta"
+  },
+  {
+    "ats": "lever",
+    "slug": "crosscountry-consulting",
+    "name": "CrossCountry Consulting"
   },
   {
     "ats": "lever",
@@ -933,6 +943,11 @@
     "slug": "kastle",
     "ats": "ashby",
     "name": "Kastle"
+  },
+  {
+    "ats": "lever",
+    "slug": "keboola",
+    "name": "Keboola"
   },
   {
     "ats": "ashby",
@@ -1728,6 +1743,11 @@
     "ats": "ashby",
     "slug": "stack-ai",
     "name": "StackAI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "stackfuel",
+    "name": "StackFuel"
   },
   {
     "ats": "greenhouse",
