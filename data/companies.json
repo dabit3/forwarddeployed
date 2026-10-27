@@ -896,6 +896,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "hud",
+    "name": "hud"
+  },
+  {
+    "ats": "ashby",
     "slug": "iceye",
     "name": "ICEYE"
   },
@@ -1488,6 +1493,11 @@
     "slug": "replit",
     "ats": "ashby",
     "name": "Replit"
+  },
+  {
+    "ats": "ashby",
+    "slug": "retell-ai",
+    "name": "Retell AI"
   },
   {
     "ats": "lever",
