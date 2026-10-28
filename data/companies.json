@@ -956,6 +956,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "kepler-ai",
+    "name": "Kepler"
+  },
+  {
+    "ats": "ashby",
     "slug": "kong",
     "name": "Kong"
   },
@@ -1553,6 +1558,11 @@
     "ats": "ashby",
     "slug": "sable",
     "name": "Sable"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "safariai",
+    "name": "Safari AI"
   },
   {
     "ats": "ashby",
