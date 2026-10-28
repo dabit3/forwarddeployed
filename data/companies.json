@@ -411,6 +411,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "composio",
+    "name": "Composio"
+  },
+  {
+    "ats": "ashby",
     "slug": "concourse",
     "name": "Concourse"
   },
@@ -513,6 +518,11 @@
     "ats": "greenhouse",
     "slug": "devrev",
     "name": "DevRev"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "dexory",
+    "name": "Dexory"
   },
   {
     "ats": "lever",
@@ -938,6 +948,11 @@
     "ats": "greenhouse",
     "slug": "jazzx-ai",
     "name": "JazzX AI"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "jetsonhome",
+    "name": "Jetson"
   },
   {
     "ats": "ashby",
@@ -1373,6 +1388,11 @@
     "ats": "ashby",
     "slug": "picogrid",
     "name": "Picogrid"
+  },
+  {
+    "ats": "lever",
+    "slug": "pigment",
+    "name": "Pigment"
   },
   {
     "ats": "greenhouse",
