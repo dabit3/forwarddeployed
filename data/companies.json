@@ -600,6 +600,11 @@
     "name": "EliseAI"
   },
   {
+    "ats": "ashby",
+    "slug": "eliza",
+    "name": "Eliza"
+  },
+  {
     "slug": "ema",
     "ats": "ashby",
     "name": "Ema"
