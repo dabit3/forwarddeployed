@@ -795,6 +795,11 @@
     "name": "GovWell"
   },
   {
+    "ats": "greenhouse",
+    "slug": "gradial",
+    "name": "Gradial"
+  },
+  {
     "ats": "ashby",
     "slug": "granica",
     "name": "Granica"
@@ -1491,6 +1496,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "recidiviz",
+    "name": "Recidiviz"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "redapt",
     "name": "Redapt"
   },
@@ -2103,6 +2113,11 @@
     "ats": "ashby",
     "slug": "xdof",
     "name": "XDOF"
+  },
+  {
+    "ats": "lever",
+    "slug": "zaimler",
+    "name": "zaimler"
   },
   {
     "ats": "ashby",
