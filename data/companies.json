@@ -815,6 +815,11 @@
     "name": "Gray Swan AI"
   },
   {
+    "ats": "greenhouse",
+    "slug": "greenlightconsulting",
+    "name": "Greenlight Consulting"
+  },
+  {
     "slug": "greptile",
     "ats": "ashby",
     "name": "Greptile"
@@ -1611,6 +1616,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "sambanovasystems",
+    "name": "SambaNova"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "sandtechholdingslimited",
     "name": "Sand Tech Holdings Limited"
   },
@@ -1663,6 +1673,11 @@
     "ats": "greenhouse",
     "slug": "scoutai",
     "name": "Scout AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "se3",
+    "name": "SE3 Labs"
   },
   {
     "ats": "ashby",
