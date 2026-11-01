@@ -906,6 +906,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "healthleap",
+    "name": "HealthLeap"
+  },
+  {
+    "ats": "ashby",
     "slug": "hebbia-ai",
     "name": "Hebbia"
   },
@@ -1023,6 +1028,11 @@
     "ats": "ashby",
     "slug": "laurel",
     "name": "Laurel"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "yurtsai",
+    "name": "Legion Intelligence"
   },
   {
     "slug": "legora",
