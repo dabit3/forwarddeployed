@@ -105,6 +105,11 @@
     "name": "Apollo Research"
   },
   {
+    "ats": "lever",
+    "slug": "appen-2",
+    "name": "Appen"
+  },
+  {
     "ats": "greenhouse",
     "slug": "appian",
     "name": "Appian"
@@ -1418,6 +1423,11 @@
     "ats": "lever",
     "slug": "pigment",
     "name": "Pigment"
+  },
+  {
+    "ats": "ashby",
+    "slug": "pinecone",
+    "name": "Pinecone"
   },
   {
     "ats": "greenhouse",
