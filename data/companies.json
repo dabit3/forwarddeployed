@@ -460,6 +460,11 @@
     "name": "Cresta"
   },
   {
+    "ats": "ashby",
+    "slug": "crogl",
+    "name": "Crogl"
+  },
+  {
     "ats": "lever",
     "slug": "crosscountry-consulting",
     "name": "CrossCountry Consulting"
@@ -523,6 +528,11 @@
     "ats": "greenhouse",
     "slug": "defenseunicorns",
     "name": "Defense Unicorns"
+  },
+  {
+    "ats": "ashby",
+    "slug": "delos-data",
+    "name": "Delos Data"
   },
   {
     "ats": "ashby",
@@ -663,6 +673,11 @@
     "ats": "ashby",
     "slug": "exa",
     "name": "Exa"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "exiger",
+    "name": "Exiger"
   },
   {
     "ats": "ashby",
