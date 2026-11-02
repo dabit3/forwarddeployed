@@ -1205,6 +1205,11 @@
     "name": "Miro"
   },
   {
+    "ats": "ashby",
+    "slug": "mistral.ai",
+    "name": "Mistral"
+  },
+  {
     "slug": "modal",
     "ats": "ashby",
     "name": "Modal"
@@ -1773,6 +1778,11 @@
     "ats": "ashby",
     "slug": "siftstack",
     "name": "Sift Stack"
+  },
+  {
+    "ats": "ashby",
+    "slug": "simple-ai",
+    "name": "Simple AI"
   },
   {
     "ats": "ashby",
