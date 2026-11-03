@@ -1540,6 +1540,11 @@
     "name": "Quindar"
   },
   {
+    "ats": "greenhouse",
+    "slug": "raft",
+    "name": "Raft"
+  },
+  {
     "slug": "ramp",
     "ats": "ashby",
     "name": "Ramp"
