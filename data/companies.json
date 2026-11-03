@@ -700,6 +700,11 @@
     "name": "Faculty"
   },
   {
+    "ats": "ashby",
+    "slug": "Fiducial",
+    "name": "Fiducial"
+  },
+  {
     "ats": "lever",
     "slug": "field-ai",
     "name": "FieldAI"
