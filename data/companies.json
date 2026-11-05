@@ -215,6 +215,11 @@
     "name": "Automat"
   },
   {
+    "ats": "ashby",
+    "slug": "autoscience",
+    "name": "Autoscience"
+  },
+  {
     "ats": "lever",
     "slug": "auxia",
     "name": "Auxia"
@@ -1135,6 +1140,11 @@
     "name": "Lyrebird Health"
   },
   {
+    "ats": "greenhouse",
+    "slug": "machindustries",
+    "name": "Mach Industries"
+  },
+  {
     "ats": "lever",
     "slug": "mactores",
     "name": "Mactores"
@@ -1615,6 +1625,11 @@
     "name": "Replit"
   },
   {
+    "ats": "lever",
+    "slug": "researchinnovations.com",
+    "name": "Research Innovations"
+  },
+  {
     "ats": "ashby",
     "slug": "retell-ai",
     "name": "Retell AI"
@@ -1923,6 +1938,11 @@
     "slug": "stripe",
     "ats": "greenhouse",
     "name": "Stripe"
+  },
+  {
+    "ats": "ashby",
+    "slug": "stuut-ai",
+    "name": "Stuut"
   },
   {
     "ats": "ashby",
