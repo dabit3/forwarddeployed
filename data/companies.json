@@ -96,6 +96,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "anyscale",
+    "name": "Anyscale"
+  },
+  {
+    "ats": "ashby",
     "slug": "anysignal",
     "name": "AnySignal"
   },
@@ -348,6 +353,11 @@
     "ats": "lever",
     "slug": "zoyi",
     "name": "Channel"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "chaosindustries",
+    "name": "CHAOS Industries"
   },
   {
     "ats": "ashby",
@@ -2048,6 +2058,11 @@
     "ats": "greenhouse",
     "slug": "translucent",
     "name": "Translucent"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "trase",
+    "name": "Trase Systems"
   },
   {
     "ats": "ashby",
