@@ -1990,6 +1990,11 @@
     "name": "Tavus"
   },
   {
+    "ats": "ashby",
+    "slug": "teleskope",
+    "name": "Teleskope"
+  },
+  {
     "ats": "greenhouse",
     "slug": "teletrackingtechnologiesinc",
     "name": "TeleTracking Technologies"
@@ -2133,6 +2138,11 @@
     "ats": "lever",
     "slug": "upscale-ai",
     "name": "Upscale"
+  },
+  {
+    "ats": "ashby",
+    "slug": "v7labs.com",
+    "name": "V7"
   },
   {
     "ats": "lever",
