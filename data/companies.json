@@ -1900,6 +1900,16 @@
     "name": "Sphere"
   },
   {
+    "ats": "ashby",
+    "slug": "Sphinx",
+    "name": "Sphinx"
+  },
+  {
+    "ats": "ashby",
+    "slug": "spruceid",
+    "name": "Spruce Systems"
+  },
+  {
     "slug": "stabilityai",
     "ats": "greenhouse",
     "name": "Stability AI"
