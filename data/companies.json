@@ -320,6 +320,11 @@
     "name": "Candid Health"
   },
   {
+    "ats": "greenhouse",
+    "slug": "capco",
+    "name": "Capco"
+  },
+  {
     "ats": "ashby",
     "slug": "Cape",
     "name": "Cape"
@@ -1478,6 +1483,11 @@
     "ats": "ashby",
     "slug": "perplexity",
     "name": "Perplexity"
+  },
+  {
+    "ats": "ashby",
+    "slug": "persona",
+    "name": "Persona"
   },
   {
     "ats": "greenhouse",
