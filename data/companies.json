@@ -266,6 +266,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "blitzy",
+    "name": "Blitzy"
+  },
+  {
+    "ats": "ashby",
     "slug": "blp-digital",
     "name": "BLP Digital AG"
   },
@@ -273,6 +278,11 @@
     "ats": "greenhouse",
     "slug": "bluefishai",
     "name": "Bluefish AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "bobyard",
+    "name": "Bobyard"
   },
   {
     "ats": "greenhouse",
@@ -955,6 +965,11 @@
     "name": "Heidi"
   },
   {
+    "ats": "ashby",
+    "slug": "helmguard",
+    "name": "HelmGuard Technologies"
+  },
+  {
     "ats": "greenhouse",
     "slug": "heygen",
     "name": "HeyGen"
@@ -1408,6 +1423,11 @@
     "ats": "ashby",
     "slug": "withpace",
     "name": "Pace"
+  },
+  {
+    "ats": "lever",
+    "slug": "packagex",
+    "name": "PackageX"
   },
   {
     "ats": "greenhouse",
@@ -2098,6 +2118,11 @@
     "ats": "greenhouse",
     "slug": "trase",
     "name": "Trase Systems"
+  },
+  {
+    "ats": "ashby",
+    "slug": "tread",
+    "name": "Tread"
   },
   {
     "ats": "ashby",
