@@ -1371,6 +1371,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "ocrolusinc",
+    "name": "Ocrolus"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "omakaserobotics",
     "name": "Omakase Robotics"
   },
@@ -2023,6 +2028,11 @@
     "ats": "lever",
     "slug": "tali-ai",
     "name": "Tali AI"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "tavily",
+    "name": "Tavily"
   },
   {
     "slug": "tavus",
