@@ -2296,6 +2296,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "workwize",
+    "name": "Workwize"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "wpp",
     "name": "WPP"
   },
