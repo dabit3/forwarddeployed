@@ -505,6 +505,11 @@
     "name": "CrossCountry Consulting"
   },
   {
+    "ats": "ashby",
+    "slug": "Crusoe",
+    "name": "Crusoe"
+  },
+  {
     "ats": "lever",
     "slug": "cruxocm",
     "name": "CruxOCM"
@@ -1726,6 +1731,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "runway-ml",
+    "name": "Runway"
+  },
+  {
+    "ats": "ashby",
     "slug": "sable",
     "name": "Sable"
   },
@@ -1878,6 +1888,11 @@
     "ats": "greenhouse",
     "slug": "sitrepsllc",
     "name": "Sitreps"
+  },
+  {
+    "ats": "ashby",
+    "slug": "skypilot",
+    "name": "SkyPilot"
   },
   {
     "ats": "lever",
