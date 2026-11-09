@@ -386,6 +386,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "clariticloudinc",
+    "name": "Clariti Cloud"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "clear",
     "name": "CLEAR"
   },
