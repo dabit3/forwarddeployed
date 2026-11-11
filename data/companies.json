@@ -236,6 +236,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "axon",
+    "name": "Axon"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "baidu",
     "name": "Baidu USA"
   },
@@ -383,6 +388,11 @@
     "ats": "ashby",
     "slug": "cinder",
     "name": "Cinder"
+  },
+  {
+    "ats": "ashby",
+    "slug": "clarasight",
+    "name": "Clarasight"
   },
   {
     "ats": "greenhouse",
@@ -1155,6 +1165,11 @@
     "name": "LLR Partners"
   },
   {
+    "ats": "greenhouse",
+    "slug": "locusrobotics",
+    "name": "Locus Robotics"
+  },
+  {
     "ats": "ashby",
     "slug": "lorikeet",
     "name": "Lorikeet"
@@ -1303,6 +1318,11 @@
     "ats": "greenhouse",
     "slug": "myto",
     "name": "Myto"
+  },
+  {
+    "ats": "ashby",
+    "slug": "n8n",
+    "name": "n8n"
   },
   {
     "ats": "ashby",
@@ -1753,6 +1773,11 @@
     "ats": "greenhouse",
     "slug": "safariai",
     "name": "Safari AI"
+  },
+  {
+    "ats": "lever",
+    "slug": "safe",
+    "name": "Safe Security"
   },
   {
     "ats": "ashby",
