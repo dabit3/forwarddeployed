@@ -575,6 +575,11 @@
     "name": "Delos Data"
   },
   {
+    "ats": "greenhouse",
+    "slug": "dept",
+    "name": "DEPT"
+  },
+  {
     "ats": "ashby",
     "slug": "depthfirst",
     "name": "DepthFirst"
