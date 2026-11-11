@@ -71,11 +71,6 @@
   },
   {
     "ats": "ashby",
-    "slug": "ameba",
-    "name": "Ameba"
-  },
-  {
-    "ats": "ashby",
     "slug": "Ampersand",
     "name": "Ampersand"
   },
@@ -1001,11 +996,6 @@
   },
   {
     "ats": "ashby",
-    "slug": "hilberts",
-    "name": "Hilbert's AI"
-  },
-  {
-    "ats": "ashby",
     "slug": "Hippocratic AI",
     "name": "Hippocratic AI"
   },
@@ -1170,8 +1160,8 @@
     "name": "Luminai"
   },
   {
-    "ats": "lever",
-    "slug": "lyrebirdhealth",
+    "ats": "ashby",
+    "slug": "lyrebird-health",
     "name": "Lyrebird Health"
   },
   {
@@ -1481,7 +1471,7 @@
   },
   {
     "slug": "parloa",
-    "ats": "greenhouse",
+    "ats": "ashby",
     "name": "Parloa"
   },
   {
@@ -1563,11 +1553,6 @@
     "ats": "greenhouse",
     "slug": "praxent",
     "name": "Praxent"
-  },
-  {
-    "ats": "greenhouse",
-    "slug": "primerai",
-    "name": "Primer"
   },
   {
     "ats": "ashby",
@@ -1820,8 +1805,8 @@
     "name": "Schonfeld"
   },
   {
-    "ats": "greenhouse",
-    "slug": "scoutai",
+    "ats": "ashby",
+    "slug": "scout-ai",
     "name": "Scout AI"
   },
   {
@@ -1833,11 +1818,6 @@
     "ats": "ashby",
     "slug": "seamflow",
     "name": "Seamflow"
-  },
-  {
-    "ats": "ashby",
-    "slug": "sema4.ai",
-    "name": "Sema4.ai"
   },
   {
     "ats": "ashby",
@@ -2038,11 +2018,6 @@
     "ats": "ashby",
     "slug": "swarmaero",
     "name": "Swarm Aero"
-  },
-  {
-    "ats": "ashby",
-    "slug": "tailwind",
-    "name": "Tailwind"
   },
   {
     "ats": "ashby",
