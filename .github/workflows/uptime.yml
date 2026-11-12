@@ -9,6 +9,8 @@ on:
         description: "Site to check"
         required: false
         default: "https://forwarddeployed-sigma.vercel.app"
+  push:
+    branches: [devin/1794526067-uptime-check]
   pull_request:
     paths:
       - .github/workflows/uptime.yml
@@ -22,7 +24,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BASE_URL: ${{ inputs.base_url || 'https://forwarddeployed-sigma.vercel.app' }}
+  BASE_URL: ${{ inputs.base_url || 'https://forwarddeployed-sigma.vercel.app/does-not-exist' }}
   ISSUE_TITLE: "Uptime check failing"
 
 jobs:
