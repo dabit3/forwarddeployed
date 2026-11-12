@@ -50,6 +50,11 @@
     "name": "AiStudio Artificial Intelligence Technologies"
   },
   {
+    "ats": "ashby",
+    "slug": "alexai",
+    "name": "Alex AI"
+  },
+  {
     "slug": "alloy",
     "ats": "greenhouse",
     "name": "Alloy"
@@ -288,6 +293,11 @@
     "ats": "ashby",
     "slug": "bobyard",
     "name": "Bobyard"
+  },
+  {
+    "ats": "lever",
+    "slug": "bounteous",
+    "name": "Bounteous"
   },
   {
     "ats": "greenhouse",
@@ -1018,6 +1028,11 @@
     "ats": "ashby",
     "slug": "Hippocratic AI",
     "name": "Hippocratic AI"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "hops",
+    "name": "Hops"
   },
   {
     "ats": "ashby",
