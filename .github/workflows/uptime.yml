@@ -9,8 +9,6 @@ on:
         description: "Site to check"
         required: false
         default: "https://forwarddeployed-sigma.vercel.app"
-  push:
-    branches: [devin/1794526067-uptime-check]
   pull_request:
     paths:
       - .github/workflows/uptime.yml
