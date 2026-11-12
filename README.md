@@ -29,6 +29,8 @@ XAI_API_KEY=... npm run discover
 
 Set `XAI_SEARCH_MODEL` to use a model other than `grok-4.20-non-reasoning`.
 
+It also fetches every board already in `data/companies.json` and lists the ones that fail (for example a 404 after a company moves ATS) under `FAILING BOARDS` in its output and in `data/failing-boards.json`. Fix or remove those entries.
+
 ## Checks
 
 ```sh
