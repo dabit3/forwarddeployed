@@ -19,6 +19,8 @@ import FilterLink from "./FilterLink";
 import Footer from "./Footer";
 import MobileBar from "./MobileBar";
 import Sidebar from "./Sidebar";
+import VisitNotice from "./VisitNotice";
+import useVisitHighlights from "./useVisitHighlights";
 
 type CompanyName = Pick<Company, "slug" | "name">;
 
@@ -36,6 +38,8 @@ export default function Board({ roles, companies }: { roles: Role[]; companies: 
   const [filters, setFilters] = useState<Filters>({});
   const shownFilters = useDeferredValue(filters);
   const [open, setOpen] = useState<Set<string>>(() => new Set());
+  const { visit, unavailable } = useVisitHighlights(roles);
+  const [newOnly, setNewOnly] = useState(false);
 
   useEffect(() => {
     const read = () => setFilters(filtersFromSearch(window.location.search));
@@ -68,10 +72,11 @@ export default function Board({ roles, companies }: { roles: Role[]; companies: 
 
   const query = shownFilters.q?.trim();
   const active = { ...shownFilters, q: query };
-  const shown = filterRoles(roles, active);
+  const matching = filterRoles(roles, active);
+  const shown = newOnly ? matching.filter((r) => visit?.newKeys.has(r.key)) : matching;
   const groups = groupByCompany(shown);
   // On phones companies start collapsed, unless the filters already narrowed things down.
-  const openAll = groups.length <= 3 || Boolean(active.company);
+  const openAll = newOnly || groups.length <= 3 || Boolean(active.company);
 
   return (
     <>
@@ -89,24 +94,28 @@ export default function Board({ roles, companies }: { roles: Role[]; companies: 
         <header>
           <h2>{heading(active, companies)}</h2>
           <h3>
-            {shown.length} open {shown.length === 1 ? "role" : "roles"}
+            {shown.length} {newOnly ? "new" : "open"} {shown.length === 1 ? "role" : "roles"}
             {query ? ` matching \u201c${query}\u201d` : ""}
           </h3>
+          <VisitNotice visit={visit} unavailable={unavailable} newOnly={newOnly} onToggle={() => setNewOnly((v) => !v)} />
         </header>
         <div className="article-body">
           {shown.length ? (
             groups.map((g) => {
               const expanded = openAll || open.has(g.slug);
+              const newCount = g.roles.filter((r) => visit?.newKeys.has(r.key)).length;
               return (
                 <section key={g.slug} className={expanded ? "company" : "company collapsed"}>
                   <h4>
                     <FilterLink to={{ ...active, company: g.slug }} onSelect={select} className="desktop-only">
                       {g.name}
+                      {newCount > 0 && <span className="new-mark">{newCount} new</span>}
                     </FilterLink>
                     <small className="desktop-only">{g.roles.length}</small>
                     <button type="button" className="toggle" aria-expanded={expanded} onClick={() => toggle(g.slug)}>
                       <span>
                         {g.name}
+                        {newCount > 0 && <span className="new-mark">{newCount} new</span>}
                         <span className="meta">{summarizePlaces(localPlaces(countBy(g.roles, (r) => r.places).map(([p]) => p)))}</span>
                       </span>
                       <small>
@@ -120,6 +129,7 @@ export default function Board({ roles, companies }: { roles: Role[]; companies: 
                         <Link href={r.href}>
                           <span>
                             {r.title}
+                            {visit?.newKeys.has(r.key) && <span className="new-mark">New</span>}
                             {r.places.length ? <span className="meta">{summarizePlaces(r.places)}</span> : null}
                           </span>
                           <span className="time">{formatDate(r.postedAt)}</span>
@@ -133,7 +143,7 @@ export default function Board({ roles, companies }: { roles: Role[]; companies: 
           ) : (
             <p className="empty">
               No roles match.{" "}
-              <FilterLink to={{}} onSelect={select}>
+              <FilterLink to={{}} onSelect={(next) => { setNewOnly(false); select(next); }}>
                 Clear filters
               </FilterLink>
             </p>
