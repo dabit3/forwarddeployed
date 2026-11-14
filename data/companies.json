@@ -995,6 +995,11 @@
     "name": "Harvey"
   },
   {
+    "ats": "ashby",
+    "slug": "havocai",
+    "name": "HavocAI"
+  },
+  {
     "ats": "greenhouse",
     "slug": "healthie",
     "name": "Healthie"
@@ -1098,6 +1103,11 @@
     "ats": "ashby",
     "slug": "judgmentlabs",
     "name": "Judgment Labs"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "judihealth",
+    "name": "Judi Health"
   },
   {
     "slug": "kastle",
