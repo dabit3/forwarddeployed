@@ -410,6 +410,11 @@
     "name": "Cinder"
   },
   {
+    "ats": "lever",
+    "slug": "circadiahealth",
+    "name": "Circadia Health"
+  },
+  {
     "ats": "ashby",
     "slug": "clarasight",
     "name": "Clarasight"
@@ -1998,6 +2003,11 @@
     "ats": "ashby",
     "slug": "Solvd",
     "name": "Solvd"
+  },
+  {
+    "ats": "ashby",
+    "slug": "solve.ai",
+    "name": "SolveAI"
   },
   {
     "ats": "greenhouse",
