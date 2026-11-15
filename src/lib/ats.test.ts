@@ -94,6 +94,13 @@ test("keeps explicit current FDE evidence when the work improves customer experi
   }
 });
 
+test("distinguishes current FDE role labels from prior FDE experience", () => {
+  for (const title of ["Senior Platform Engineer", "Applied AI Engineer"]) {
+    assert.equal(isForwardDeployedEngineer(title, "<p>Role:</p><p>Forward Deployed Engineering</p>"), true, title);
+    assert.equal(isForwardDeployedEngineer(title, "<p>Build our internal platform.</p><p>We seek candidates with experience as a forward-deployed engineer.</p>"), false, title);
+  }
+});
+
 test("ignores qualification-only customer experience under paragraph headings or plain paragraphs", () => {
   const role = "<p>Build our internal AI platform.</p>";
   for (const qualifications of [

@@ -60,7 +60,7 @@ const QUALIFICATION_HEADING = new RegExp(
 
 function describesFdeRole(html: string): boolean {
   const text = roleText(html);
-  return /\bas (?:an?|our) forward[\s-]*deployed (?:software )?engineer\b/i.test(text) ||
+  return /(?:^|[.!?\n])\s*as (?:an?|our) forward[\s-]*deployed (?:software )?engineer\b/i.test(text) ||
     /\b(?:role|engineering)\s*[|:]\s*forward[\s-]*deployed engineering\b/i.test(text) ||
     /\bas a technical deployment lead on the forward deployed engineering team\b/i.test(text);
 }
@@ -78,9 +78,9 @@ function roleText(html: string): string {
   // Prior customer/FDE experience in a requirements list does not make an internal role an FDE.
   const qualifications = decoded.search(QUALIFICATION_HEADING);
   return (qualifications < 0 ? decoded : decoded.slice(0, qualifications))
-    .replace(/<\/(?:p|li|div|h[1-6])>/gi, ". ")
-    .replace(/<[^>]*>/g, " ").replace(/\s+/g, " ")
-    .split(/(?<=[.!?])/)
+    .replace(/<\/(?:p|li|div|h[1-6])>/gi, "\n")
+    .replace(/<[^>]*>/g, " ").replace(/[^\S\n]+/g, " ")
+    .split(/(?<=[.!?\n])/)
     // Ignore qualification sentences, not responsibilities that improve "customer experience".
     .filter((sentence) =>
       !/\b(?:prior|previous|years? of) (?:experience|background)\b/i.test(sentence) &&
