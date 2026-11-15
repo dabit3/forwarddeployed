@@ -70,6 +70,7 @@ function needsRoleContext(title: string): boolean {
   const normalized = normalizedTitle(title);
   return !FORWARD_DEPLOYED.test(normalized) &&
     (/\bapplied ai\b/.test(normalized) || EMBEDDED_AI.test(normalized) ||
+      (APPLIED_RESEARCH.test(normalized) && !/\b(?:customers?|clients?|field)\b/.test(normalized)) ||
       (POSSIBLE_FDE.test(normalized) && !SIMILAR_TITLE.test(normalized)));
 }
 

@@ -37,8 +37,6 @@ test("keeps other names for the deployed engineer role", () => {
     "Customer AI Engineer",
     "Agent Deployment Engineer",
     "Applied Research Engineer, Customer Facing",
-    "Applied Research Engineer, Deployment",
-    "Applied Research Engineer, Customer Deployments",
     "Deployment Strategist",
     "Deployed Architect, Professional Services",
     "Customer Deployment Engineer",
@@ -85,6 +83,14 @@ test("requires customer-delivery context for ambiguous AI aliases", () => {
     assert.equal(isForwardDeployedEngineer(title, "You will be a pre-sales architect helping customers build AI prototypes."), false, title);
   }
   assert.equal(isForwardDeployedEngineer("Embedded AI Engineer – Android Automotive (On-Device Intelligence)", "Work directly with customers."), false);
+});
+
+test("deployment alone does not make applied research customer-facing", () => {
+  for (const title of ["Applied Research Engineer, Deployment", "Applied Research Engineer, Model Deployment"]) {
+    assert.equal(isForwardDeployedEngineer(title, "Deploy our internal research models."), false, title);
+    assert.equal(isForwardDeployedEngineer(title, "As a Forward-Deployed Engineer, you own customer integrations."), true, title);
+  }
+  assert.equal(isForwardDeployedEngineer("Applied Research Engineer, Customer Deployments"), true);
 });
 
 test("keeps explicit current FDE evidence when the work improves customer experience", () => {
