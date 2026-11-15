@@ -29,12 +29,12 @@ function readSnapshot(raw: string | null, now: number): Snapshot | null {
   }
 }
 
-export function recordVisit(
-  storage: Pick<Storage, "getItem" | "setItem">,
+function visitState(
+  raw: string | null,
   roleKeys: string[],
-  now = Date.now(),
-): VisitHighlights {
-  const previous = readSnapshot(storage.getItem(VISIT_STORAGE_KEY), now);
+  now: number,
+): { snapshot: Snapshot; highlights: VisitHighlights } {
+  const previous = readSnapshot(raw, now);
   const continuing = previous && now - previous.visitedAt < VISIT_GAP_MS;
   const baselineAt = continuing ? previous.baselineAt : previous?.visitedAt ?? null;
   const baselineKeys = continuing ? previous.baselineKeys : previous?.knownKeys ?? [];
@@ -48,6 +48,19 @@ export function recordVisit(
     baselineAt,
     baselineKeys,
   };
+  return { snapshot, highlights: { previousVisitAt: baselineAt, newKeys } };
+}
+
+export function readVisit(storage: Pick<Storage, "getItem">, roleKeys: string[], now = Date.now()): VisitHighlights {
+  return visitState(storage.getItem(VISIT_STORAGE_KEY), roleKeys, now).highlights;
+}
+
+export function recordVisit(
+  storage: Pick<Storage, "getItem" | "setItem">,
+  roleKeys: string[],
+  now = Date.now(),
+): VisitHighlights {
+  const { snapshot, highlights } = visitState(storage.getItem(VISIT_STORAGE_KEY), roleKeys, now);
   storage.setItem(VISIT_STORAGE_KEY, JSON.stringify(snapshot));
-  return { previousVisitAt: baselineAt, newKeys };
+  return highlights;
 }

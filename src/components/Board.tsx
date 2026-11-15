@@ -83,7 +83,7 @@ export default function Board({ roles, companies, page = 1 }: { roles: Role[]; c
   const [filters, setFilters] = useState<Filters>(initial?.filters ?? {});
   const shownFilters = useDeferredValue(filters);
   const [open, setOpen] = useState<Set<string>>(() => new Set());
-  const { visit, unavailable } = useVisitHighlights(roles);
+  const { visit, unavailable } = useVisitHighlights(roles, initial !== null);
   const [newOnly, setNewOnly] = useState(initial?.newOnly ?? false);
   const [firstPage, setFirstPage] = useState(initial?.firstPage ?? page);
   const [more, setMore] = useState<Shown>(initial?.shown ?? { list: "", count: 1 });

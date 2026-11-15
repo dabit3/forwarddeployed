@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { recordVisit, VISIT_GAP_MS, VISIT_STORAGE_KEY } from "./visits.ts";
+import { readVisit, recordVisit, VISIT_GAP_MS, VISIT_STORAGE_KEY } from "./visits.ts";
 
 const NOW = Date.parse("2026-11-10T12:00:00Z");
 const storage = (initial: string | null = null) => {
@@ -41,6 +41,17 @@ test("first-visit refreshes stay first visits until the inactivity gap", () => {
   const store = storage();
   recordVisit(store, ["acme:fde"], NOW);
   assert.equal(recordVisit(store, ["acme:fde", "beta:fde"], NOW + 1000).previousVisitAt, null);
+});
+
+test("reading highlights before a restored page renders does not write or acknowledge them", () => {
+  const store = storage();
+  const keys = ["acme:fde", "beta:fde"];
+  recordVisit(store, ["acme:fde"], NOW);
+  recordVisit(store, keys, NOW + VISIT_GAP_MS);
+  const before = store.getItem(VISIT_STORAGE_KEY);
+  assert.deepEqual([...readVisit(store, keys, NOW + VISIT_GAP_MS + 1000).newKeys], ["beta:fde"]);
+  assert.equal(store.getItem(VISIT_STORAGE_KEY), before);
+  assert.deepEqual(readVisit(store, keys, NOW + VISIT_GAP_MS + 1000), recordVisit(store, keys, NOW + VISIT_GAP_MS + 1000));
 });
 
 test("the next visit acknowledges prior highlights and detects later additions", () => {
