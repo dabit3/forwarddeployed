@@ -45,7 +45,7 @@ const SIMILAR_TITLE = new RegExp(
 const APPLIED_RESEARCH = /\bapplied research engineers?\b/;
 const EMBEDDED_AI = /\bembedded ai engineers?\b/;
 const ON_DEVICE = /\b(?:on device|firmware|automotive|android|edge|hardware)\b/;
-const CUSTOMER_FACING = /\b(?:customer|client|field|deploy)\b/;
+const CUSTOMER_FACING = /\b(?:customers?|clients?|field|deploy(?:ed|ment|ments|ing)?)\b/;
 const NOT_ENGINEERING =
   /\b(?:account (?:executives?|managers?)|recruit\w*|talent|sales|marketing|(?:product|program|project|engagement|delivery|partner|partnerships|customer success) (?:managers?|management|directors?|leads?)|designers?|ux design|operations|chief of staff|bankers?|investors?|lawyers?)\b/;
 const NON_SOFTWARE_ENGINEERING = /\b(?:hardware(?: integration)?|mechanical|electrical|build|finance|financial) engineers?\b/;

@@ -37,6 +37,8 @@ test("keeps other names for the deployed engineer role", () => {
     "Customer AI Engineer",
     "Agent Deployment Engineer",
     "Applied Research Engineer, Customer Facing",
+    "Applied Research Engineer, Deployment",
+    "Applied Research Engineer, Customer Deployments",
     "Deployment Strategist",
     "Deployed Architect, Professional Services",
     "Customer Deployment Engineer",
