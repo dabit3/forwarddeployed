@@ -40,7 +40,7 @@ async function mapPool<T, R>(items: T[], limit: number, fn: (item: T) => Promise
   return out;
 }
 
-async function buildRoles(): Promise<Role[]> {
+async function readAllBoards(): Promise<Job[]> {
   const boards = await mapPool(companies, CONCURRENCY, async (c) => {
     try {
       return await getBoard(c);
@@ -49,7 +49,11 @@ async function buildRoles(): Promise<Role[]> {
       return [];
     }
   });
-  return groupRoles(boards.flat());
+  return boards.flat();
+}
+
+async function buildRoles(): Promise<Role[]> {
+  return groupRoles(await readAllBoards());
 }
 
 // Reading every board takes seconds, so pages share one cached role index. The key changes with the
@@ -63,6 +67,9 @@ export const getRoles = cache(async (): Promise<Role[]> => {
   })();
   return roles.filter((r) => isForwardDeployedEngineer(r.title));
 });
+
+/** Every posting with its own detail page, including each city of a folded role. */
+export const getPostings = cache(readAllBoards);
 
 const getGreenhouseDescription = (company: Company, id: string) =>
   unstable_cache(() => fetchGreenhouseDescription(company, id), ["gh-desc-v1", company.slug, id], {
