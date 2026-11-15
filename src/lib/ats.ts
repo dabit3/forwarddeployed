@@ -52,9 +52,14 @@ const NON_SOFTWARE_ENGINEERING = /\b(?:hardware(?: integration)?|mechanical|elec
 // Generic titles are only FDEs when the description identifies the current role as such,
 // not merely when prior FDE experience appears in the qualifications.
 const POSSIBLE_FDE = /\b(?:professional services engineers?|technical deployment leads?|software engineers? applied ai|(?:ai|platform) engineers?)\b/;
+const QUALIFICATION_LABEL = String.raw`(?:qualifications|required qualifications|requirements|what you bring|what you.ll bring|who you are|what we.re looking for|what we look for|you may be a good fit|nice to have)`;
+const QUALIFICATION_HEADING = new RegExp(
+  String.raw`<(?:h[1-6]|strong|b)\b[^>]*>\s*${QUALIFICATION_LABEL}|<(?:p|div)\b[^>]*>\s*${QUALIFICATION_LABEL}\s*:?\s*</(?:p|div)>`,
+  "i",
+);
 
 function describesFdeRole(html: string): boolean {
-  const text = roleText(html).replace(/[^.!?]*\b(?:experience|background)\b[^.!?]*(?:[.!?]|$)/gi, " ");
+  const text = roleText(html);
   return /\bas (?:an?|our) forward[\s-]*deployed (?:software )?engineer\b/i.test(text) ||
     /\b(?:role|engineering)\s*[|:]\s*forward[\s-]*deployed engineering\b/i.test(text) ||
     /\bas a technical deployment lead on the forward deployed engineering team\b/i.test(text);
@@ -71,9 +76,16 @@ function needsRoleContext(title: string): boolean {
 function roleText(html: string): string {
   const decoded = decodeEntities(html);
   // Prior customer/FDE experience in a requirements list does not make an internal role an FDE.
-  const qualifications = decoded.search(/<(?:h[1-6]|strong|b)\b[^>]*>\s*(?:qualifications|required qualifications|requirements|what you bring|what you.ll bring|who you are|what we.re looking for|you may be a good fit|nice to have)/i);
+  const qualifications = decoded.search(QUALIFICATION_HEADING);
   return (qualifications < 0 ? decoded : decoded.slice(0, qualifications))
-    .replace(/<[^>]*>/g, " ").replace(/\s+/g, " ");
+    .replace(/<\/(?:p|li|div|h[1-6])>/gi, ". ")
+    .replace(/<[^>]*>/g, " ").replace(/\s+/g, " ")
+    .split(/(?<=[.!?])/)
+    // Ignore qualification sentences, not responsibilities that improve "customer experience".
+    .filter((sentence) =>
+      !/\b(?:prior|previous|years? of) (?:experience|background)\b/i.test(sentence) &&
+      !/^\s*(?:(?:we|you) (?:require|value|have|bring) )?(?:(?:strong|extensive|relevant|proven) )?(?:experience|background)\b/i.test(sentence))
+    .join(" ");
 }
 
 function hasCustomerDeliveryContext(html: string): boolean {

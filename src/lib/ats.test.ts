@@ -87,6 +87,21 @@ test("requires customer-delivery context for ambiguous AI aliases", () => {
   assert.equal(isForwardDeployedEngineer("Embedded AI Engineer – Android Automotive (On-Device Intelligence)", "Work directly with customers."), false);
 });
 
+test("keeps explicit current FDE evidence when the work improves customer experience", () => {
+  for (const title of ["Applied AI Engineer", "Senior AI Engineer"]) {
+    assert.equal(isForwardDeployedEngineer(title, "As a Forward-Deployed Engineer, you will improve the customer experience."), true, title);
+    assert.equal(isForwardDeployedEngineer(title, "As a Forward-Deployed Engineer, you will improve customer experience with our product."), true, title);
+  }
+});
+
+test("ignores qualification-only customer experience under paragraph headings or plain paragraphs", () => {
+  const role = "<p>Build our internal AI platform.</p>";
+  for (const qualifications of [
+    "<p>Qualifications</p><p>Experience working directly with customers.</p>",
+    "<p>Experience working directly with customers.</p>",
+  ]) assert.equal(isForwardDeployedEngineer("Software Engineer, Applied AI", role + qualifications), false, qualifications);
+});
+
 test("only includes generic engineering titles when the current role is explicitly an FDE", () => {
   for (const title of ["Senior Professional Services Engineer", "Technical Deployment Lead", "Software Engineer, Applied AI", "Senior AI Engineer", "Senior Platform Engineer"]) {
     assert.equal(isForwardDeployedEngineer(title, "As a Forward-Deployed Engineer, you will ship customer integrations."), true, title);
