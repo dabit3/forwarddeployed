@@ -57,6 +57,7 @@ const QUALIFICATION_HEADING = new RegExp(
   String.raw`<(?:h[1-6]|strong|b)\b[^>]*>\s*${QUALIFICATION_LABEL}|<(?:p|div)\b[^>]*>\s*${QUALIFICATION_LABEL}\s*:?\s*</(?:p|div)>`,
   "i",
 );
+const INLINE_QUALIFICATION = new RegExp(String.raw`(?:^|[.!?\n])\s*${QUALIFICATION_LABEL}\s*:`, "i");
 
 function describesFdeRole(html: string): boolean {
   const text = roleText(html);
@@ -83,9 +84,11 @@ function roleText(html: string): string {
   const decoded = decodeEntities(html).replace(/\s+/g, " ");
   // Prior customer/FDE experience in a requirements list does not make an internal role an FDE.
   const qualifications = decoded.search(QUALIFICATION_HEADING);
-  return (qualifications < 0 ? decoded : decoded.slice(0, qualifications))
+  const text = (qualifications < 0 ? decoded : decoded.slice(0, qualifications))
     .replace(/<\/(?:p|li|div|h[1-6])>/gi, "\n")
     .replace(/<[^>]*>/g, " ").replace(/[^\S\n]+/g, " ");
+  const inlineQualifications = text.search(INLINE_QUALIFICATION);
+  return inlineQualifications < 0 ? text : text.slice(0, inlineQualifications);
 }
 
 function hasCustomerDeliveryContext(html: string): boolean {
