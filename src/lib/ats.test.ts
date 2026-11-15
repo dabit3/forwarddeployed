@@ -115,6 +115,7 @@ test("distinguishes current FDE role labels from prior FDE experience", () => {
   for (const title of ["Senior Platform Engineer", "Applied AI Engineer"]) {
     assert.equal(isForwardDeployedEngineer(title, "<p>Role:</p><p>Forward Deployed Engineering</p>"), true, title);
     assert.equal(isForwardDeployedEngineer(title, "<p><em>AI Engineering | Forward Deployed Engineering</em></p>"), true, title);
+    assert.equal(isForwardDeployedEngineer(title, "About the role: Forward Deployed Engineering."), true, title);
     assert.equal(isForwardDeployedEngineer(title, "You will act as a Forward-Deployed Engineer, owning deployments."), true, title);
     assert.equal(isForwardDeployedEngineer(title, "As a Forward-Deployed Engineer, draw on your prior experience to own deployments."), true, title);
     assert.equal(isForwardDeployedEngineer(title, "<p>Build our internal platform.</p><p>We seek candidates with experience as a forward-deployed engineer.</p>"), false, title);
