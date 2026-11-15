@@ -60,9 +60,13 @@ const QUALIFICATION_HEADING = new RegExp(
 
 function describesFdeRole(html: string): boolean {
   const text = roleText(html);
-  return /(?:^|[.!?\n])\s*as (?:an?|our) forward[\s-]*deployed (?:software )?engineer\b/i.test(text) ||
-    /\b(?:role|engineering)\s*[|:]\s*forward[\s-]*deployed engineering\b/i.test(text) ||
-    /\bas a technical deployment lead on the forward deployed engineering team\b/i.test(text);
+  const namedRole = /\bas (?:(?:an?|our) forward[\s-]*deployed (?:software )?engineer|a technical deployment lead on the forward deployed engineering team)\b/gi;
+  for (const match of text.matchAll(namedRole)) {
+    // Inspect the clause BEFORE "as an FDE": experience after it can describe current duties.
+    const prefix = text.slice(0, match.index).split(/[.!?\n]/).at(-1) ?? "";
+    if (!/\b(?:experience|background|formerly|previously|worked|served|acted)\b/i.test(prefix)) return true;
+  }
+  return /(?:^|[\n|])\s*(?:role|engineering)\s*[|:]\s*forward[\s-]*deployed engineering\b/i.test(text);
 }
 
 /** These titles also describe internal product work or on-device AI, not just FDE work. */
@@ -81,17 +85,18 @@ function roleText(html: string): string {
   const qualifications = decoded.search(QUALIFICATION_HEADING);
   return (qualifications < 0 ? decoded : decoded.slice(0, qualifications))
     .replace(/<\/(?:p|li|div|h[1-6])>/gi, "\n")
-    .replace(/<[^>]*>/g, " ").replace(/[^\S\n]+/g, " ")
+    .replace(/<[^>]*>/g, " ").replace(/[^\S\n]+/g, " ");
+}
+
+function hasCustomerDeliveryContext(html: string): boolean {
+  const text = roleText(html)
     .split(/(?<=[.!?\n])/)
     // Ignore qualification sentences, not responsibilities that improve "customer experience".
     .filter((sentence) =>
       !/\b(?:prior|previous|years? of) (?:experience|background)\b/i.test(sentence) &&
+      !/\b(?:candidates?|applicants?|qualifications?|requirements?)\b.{0,50}\b(?:experience|background)\b/i.test(sentence) &&
       !/^\s*(?:(?:we|you) (?:require|value|have|bring) )?(?:(?:strong|extensive|relevant|proven) )?(?:experience|background)\b/i.test(sentence))
-    .join(" ");
-}
-
-function hasCustomerDeliveryContext(html: string): boolean {
-  const text = roleText(html).replace(/\s+/g, " ");
+    .join(" ").replace(/\s+/g, " ");
   // Customer-facing presales architecture is not a post-sale deployment role.
   if (/\byou (?:will|would) be (?:an? )?pre[\s-]sales (?:architect|engineer)\b/i.test(text)) return false;
   return describesFdeRole(html) || /\bcustomer[\s-]*embedded\b/i.test(text) ||
