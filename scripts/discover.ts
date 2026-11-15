@@ -2,8 +2,10 @@
 // verifies each board against its public ATS API, and adds new ones to data/companies.json.
 import { readFile, writeFile } from "node:fs/promises";
 import { fetchBoard, isInvestorBoard, parseBoardUrl, type Company } from "../src/lib/ats.ts";
+import { findFailingBoards, formatFailures } from "../src/lib/health.ts";
 
 const FILE = new URL("../data/companies.json", import.meta.url);
+const FAILING_FILE = new URL("../data/failing-boards.json", import.meta.url);
 const MODEL = process.env.XAI_SEARCH_MODEL ?? "grok-4.20-non-reasoning";
 
 const ANGLES = [
@@ -111,6 +113,11 @@ const existing = JSON.parse(await readFile(FILE, "utf8")) as Company[];
 const seen = new Set(existing.map((c) => `${c.ats}:${c.slug.toLowerCase()}`));
 const knownNames = existing.map((c) => c.name);
 
+// Moved or deleted boards fail silently on the site, so report them on every refresh.
+const failing = await findFailingBoards(existing);
+console.log(formatFailures(failing, existing.length));
+await writeFile(FAILING_FILE, `${JSON.stringify(failing, null, 2)}\n`);
+
 const results = await Promise.allSettled(QUERIES.map((q) => search(q, knownNames)));
 const candidates = new Map<string, Company>();
 results.forEach((r, i) => {
@@ -144,4 +151,4 @@ if (added.length) {
   const merged = [...existing, ...added].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
   await writeFile(FILE, `${JSON.stringify(merged, null, 2)}\n`);
 }
-console.log(`added ${added.length} companies (${existing.length + added.length} total)`);
+console.log(`added ${added.length} companies (${existing.length + added.length} total); ${failing.length} failing boards`);

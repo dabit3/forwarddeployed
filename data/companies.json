@@ -81,11 +81,6 @@
   },
   {
     "ats": "ashby",
-    "slug": "ameba",
-    "name": "Ameba"
-  },
-  {
-    "ats": "ashby",
     "slug": "Ampersand",
     "name": "Ampersand"
   },
@@ -1546,7 +1541,7 @@
   },
   {
     "slug": "parloa",
-    "ats": "greenhouse",
+    "ats": "ashby",
     "name": "Parloa"
   },
   {
@@ -1628,11 +1623,6 @@
     "ats": "greenhouse",
     "slug": "praxent",
     "name": "Praxent"
-  },
-  {
-    "ats": "greenhouse",
-    "slug": "primerai",
-    "name": "Primer"
   },
   {
     "ats": "ashby",
@@ -1890,8 +1880,8 @@
     "name": "Schonfeld"
   },
   {
-    "ats": "greenhouse",
-    "slug": "scoutai",
+    "ats": "ashby",
+    "slug": "scout-ai",
     "name": "Scout AI"
   },
   {
@@ -1903,11 +1893,6 @@
     "ats": "ashby",
     "slug": "seamflow",
     "name": "Seamflow"
-  },
-  {
-    "ats": "ashby",
-    "slug": "sema4.ai",
-    "name": "Sema4.ai"
   },
   {
     "ats": "ashby",
@@ -2113,11 +2098,6 @@
     "ats": "ashby",
     "slug": "swarmaero",
     "name": "Swarm Aero"
-  },
-  {
-    "ats": "ashby",
-    "slug": "tailwind",
-    "name": "Tailwind"
   },
   {
     "ats": "ashby",
