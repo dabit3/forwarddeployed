@@ -1,7 +1,19 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import type { Job } from "./ats.ts";
-import { filterRoles, filtersFromSearch, filtersHref, formatDate, groupByCompany, groupRoles, localPlaces } from "./roles.ts";
+import {
+  filterRoles,
+  filtersFromSearch,
+  filtersHref,
+  formatDate,
+  groupByCompany,
+  groupRoles,
+  localPlaces,
+  pageFromPath,
+  pageHref,
+  paginate,
+  type CompanyGroup,
+} from "./roles.ts";
 
 const job = (o: Partial<Job>): Job => ({
   id: "a/1",
@@ -81,4 +93,27 @@ test("localPlaces shows cities ahead of their countries", () => {
   assert.deepEqual(localPlaces(["United States", "New York", "San Francisco", "Remote"]), ["New York", "San Francisco", "Remote"]);
   assert.deepEqual(localPlaces(["Canada", "CANADA", "Mexico"]), ["Canada", "Mexico"]);
   assert.deepEqual(localPlaces(["United States", "Remote"]), ["United States", "Remote"]);
+});
+
+test("pages break between companies once a page is full", () => {
+  const group = (slug: string, n: number): CompanyGroup => ({
+    slug,
+    name: slug,
+    roles: groupRoles(Array.from({ length: n }, (_, i) => job({ id: `${slug}/${i}`, title: `FDE ${i}`, companySlug: slug, company: slug }))),
+  });
+  const pages = paginate([group("a", 3), group("b", 2), group("c", 4), group("d", 1)], 5);
+  assert.deepEqual(
+    pages.map((p) => p.map((g) => g.slug)),
+    [["a", "b"], ["c", "d"]],
+  );
+  assert.deepEqual(paginate([], 5), []);
+  assert.equal(pages.flat().reduce((n, g) => n + g.roles.length, 0), 10);
+});
+
+test("page URLs round-trip", () => {
+  assert.equal(pageHref(1), "/");
+  assert.equal(pageHref(3), "/page/3");
+  assert.equal(pageFromPath("/page/3"), 3);
+  assert.equal(pageFromPath("/"), 1);
+  assert.equal(pageFromPath("/jobs/acme/1"), 1);
 });
