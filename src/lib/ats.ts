@@ -75,7 +75,8 @@ function needsRoleContext(title: string): boolean {
 }
 
 function roleText(html: string): string {
-  const decoded = decodeEntities(html);
+  // Source formatting newlines are soft wraps, unlike the HTML block boundaries below.
+  const decoded = decodeEntities(html).replace(/\s+/g, " ");
   // Prior customer/FDE experience in a requirements list does not make an internal role an FDE.
   const qualifications = decoded.search(QUALIFICATION_HEADING);
   return (qualifications < 0 ? decoded : decoded.slice(0, qualifications))

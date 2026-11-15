@@ -122,6 +122,8 @@ test("ignores qualification-only customer experience under paragraph headings or
   for (const qualifications of [
     "<p>Qualifications</p><p>Experience working directly with customers.</p>",
     "<p>Experience working directly with customers.</p>",
+    "<p>Experience\nworking directly with customers.</p>",
+    "<p>We value prior experience\nas a forward-deployed engineer.</p>",
   ]) assert.equal(isForwardDeployedEngineer("Software Engineer, Applied AI", role + qualifications), false, qualifications);
 });
 
