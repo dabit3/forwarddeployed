@@ -118,6 +118,8 @@ test("distinguishes current FDE role labels from prior FDE experience", () => {
     assert.equal(isForwardDeployedEngineer(title, "You will act as a Forward-Deployed Engineer, owning deployments."), true, title);
     assert.equal(isForwardDeployedEngineer(title, "As a Forward-Deployed Engineer, draw on your prior experience to own deployments."), true, title);
     assert.equal(isForwardDeployedEngineer(title, "<p>Build our internal platform.</p><p>We seek candidates with experience as a forward-deployed engineer.</p>"), false, title);
+    assert.equal(isForwardDeployedEngineer(title, "In your previous role as a Forward-Deployed Engineer, you built integrations."), false, title);
+    assert.equal(isForwardDeployedEngineer(title, "In your prior role as a Forward-Deployed Engineer, you built integrations."), false, title);
   }
 });
 

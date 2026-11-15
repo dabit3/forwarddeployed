@@ -64,7 +64,7 @@ function describesFdeRole(html: string): boolean {
   for (const match of text.matchAll(namedRole)) {
     // Inspect the clause BEFORE "as an FDE": experience after it can describe current duties.
     const prefix = text.slice(0, match.index).split(/[.!?\n]/).at(-1) ?? "";
-    if (!/\b(?:experience|background|formerly|previously|worked|served|acted)\b/i.test(prefix)) return true;
+    if (!/\b(?:experience|background|formerly|prior|previous|previously|worked|served|acted)\b/i.test(prefix)) return true;
   }
   return /(?:^|[\n|])\s*(?:role|(?:ai )?engineering)\s*[|:]\s*forward[\s-]*deployed engineering\b/i.test(text);
 }
