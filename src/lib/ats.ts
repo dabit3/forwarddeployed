@@ -94,7 +94,7 @@ function hasCustomerDeliveryContext(html: string): boolean {
     // Ignore qualification sentences, not responsibilities that improve "customer experience".
     .filter((sentence) =>
       !/\b(?:prior|previous|years? of) (?:experience|background)\b/i.test(sentence) &&
-      !/\b(?:candidates?|applicants?|qualifications?|requirements?)\b.{0,50}\b(?:experience|background)\b/i.test(sentence) &&
+      !/\b(?:candidates?|applicants?)\b.{0,50}\b(?:experience|background)\b/i.test(sentence) &&
       !/^\s*(?:(?:we|you) (?:require|value|have|bring) )?(?:(?:strong|extensive|relevant|proven) )?(?:experience|background)\b/i.test(sentence))
     .join(" ").replace(/\s+/g, " ");
   // Customer-facing presales architecture is not a post-sale deployment role.

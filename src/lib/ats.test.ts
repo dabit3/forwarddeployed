@@ -92,6 +92,7 @@ test("retains customer and research-partner delivery responsibilities", () => {
     "<p>Work with research partners on molecular design, from advising to writing production code.</p>",
     "<p>Act as the technical point of contact for clients on their production AI systems.</p>",
     "<p>Act as the senior technical partner to client leadership on AI strategy.</p>",
+    "Work directly with customers to gather requirements and improve their experience.",
   ]) assert.equal(isForwardDeployedEngineer("Applied AI Engineer", description), true, description);
 });
 
