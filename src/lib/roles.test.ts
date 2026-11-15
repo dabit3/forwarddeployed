@@ -1,7 +1,20 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import type { Job } from "./ats.ts";
-import { filterRoles, filtersFromSearch, filtersHref, formatDate, groupByCompany, groupRoles, localPlaces } from "./roles.ts";
+import {
+  filterRoles,
+  filtersFromSearch,
+  filtersHref,
+  formatDate,
+  groupByCompany,
+  groupRoles,
+  localPlaces,
+  pageFromPath,
+  pageHref,
+  paginate,
+  roleListKey,
+  type CompanyGroup,
+} from "./roles.ts";
 
 const job = (o: Partial<Job>): Job => ({
   id: "a/1",
@@ -81,4 +94,52 @@ test("localPlaces shows cities ahead of their countries", () => {
   assert.deepEqual(localPlaces(["United States", "New York", "San Francisco", "Remote"]), ["New York", "San Francisco", "Remote"]);
   assert.deepEqual(localPlaces(["Canada", "CANADA", "Mexico"]), ["Canada", "Mexico"]);
   assert.deepEqual(localPlaces(["United States", "Remote"]), ["United States", "Remote"]);
+});
+
+test("pages break between companies once a page is full", () => {
+  const group = (slug: string, n: number): CompanyGroup => ({
+    slug,
+    name: slug,
+    roles: groupRoles(Array.from({ length: n }, (_, i) => job({ id: `${slug}/${i}`, title: `FDE ${i}`, companySlug: slug, company: slug }))),
+  });
+  const pages = paginate([group("a", 3), group("b", 2), group("c", 4), group("d", 1)], 5);
+  assert.deepEqual(
+    pages.map((p) => p.map((g) => g.slug)),
+    [["a", "b"], ["c", "d"]],
+  );
+  assert.deepEqual(paginate([], 5), []);
+  assert.equal(pages.flat().reduce((n, g) => n + g.roles.length, 0), 10);
+});
+
+test("page URLs round-trip", () => {
+  assert.equal(pageHref(1), "/");
+  assert.equal(pageHref(3), "/page/3");
+  assert.equal(pageFromPath("/page/3"), 3);
+  assert.equal(pageFromPath("/"), 1);
+  assert.equal(pageFromPath("/jobs/acme/1"), 1);
+});
+
+test("new-only pagination starts at page one with separate restored list state", () => {
+  assert.equal(roleListKey({}, 3), "/@3");
+  assert.equal(roleListKey({}, 3, true), "/@1:new");
+  assert.equal(roleListKey({}, 1, true), roleListKey({}, 3, true));
+  assert.notEqual(roleListKey({}, 1), roleListKey({}, 1, true));
+  for (const f of [{ place: "Remote" }, { company: "acme" }, { q: "engineer" }]) {
+    assert.equal(roleListKey(f, 3), `${filtersHref(f)}@1`);
+    assert.equal(roleListKey(f, 3, true), `${filtersHref(f)}@1:new`);
+  }
+});
+
+test("filtering new keys before pagination keeps unseen roles beyond the first page reachable", () => {
+  const roles = groupRoles(Array.from({ length: 250 }, (_, i) => job({
+    id: `company${i}/1`,
+    company: `Company ${String(i).padStart(3, "0")}`,
+    companySlug: `company${i}`,
+  })));
+  const pages = paginate(groupByCompany(roles));
+  const newKeys = new Set([pages[0][0].roles[0].key, pages[2][0].roles[0].key]);
+  const matching = filterRoles(roles, { q: "engineer" }).filter((r) => newKeys.has(r.key));
+  const newPages = paginate(groupByCompany(matching));
+  assert.equal(newPages.length, 1);
+  assert.deepEqual(new Set(newPages.flat().flatMap((g) => g.roles.map((r) => r.key))), newKeys);
 });

@@ -81,11 +81,6 @@
   },
   {
     "ats": "ashby",
-    "slug": "ameba",
-    "name": "Ameba"
-  },
-  {
-    "ats": "ashby",
     "slug": "Ampersand",
     "name": "Ampersand"
   },
@@ -103,6 +98,11 @@
     "slug": "anthropic",
     "ats": "greenhouse",
     "name": "Anthropic"
+  },
+  {
+    "ats": "ashby",
+    "slug": "antithesis",
+    "name": "Antithesis"
   },
   {
     "ats": "ashby",
@@ -403,6 +403,11 @@
     "ats": "ashby",
     "slug": "cinder",
     "name": "Cinder"
+  },
+  {
+    "ats": "lever",
+    "slug": "circadiahealth",
+    "name": "Circadia Health"
   },
   {
     "ats": "ashby",
@@ -990,6 +995,11 @@
     "name": "Harvey"
   },
   {
+    "ats": "ashby",
+    "slug": "havocai",
+    "name": "HavocAI"
+  },
+  {
     "ats": "greenhouse",
     "slug": "healthie",
     "name": "Healthie"
@@ -1093,6 +1103,11 @@
     "ats": "ashby",
     "slug": "judgmentlabs",
     "name": "Judgment Labs"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "judihealth",
+    "name": "Judi Health"
   },
   {
     "slug": "kastle",
@@ -1526,7 +1541,7 @@
   },
   {
     "slug": "parloa",
-    "ats": "greenhouse",
+    "ats": "ashby",
     "name": "Parloa"
   },
   {
@@ -1608,11 +1623,6 @@
     "ats": "greenhouse",
     "slug": "praxent",
     "name": "Praxent"
-  },
-  {
-    "ats": "greenhouse",
-    "slug": "primerai",
-    "name": "Primer"
   },
   {
     "ats": "ashby",
@@ -1870,8 +1880,8 @@
     "name": "Schonfeld"
   },
   {
-    "ats": "greenhouse",
-    "slug": "scoutai",
+    "ats": "ashby",
+    "slug": "scout-ai",
     "name": "Scout AI"
   },
   {
@@ -1883,11 +1893,6 @@
     "ats": "ashby",
     "slug": "seamflow",
     "name": "Seamflow"
-  },
-  {
-    "ats": "ashby",
-    "slug": "sema4.ai",
-    "name": "Sema4.ai"
   },
   {
     "ats": "ashby",
@@ -1983,6 +1988,11 @@
     "ats": "ashby",
     "slug": "Solvd",
     "name": "Solvd"
+  },
+  {
+    "ats": "ashby",
+    "slug": "solve.ai",
+    "name": "SolveAI"
   },
   {
     "ats": "greenhouse",
@@ -2088,11 +2098,6 @@
     "ats": "ashby",
     "slug": "swarmaero",
     "name": "Swarm Aero"
-  },
-  {
-    "ats": "ashby",
-    "slug": "tailwind",
-    "name": "Tailwind"
   },
   {
     "ats": "ashby",
@@ -2313,6 +2318,11 @@
     "ats": "greenhouse",
     "slug": "veeamsoftware",
     "name": "Veeam"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "venncity",
+    "name": "Venn"
   },
   {
     "slug": "vercel",

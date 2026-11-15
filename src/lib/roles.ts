@@ -138,3 +138,36 @@ export function groupByCompany(roles: Role[]): CompanyGroup[] {
   }
   return [...groups.values()].sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }));
 }
+
+/** Roles per page of the list, give or take: pages break between companies, never inside one. */
+export const PAGE_SIZE = 100;
+
+export function paginate(groups: CompanyGroup[], size = PAGE_SIZE): CompanyGroup[][] {
+  const pages: CompanyGroup[][] = [];
+  let page: CompanyGroup[] = [];
+  let n = 0;
+  for (const g of groups) {
+    page.push(g);
+    n += g.roles.length;
+    if (n >= size) {
+      pages.push(page);
+      page = [];
+      n = 0;
+    }
+  }
+  if (page.length) pages.push(page);
+  return pages;
+}
+
+export function pageHref(page: number): string {
+  return page > 1 ? `/page/${page}` : "/";
+}
+
+export function roleListKey(f: Filters, page: number, newOnly = false): string {
+  return `${filtersHref(f)}@${newOnly || f.place || f.company || f.q ? 1 : page}${newOnly ? ":new" : ""}`;
+}
+
+export function pageFromPath(path: string): number {
+  const m = /^\/page\/(\d+)\/?$/.exec(path);
+  return m ? Number(m[1]) : 1;
+}
