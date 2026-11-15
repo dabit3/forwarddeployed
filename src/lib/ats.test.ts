@@ -85,6 +85,16 @@ test("requires customer-delivery context for ambiguous AI aliases", () => {
   assert.equal(isForwardDeployedEngineer("Embedded AI Engineer – Android Automotive (On-Device Intelligence)", "Work directly with customers."), false);
 });
 
+test("retains customer and research-partner delivery responsibilities", () => {
+  for (const description of [
+    "<p>You'll advise and embed in partners' teams, building alongside their engineers.</p>",
+    "<p>Work with labs to automate experiments end-to-end, from advising to writing production code.</p>",
+    "<p>Work with research partners on molecular design, from advising to writing production code.</p>",
+    "<p>Act as the technical point of contact for clients on their production AI systems.</p>",
+    "<p>Act as the senior technical partner to client leadership on AI strategy.</p>",
+  ]) assert.equal(isForwardDeployedEngineer("Applied AI Engineer", description), true, description);
+});
+
 test("deployment alone does not make applied research customer-facing", () => {
   for (const title of ["Applied Research Engineer, Deployment", "Applied Research Engineer, Model Deployment"]) {
     assert.equal(isForwardDeployedEngineer(title, "Deploy our internal research models."), false, title);

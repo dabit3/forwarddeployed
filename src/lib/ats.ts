@@ -90,11 +90,13 @@ function roleText(html: string): string {
 }
 
 function hasCustomerDeliveryContext(html: string): boolean {
-  const text = roleText(html);
+  const text = roleText(html).replace(/\s+/g, " ");
   // Customer-facing presales architecture is not a post-sale deployment role.
   if (/\byou (?:will|would) be (?:an? )?pre[\s-]sales (?:architect|engineer)\b/i.test(text)) return false;
-  return describesFdeRole(text) || /\bcustomer[\s-]*embedded\b/i.test(text) ||
-    /\bembed\w*\b.{0,100}\b(?:customers?|clients?|enterprise|integrators?|gsis?|rsis?)\b/i.test(text) ||
+  return describesFdeRole(html) || /\bcustomer[\s-]*embedded\b/i.test(text) ||
+    /\bembed\w*\b.{0,100}\b(?:customers?|clients?|partners?|enterprise|integrators?|gsis?|rsis?)\b/i.test(text) ||
+    /\bwork(?:ing)? with (?:research partners|labs)\b.{0,160}\b(?:production code|end.to.end)\b/i.test(text) ||
+    /\btechnical (?:partner|point of contact)\b.{0,40}\b(?:clients?|customers?)\b/i.test(text) ||
     /\b(?:works?|working|partners?|partnering|collaborates?|collaborating)\b.{0,60}\b(?:directly|closely|side.by.side)\b.{0,40}\b(?:customers?|clients?)\b/i.test(text) ||
     /\b(?:works?|working|partners?|partnering|pairs?|pairing)\b.{0,60}\b(?:with|alongside)\b.{0,40}\b(?:customers?|clients?)\b/i.test(text) ||
     /\b(?:help|helping|enable|enabling|guide|guiding|support|supporting)\b.{0,40}\b(?:customers?|clients?|enterprises?)\b.{0,100}\b(?:build|deploy\w*|integrat\w*|implement\w*|production|adopt\w*)\b/i.test(text) ||
