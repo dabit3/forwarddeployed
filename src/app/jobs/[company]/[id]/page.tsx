@@ -17,14 +17,14 @@ export function generateStaticParams(): { company: string; id: string }[] {
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { company, id } = await params;
-  const detail = await getPosting(decodeURIComponent(company), decodeURIComponent(id)).catch(() => null);
+  const detail = await getPosting(decodeURIComponent(company), decodeURIComponent(id));
   return { title: detail ? `${detail.job.title} at ${detail.job.company} \u00b7 Forward Deployed` : "Forward Deployed" };
 }
 
 export default async function JobPage({ params }: { params: Params }) {
   const { company, id } = await params;
   const [detail, roles] = await Promise.all([
-    getPosting(decodeURIComponent(company), decodeURIComponent(id)).catch(() => null),
+    getPosting(decodeURIComponent(company), decodeURIComponent(id)),
     getRoles(),
   ]);
   if (!detail) notFound();
