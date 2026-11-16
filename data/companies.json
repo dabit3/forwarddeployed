@@ -220,6 +220,11 @@
     "name": "August"
   },
   {
+    "ats": "greenhouse",
+    "slug": "auterion",
+    "name": "Auterion"
+  },
+  {
     "ats": "ashby",
     "slug": "automat",
     "name": "Automat"
@@ -1333,6 +1338,11 @@
     "ats": "ashby",
     "slug": "moment",
     "name": "Moment"
+  },
+  {
+    "ats": "ashby",
+    "slug": "monday.com",
+    "name": "monday.com"
   },
   {
     "slug": "mongodb",
