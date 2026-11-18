@@ -25,6 +25,11 @@
     "name": "Adyen"
   },
   {
+    "ats": "greenhouse",
+    "slug": "agilerobotsse",
+    "name": "Agile Robots SE"
+  },
+  {
     "ats": "lever",
     "slug": "thinkahead",
     "name": "AHEAD"
