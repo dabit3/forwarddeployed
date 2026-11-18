@@ -79,6 +79,9 @@ test("uses the ATS workplace type separately from the location filters", async (
     ] });
     return Response.json({ jobs: [
       { id: 1, title, absolute_url: url, metadata: [{ name: "Workplace", value: "On-site" }] },
+      { id: 2, title, absolute_url: url, metadata: [{ name: "Location Type", value: null }, { name: "Work Type", value: "Remote" }] },
+      { id: 3, title, absolute_url: url, metadata: [{ name: "Work Arrangement", value: "Hybrid" }] },
+      { id: 4, title, absolute_url: url, metadata: [{ name: "Location Type", value: "Hybrid (Travel-Required)" }] },
     ] });
   });
 
@@ -89,8 +92,8 @@ test("uses the ATS workplace type separately from the location filters", async (
 
   const [hybrid] = await fetchBoard({ ats: "ashby", slug: "example", name: "Example" });
   assert.equal(hybrid.workplace, "Hybrid");
-  const [onsite] = await fetchBoard({ ats: "greenhouse", slug: "example", name: "Example" });
-  assert.equal(onsite.workplace, "On-site");
+  const greenhouse = await fetchBoard({ ats: "greenhouse", slug: "example", name: "Example" });
+  assert.deepEqual(greenhouse.map((j) => j.workplace), ["On-site", "Remote", "Hybrid", "Hybrid (Travel-Required)"]);
 });
 
 test("parses board urls", () => {
