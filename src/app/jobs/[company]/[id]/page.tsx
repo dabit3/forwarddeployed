@@ -30,7 +30,7 @@ export default async function JobPage({ params }: { params: Params }) {
   if (!detail) notFound();
   const { job, html, siblings } = detail;
   const postings = [job, ...siblings];
-  const workplace = job.remote ? (job.places.length > 1 ? "Remote or on-site" : "Remote") : "On-site";
+  const workplace = job.workplace ?? (job.remote ? "Remote available" : null);
 
   return (
     <>
@@ -50,10 +50,12 @@ export default async function JobPage({ params }: { params: Params }) {
               <span>Location</span>
               <span>{job.location || "Unspecified"}</span>
             </li>
-            <li>
-              <span>Workplace</span>
-              <span>{workplace}</span>
-            </li>
+            {workplace && (
+              <li>
+                <span>Workplace</span>
+                <span>{workplace}</span>
+              </li>
+            )}
             {job.team && (
               <li>
                 <span>Team</span>

@@ -14,6 +14,7 @@ export interface Job {
   location: string;
   places: string[];
   remote: boolean;
+  workplace?: "Remote" | "Hybrid" | "On-site";
   team: string | null;
   compensation: string | null;
   url: string;
@@ -161,6 +162,15 @@ function jobId(company: Company, id: string | number): string {
   return `${company.slug}/${id}`;
 }
 
+function workplaceLabel(value?: string | null): Job["workplace"] {
+  switch (value?.trim().toLowerCase()) {
+    case "remote": return "Remote";
+    case "hybrid": return "Hybrid";
+    case "onsite":
+    case "on-site": return "On-site";
+  }
+}
+
 interface GreenhouseJob {
   id: number;
   title: string;
@@ -185,6 +195,7 @@ function fromGreenhouse(company: Company, j: GreenhouseJob): Job {
     location,
     places: splitPlaces([location], remote),
     remote,
+    workplace: workplaceLabel(typeof locationType === "string" ? locationType : undefined),
     team: j.departments?.[0]?.name ?? null,
     compensation: null,
     url: j.absolute_url,
@@ -224,6 +235,7 @@ function fromLever(company: Company, j: LeverJob): Job {
     location,
     places: splitPlaces(locations, remote),
     remote,
+    workplace: workplaceLabel(j.workplaceType),
     team: j.categories?.team ?? null,
     compensation: s?.min && s?.max ? `${money(s.min, s.currency)} – ${money(s.max, s.currency)}` : null,
     url: j.hostedUrl,
@@ -260,6 +272,7 @@ function fromAshby(company: Company, j: AshbyJob): Job {
     location,
     places: splitPlaces(locations, remote),
     remote,
+    workplace: workplaceLabel(j.workplaceType),
     team: j.department || j.team || null,
     compensation: j.compensation?.scrapeableCompensationSalarySummary || j.compensation?.compensationTierSummary || null,
     url: j.jobUrl,
