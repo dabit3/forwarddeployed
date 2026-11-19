@@ -415,6 +415,11 @@
     "name": "CHAOS Industries"
   },
   {
+    "ats": "lever",
+    "slug": "ciandt",
+    "name": "CI&T"
+  },
+  {
     "ats": "ashby",
     "slug": "cinder",
     "name": "Cinder"
@@ -1913,6 +1918,11 @@
     "ats": "ashby",
     "slug": "se3",
     "name": "SE3 Labs"
+  },
+  {
+    "ats": "ashby",
+    "slug": "sea12",
+    "name": "Sea12 Technologies"
   },
   {
     "ats": "ashby",
