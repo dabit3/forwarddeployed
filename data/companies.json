@@ -521,6 +521,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "condor-software",
+    "name": "Condor Software"
+  },
+  {
+    "ats": "ashby",
     "slug": "condukt",
     "name": "Condukt"
   },
@@ -2148,6 +2153,11 @@
     "ats": "lever",
     "slug": "tali-ai",
     "name": "Tali AI"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "talkdesk2",
+    "name": "Talkdesk"
   },
   {
     "ats": "greenhouse",
