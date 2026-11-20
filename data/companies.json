@@ -100,6 +100,11 @@
     "name": "Anduril Industries"
   },
   {
+    "ats": "ashby",
+    "slug": "anterior",
+    "name": "Anterior"
+  },
+  {
     "slug": "anthropic",
     "ats": "greenhouse",
     "name": "Anthropic"
@@ -1096,6 +1101,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "indiciumai",
+    "name": "Indicium AI"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "innodatainc",
     "name": "Innodata"
   },
@@ -1480,6 +1490,11 @@
     "name": "Notion"
   },
   {
+    "ats": "ashby",
+    "slug": "novita-ai",
+    "name": "Novita AI"
+  },
+  {
     "ats": "greenhouse",
     "slug": "ocrolusinc",
     "name": "Ocrolus"
@@ -1528,6 +1543,11 @@
     "ats": "greenhouse",
     "slug": "ophelos",
     "name": "Ophelos"
+  },
+  {
+    "ats": "ashby",
+    "slug": "originhq",
+    "name": "Origin"
   },
   {
     "slug": "oscilar",
