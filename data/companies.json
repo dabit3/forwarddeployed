@@ -466,6 +466,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "code-metal",
+    "name": "Code Metal"
+  },
+  {
+    "ats": "ashby",
     "slug": "coderabbit",
     "name": "CodeRabbit"
   },
