@@ -1,6 +1,11 @@
 [
   {
     "ats": "greenhouse",
+    "slug": "540",
+    "name": "540"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "66degrees",
     "name": "66degrees"
   },
@@ -716,6 +721,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "echeloncareers",
+    "name": "Echelon"
+  },
+  {
+    "ats": "ashby",
     "slug": "Edison Scientific",
     "name": "Edison Scientific"
   },
@@ -930,6 +940,11 @@
     "name": "Glimpse"
   },
   {
+    "ats": "ashby",
+    "slug": "goaly",
+    "name": "Goaly"
+  },
+  {
     "ats": "greenhouse",
     "slug": "goodfire",
     "name": "Goodfire"
@@ -1078,6 +1093,11 @@
     "ats": "ashby",
     "slug": "Hippocratic AI",
     "name": "Hippocratic AI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "hopper",
+    "name": "Hopper"
   },
   {
     "ats": "greenhouse",
