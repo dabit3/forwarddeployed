@@ -83,15 +83,17 @@ export function groupRoles(jobs: Job[]): Role[] {
   }
   return [...roles.values()]
     .map(({ text, ...r }) => ({ ...r, search: `${r.title} ${r.company} ${r.places.join(" ")} ${text.join(" ")}`.toLowerCase() }))
-    .sort(
-      (a, b) =>
-        (b.postedAt ? Date.parse(b.postedAt) : 0) - (a.postedAt ? Date.parse(a.postedAt) : 0) || a.title.localeCompare(b.title),
-    );
+    .sort(newestFirst);
+}
+
+function newestFirst(a: Role, b: Role): number {
+  return (b.postedAt ? Date.parse(b.postedAt) : 0) - (a.postedAt ? Date.parse(a.postedAt) : 0) || a.title.localeCompare(b.title);
 }
 
 export function filterRoles(roles: Role[], f: Filters): Role[] {
   const words = (f.q ?? "").toLowerCase().split(/\s+/).filter(Boolean);
-  return roles.flatMap((r) => {
+  let narrowed = false;
+  const result = roles.flatMap((r) => {
     if (f.company && r.companySlug !== f.company) return [];
     if (!f.place && !words.length) return [r];
     const postings = r.postings.filter((p) => {
@@ -102,6 +104,7 @@ export function filterRoles(roles: Role[], f: Filters): Role[] {
     });
     if (!postings.length) return [];
     if (postings.length === r.postings.length) return [r];
+    narrowed = true;
     return [{
       ...r,
       postings,
@@ -111,6 +114,7 @@ export function filterRoles(roles: Role[], f: Filters): Role[] {
       postedAt: postings.reduce<string | null>((date, p) => newest(date, p.postedAt), null),
     }];
   });
+  return narrowed ? result.sort(newestFirst) : result;
 }
 
 export function filtersHref(f: Filters): string {
