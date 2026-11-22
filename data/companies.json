@@ -460,6 +460,11 @@
     "name": "CLEAR"
   },
   {
+    "ats": "greenhouse",
+    "slug": "cleartelligence",
+    "name": "Cleartelligence"
+  },
+  {
     "slug": "cloudflare",
     "ats": "greenhouse",
     "name": "Cloudflare"
@@ -1198,6 +1203,11 @@
     "ats": "ashby",
     "slug": "kong",
     "name": "Kong"
+  },
+  {
+    "ats": "ashby",
+    "slug": "kota",
+    "name": "Kota"
   },
   {
     "slug": "labelbox",
