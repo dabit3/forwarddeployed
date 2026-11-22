@@ -416,6 +416,18 @@ footer .built-by {
   text-decoration: none;
 }
 
+footer .github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.github-logo {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
 /* The lockup is white on transparent; masking lets it take the footer's text color. */
 .devin-logo {
   display: inline-block;
