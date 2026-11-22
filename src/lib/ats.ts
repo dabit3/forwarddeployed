@@ -22,35 +22,127 @@ export interface Job {
   descriptionHtml?: string;
 }
 
-const FORWARD_DEPLOYED = /forward[\s-]*deploy|\bFDEs?\b/i;
-const ENGINEERING = /engineer|engineering|\bFDEs?\b|developer|builder|software|technical staff/i;
+// Match words, not arbitrary substrings; ATS titles use Unicode dashes, NBSPs and full-width text.
+function normalizedTitle(title: string): string {
+  return decodeEntities(title).normalize("NFKC").replace(/[^\p{L}\p{N}]+/gu, " ").trim().toLowerCase();
+}
+
+const FORWARD_DEPLOYED = /\bforward\s*deploy(?:ed|ment)?\b|\bfdes?\b/;
+const ENGINEERING = /\b(?:engineers?|engineering|fdes?|developers?|builders?|software|architects?|architecture|technical staff|data scien(?:tists?|ce)|researchers?|research scientists?|strategists?)\b/;
 // Other names companies use for the same customer-embedded engineering role.
 const SIMILAR_TITLE = new RegExp(
   [
-    String.raw`\bdeployed (ai |ml |software )?engineer`,
-    String.raw`\bdelta engineer`,
-    String.raw`\bapplied ai (engineer|architect|specialist)`,
-    String.raw`\b(ai|agent) (deployment|implementation|integration|field) engineer`,
-    String.raw`\bcustomer ai engineer`,
-    String.raw`\bdeployment strategist`,
+    String.raw`\bdeployed (?:(?:ai|ml|software|systems) )?(?:engineers?|engineering|architects?)\b`,
+    String.raw`\bdelta engineers?\b`,
+    String.raw`\bapplied ai (?:engineers?|engineering|architects?|architecture|specialists?)\b`,
+    String.raw`\b(?:ai|agent) (?:deployment|implementation|integration|field) (?:engineers?|engineering|architects?)\b`,
+    String.raw`\bcustomer (?:ai|deployment) engineers?\b`,
+    String.raw`\bdeployment (?:strategists?|success engineers?)\b`,
+    // Chainalysis publishes this same technical deployment role in Japanese.
+    String.raw`デプロイメント\s*ストラテジスト`,
   ].join("|"),
   "i",
 );
-const APPLIED_RESEARCH = /\bapplied research engineer/i;
-// "Embedded AI Engineer" also names on-device roles; keep only the customer-embedded kind.
-const EMBEDDED_AI = /\bembedded ai engineer/i;
-const ON_DEVICE = /on-device|firmware|automotive|android|edge|hardware/i;
-const CUSTOMER_FACING = /customer|client|field|deploy/i;
+const APPLIED_RESEARCH = /\bapplied research engineers?\b/;
+const EMBEDDED_AI = /\bembedded ai engineers?\b/;
+const ON_DEVICE = /\b(?:on device|firmware|automotive|android|edge|hardware)\b/;
+const CUSTOMER_FACING = /\b(?:customers?|clients?|field|deploy(?:ed|ment|ments|ing)?)\b/;
 const NOT_ENGINEERING =
-  /(?<!deployment )strategist|account (executive|manager)|recruit|talent|sales|marketing|(product|program|project|engagement|delivery|partner|partnerships) manager|customer success|designer|operations|\bops\b/i;
+  /\b(?:account (?:executives?|managers?)|recruit\w*|talent|sales|marketing|(?:product|program|project|engagement|delivery|partner|partnerships|customer success) (?:managers?|management|directors?|leads?)|designers?|ux design|operations|chief of staff|bankers?|investors?|lawyers?)\b/;
+const NON_SOFTWARE_ENGINEERING = /\b(?:hardware(?: integration)?|mechanical|electrical|build|finance|financial) engineers?\b/;
+// Generic titles are only FDEs when the description identifies the current role as such,
+// not merely when prior FDE experience appears in the qualifications.
+const POSSIBLE_FDE = /\b(?:professional services engineers?|technical deployment leads?|software engineers? applied ai|(?:ai|platform) engineers?)\b/;
+const QUALIFICATION_LABEL = String.raw`(?:qualifications|required qualifications|requirements|what you bring|what you.ll bring|who you are|what we.re looking for|what we look for|you may be a good fit|nice to have)`;
+const QUALIFICATION_HEADING = new RegExp(
+  String.raw`<(?:h[1-6]|strong|b)\b[^>]*>\s*${QUALIFICATION_LABEL}|<(?:p|div)\b[^>]*>\s*${QUALIFICATION_LABEL}\s*:?\s*</(?:p|div)>`,
+  "i",
+);
+const INLINE_QUALIFICATION = new RegExp(String.raw`(?:^|[.!?\n])\s*${QUALIFICATION_LABEL}\s*:`, "i");
 
-export function isForwardDeployedEngineer(title: string): boolean {
+function describesFdeRole(html: string): boolean {
+  const text = roleText(html);
+  const namedRole = /\bas (?:(?:an?|our) forward[\s-]*deployed (?:software )?engineer|a technical deployment lead on the forward deployed engineering team)\b/gi;
+  for (const match of text.matchAll(namedRole)) {
+    // Inspect the clause BEFORE "as an FDE": experience after it can describe current duties.
+    const prefix = text.slice(0, match.index).split(/[.!?\n]/).at(-1) ?? "";
+    if (!/\b(?:experience|background|formerly|prior|previous|previously|worked|served|acted)\b/i.test(prefix)) return true;
+  }
+  return /(?:^|[\n|])\s*(?:(?:about (?:the|this) )?role|(?:ai )?engineering)\s*[|:]\s*forward[\s-]*deployed engineering\b/i.test(text);
+}
+
+/** These titles also describe internal product work or on-device AI, not just FDE work. */
+function needsRoleContext(title: string): boolean {
+  const normalized = normalizedTitle(title);
+  return !FORWARD_DEPLOYED.test(normalized) &&
+    (/\bapplied ai\b/.test(normalized) || EMBEDDED_AI.test(normalized) ||
+      (APPLIED_RESEARCH.test(normalized) && !/\b(?:customers?|clients?|field)\b/.test(normalized)) ||
+      (POSSIBLE_FDE.test(normalized) && !SIMILAR_TITLE.test(normalized)));
+}
+
+function roleText(html: string): string {
+  // Source formatting newlines are soft wraps, unlike the HTML block boundaries below.
+  const decoded = decodeEntities(html).replace(/\s+/g, " ");
+  // Prior customer/FDE experience in a requirements list does not make an internal role an FDE.
+  const qualifications = decoded.search(QUALIFICATION_HEADING);
+  const text = (qualifications < 0 ? decoded : decoded.slice(0, qualifications))
+    .replace(/<\/(?:p|li|div|h[1-6])>/gi, "\n")
+    .replace(/<[^>]*>/g, " ").replace(/[^\S\n]+/g, " ");
+  const inlineQualifications = text.search(INLINE_QUALIFICATION);
+  return inlineQualifications < 0 ? text : text.slice(0, inlineQualifications);
+}
+
+function hasCustomerDeliveryContext(html: string): boolean {
+  const text = roleText(html)
+    .split(/(?<=[.!?\n])/)
+    // Ignore qualification sentences, not responsibilities that improve "customer experience".
+    .filter((sentence) =>
+      !/\b(?:prior|previous|years? of) (?:experience|background)\b/i.test(sentence) &&
+      !/\b(?:candidates?|applicants?)\b.{0,50}\b(?:experience|background)\b/i.test(sentence) &&
+      !/^\s*(?:(?:we|you) (?:require|value|have|bring) )?(?:(?:strong|extensive|relevant|proven) )?(?:experience|background)\b/i.test(sentence))
+    .join(" ").replace(/\s+/g, " ");
+  // Customer-facing presales architecture is not a post-sale deployment role.
+  if (/\byou (?:will|would) be (?:an? )?pre[\s-]sales (?:architect|engineer)\b/i.test(text)) return false;
+  return describesFdeRole(html) || /\bcustomer[\s-]*embedded\b/i.test(text) ||
+    /\bembed\w*\b.{0,100}\b(?:customers?|clients?|partners?|enterprise|integrators?|gsis?|rsis?)\b/i.test(text) ||
+    /\bwork(?:ing)? with (?:research partners|labs)\b.{0,160}\b(?:production code|end.to.end)\b/i.test(text) ||
+    /\btechnical (?:partner|point of contact)\b.{0,40}\b(?:clients?|customers?)\b/i.test(text) ||
+    /\b(?:works?|working|partners?|partnering|collaborates?|collaborating)\b.{0,60}\b(?:directly|closely|side.by.side)\b.{0,40}\b(?:customers?|clients?)\b/i.test(text) ||
+    /\b(?:works?|working|partners?|partnering|pairs?|pairing)\b.{0,60}\b(?:with|alongside)\b.{0,40}\b(?:customers?|clients?)\b/i.test(text) ||
+    /\b(?:help|helping|enable|enabling|guide|guiding|support|supporting)\b.{0,40}\b(?:customers?|clients?|enterprises?)\b.{0,100}\b(?:build|deploy\w*|integrat\w*|implement\w*|production|adopt\w*)\b/i.test(text) ||
+    /\b(?:build|building|implement\w*|deploy\w*)\b.{0,40}\b(?:alongside|with|for)\b.{0,40}\b(?:customers?|clients?|partners?)\b/i.test(text) ||
+    /\b(?:hands.on|technical|engineering)\b.{0,40}\bpartner[\s-]+(?:facing|engagement|journey)\b/i.test(text) ||
+    /\bfield product engineer\b|\b(?:customer|client) (?:engineering engagements|repositories|codebases|infrastructure|use cases)\b/i.test(text) ||
+    /\b(?:customer|client) (?:engineering|technical) (?:partner|lead|advisor|engagement)\w*\b/i.test(text) ||
+    /\b(?:customer|client)[\s-]+(?:facing|specific)\s+(?:engineer\w*|technical|role|position|solutions?|implementations?|deployments?|integrations?)\b/i.test(text) ||
+    /\b(?:customer|client)(?:s['’]?|['’]s)?[\s-]+(?:environments?|deployments?|implementations?|integrations?|workflows?)\b/i.test(text);
+}
+
+function isTitleCandidate(title: string): boolean {
+  const normalized = normalizedTitle(title);
+  // Post-sales engineers build customer integrations; this is not the sales-engineer job family.
+  const jobFamily = normalized.replace(/\bpost sales\b/g, "")
+    .replace(/\bprogram lead(?= .*deployment strategist)/g, "");
   const matches =
-    (FORWARD_DEPLOYED.test(title) && ENGINEERING.test(title)) ||
-    SIMILAR_TITLE.test(title) ||
-    (APPLIED_RESEARCH.test(title) && CUSTOMER_FACING.test(title)) ||
-    (EMBEDDED_AI.test(title) && !ON_DEVICE.test(title));
-  return matches && !NOT_ENGINEERING.test(title);
+    (FORWARD_DEPLOYED.test(normalized) && ENGINEERING.test(normalized)) ||
+    SIMILAR_TITLE.test(normalized) ||
+    (APPLIED_RESEARCH.test(normalized) && CUSTOMER_FACING.test(normalized)) ||
+    (EMBEDDED_AI.test(normalized) && !ON_DEVICE.test(normalized)) ||
+    POSSIBLE_FDE.test(normalized);
+  return matches && !NOT_ENGINEERING.test(jobFamily) && !NON_SOFTWARE_ENGINEERING.test(normalized) &&
+    !(EMBEDDED_AI.test(normalized) && ON_DEVICE.test(normalized)) &&
+    !/\binternal (?:tools?|automation|ai)\b/.test(normalized);
+}
+
+/** Ambiguous aliases must describe customer delivery, not just internal product engineering. */
+export function isForwardDeployedEngineer(title: string, descriptionHtml = ""): boolean {
+  if (!isTitleCandidate(title)) return false;
+  if (!needsRoleContext(title)) return true;
+  const normalized = normalizedTitle(title);
+  if (POSSIBLE_FDE.test(normalized) && !/\bapplied ai\b/.test(normalized) && !EMBEDDED_AI.test(normalized)) {
+    return describesFdeRole(descriptionHtml);
+  }
+  return hasCustomerDeliveryContext(descriptionHtml);
 }
 
 const PLACE_ALIASES: [RegExp, string][] = [
@@ -150,6 +242,11 @@ async function getJson<T>(url: string): Promise<T> {
 
 export function decodeEntities(s: string): string {
   return s
+    .replace(/&#(x[\da-f]+|\d+);/gi, (entity, value: string) => {
+      const code = value[0].toLowerCase() === "x" ? parseInt(value.slice(1), 16) : Number(value);
+      return code <= 0x10ffff ? String.fromCodePoint(code) : entity;
+    })
+    .replace(/&(?:ndash|mdash|hyphen);/g, "-")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
@@ -294,19 +391,37 @@ export async function fetchBoard(company: Company): Promise<Job[]> {
   let jobs: Job[];
   if (company.ats === "greenhouse") {
     const d = await getJson<{ jobs: GreenhouseJob[] }>(`https://boards-api.greenhouse.io/v1/boards/${slug}/jobs`);
-    jobs = d.jobs.filter((j) => isForwardDeployedEngineer(j.title)).map((j) => fromGreenhouse(company, j));
+    jobs = d.jobs.filter((j) => isTitleCandidate(j.title)).map((j) => fromGreenhouse(company, j));
   } else if (company.ats === "lever") {
     const d = await getJson<LeverJob[]>(`https://api.lever.co/v0/postings/${slug}?mode=json`);
-    jobs = d.filter((j) => isForwardDeployedEngineer(j.text)).map((j) => fromLever(company, j));
+    jobs = d.filter((j) => isTitleCandidate(j.text)).map((j) => fromLever(company, j));
   } else {
     const d = await getJson<{ jobs: AshbyJob[] }>(
       `https://api.ashbyhq.com/posting-api/job-board/${slug}?includeCompensation=true`,
     );
     jobs = d.jobs
-      .filter((j) => j.isListed !== false && isForwardDeployedEngineer(j.title))
+      .filter((j) => j.isListed !== false && isTitleCandidate(j.title))
       .map((j) => fromAshby(company, j));
   }
-  return jobs;
+  // Only ambiguous Greenhouse aliases need detail requests. Do not download every job's
+  // description (?content=true) or make an unbounded request burst on large boards.
+  const accepted: boolean[] = new Array(jobs.length);
+  let next = 0;
+  await Promise.all(Array.from({ length: Math.min(4, jobs.length) }, async () => {
+    while (next < jobs.length) {
+      const i = next++;
+      const job = jobs[i];
+      if (company.ats === "greenhouse" && needsRoleContext(job.title) && !job.descriptionHtml) {
+        try {
+          job.descriptionHtml = await fetchGreenhouseDescription(company, job.id.slice(company.slug.length + 1));
+        } catch (err) {
+          console.error(`role context ${job.id} failed:`, err instanceof Error ? err.message : err);
+        }
+      }
+      accepted[i] = isForwardDeployedEngineer(job.title, job.descriptionHtml ?? "");
+    }
+  }));
+  return jobs.filter((_, i) => accepted[i]);
 }
 
 /** Greenhouse list responses omit descriptions; fetch one posting in full. */

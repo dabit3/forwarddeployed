@@ -15,14 +15,15 @@ export function getCompany(slug: string): Company | undefined {
   return companies.find((c) => c.slug === slug);
 }
 
-// Re-filter and re-place after the cache so rule changes apply without waiting for revalidation.
+// Bump both board and role cache keys when matching changes: these caches contain filtered data.
+// Re-filtering alone can remove old matches, but cannot recover previously excluded postings.
 async function getBoard(company: Company): Promise<Job[]> {
-  const jobs = await unstable_cache(() => fetchBoard(company), ["board-v2-workplace", company.ats, company.slug], {
+  const jobs = await unstable_cache(() => fetchBoard(company), ["board-v3-matching-workplace", company.ats, company.slug], {
     revalidate: REVALIDATE_SECONDS,
     tags: ["jobs"],
   })();
   return jobs
-    .filter((j) => isForwardDeployedEngineer(j.title))
+    .filter((j) => isForwardDeployedEngineer(j.title, j.descriptionHtml ?? ""))
     .map((j) => ({ ...j, places: splitPlaces([j.location], j.remote) }));
 }
 
@@ -56,16 +57,17 @@ async function buildRoles(): Promise<Role[]> {
   return groupRoles(await readAllBoards());
 }
 
-// Reading every board takes seconds, so pages share one cached role index. The key changes with the
-// company list, and the title filter is re-applied after the read so stricter rules show at once.
+// Reading every board takes seconds, so pages share one cached, fully classified role index.
+// Its key changes with the company list; board/role versions above change with matching rules.
+// Version the role shape too: location filtering needs main's per-posting metadata.
 const COMPANIES_KEY = createHash("sha1").update(JSON.stringify(companies)).digest("hex").slice(0, 12);
 
 export const getRoles = cache(async (): Promise<Role[]> => {
-  const roles = await unstable_cache(buildRoles, ["roles-v3", COMPANIES_KEY], {
+  const roles = await unstable_cache(buildRoles, ["roles-v4-matching-workplace", COMPANIES_KEY], {
     revalidate: REVALIDATE_SECONDS,
     tags: ["jobs"],
   })();
-  return roles.filter((r) => isForwardDeployedEngineer(r.title));
+  return roles;
 });
 
 /** Every posting with its own detail page, including each city of a folded role. */
