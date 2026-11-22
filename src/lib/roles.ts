@@ -163,6 +163,10 @@ export function pageHref(page: number): string {
   return page > 1 ? `/page/${page}` : "/";
 }
 
+export function roleListKey(f: Filters, page: number, newOnly = false): string {
+  return `${filtersHref(f)}@${newOnly || f.place || f.company || f.q ? 1 : page}${newOnly ? ":new" : ""}`;
+}
+
 export function pageFromPath(path: string): number {
   const m = /^\/page\/(\d+)\/?$/.exec(path);
   return m ? Number(m[1]) : 1;

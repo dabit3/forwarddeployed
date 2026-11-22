@@ -12,6 +12,7 @@ import {
   pageFromPath,
   pageHref,
   paginate,
+  roleListKey,
   type CompanyGroup,
 } from "./roles.ts";
 
@@ -116,4 +117,29 @@ test("page URLs round-trip", () => {
   assert.equal(pageFromPath("/page/3"), 3);
   assert.equal(pageFromPath("/"), 1);
   assert.equal(pageFromPath("/jobs/acme/1"), 1);
+});
+
+test("new-only pagination starts at page one with separate restored list state", () => {
+  assert.equal(roleListKey({}, 3), "/@3");
+  assert.equal(roleListKey({}, 3, true), "/@1:new");
+  assert.equal(roleListKey({}, 1, true), roleListKey({}, 3, true));
+  assert.notEqual(roleListKey({}, 1), roleListKey({}, 1, true));
+  for (const f of [{ place: "Remote" }, { company: "acme" }, { q: "engineer" }]) {
+    assert.equal(roleListKey(f, 3), `${filtersHref(f)}@1`);
+    assert.equal(roleListKey(f, 3, true), `${filtersHref(f)}@1:new`);
+  }
+});
+
+test("filtering new keys before pagination keeps unseen roles beyond the first page reachable", () => {
+  const roles = groupRoles(Array.from({ length: 250 }, (_, i) => job({
+    id: `company${i}/1`,
+    company: `Company ${String(i).padStart(3, "0")}`,
+    companySlug: `company${i}`,
+  })));
+  const pages = paginate(groupByCompany(roles));
+  const newKeys = new Set([pages[0][0].roles[0].key, pages[2][0].roles[0].key]);
+  const matching = filterRoles(roles, { q: "engineer" }).filter((r) => newKeys.has(r.key));
+  const newPages = paginate(groupByCompany(matching));
+  assert.equal(newPages.length, 1);
+  assert.deepEqual(new Set(newPages.flat().flatMap((g) => g.roles.map((r) => r.key))), newKeys);
 });
