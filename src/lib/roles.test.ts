@@ -12,6 +12,7 @@ import {
   pageFromPath,
   pageHref,
   paginate,
+  roleListKey,
   type CompanyGroup,
 } from "./roles.ts";
 
@@ -60,6 +61,45 @@ test("formats dates like the archive list", () => {
   assert.equal(formatDate(null), "");
 });
 
+test("narrows grouped locations and links to the first matching posting", () => {
+  const roles = groupRoles([
+    job({ id: "acme/8899736002", location: "Munich, Germany", places: ["Munich", "Germany"] }),
+    job({ id: "acme/8503068002", location: "Remote - India", places: ["Remote", "India"], remote: true }),
+    job({ id: "acme/3", location: "Bangalore, India", places: ["Bengaluru", "India"] }),
+  ]);
+  for (const filters of [{ place: "India" }, { q: "India" }, { q: "engineer INDIA", place: "India" }]) {
+    const [role] = filterRoles(roles, filters);
+    assert.deepEqual(role.places, ["Remote", "India", "Bengaluru"]);
+    assert.equal(role.href, "/jobs/acme/8503068002");
+    assert.equal(role.remote, true);
+    assert.equal(role.postings.length, 2);
+  }
+  for (const filters of [{}, { q: "deploy" }, { q: "acm" }, { q: "   " }]) {
+    assert.deepEqual(filterRoles(roles, filters), roles);
+  }
+  assert.deepEqual(filterRoles(roles, { place: "Germany", q: "India" }), []);
+  assert.deepEqual(filterRoles(roles, { q: "Munich Bangalore" }), []);
+  assert.deepEqual(filterRoles(roles, { q: "unknown" }), []);
+  assert.deepEqual(filterRoles([], { q: "India" }), []);
+  assert.deepEqual(roles[0].places, ["Munich", "Germany", "Remote", "India", "Bengaluru"]);
+});
+
+test("matches whole location words and normalized places, but title and company substrings", () => {
+  const roles = groupRoles([
+    job({ id: "acme/1", location: "Indiana", places: ["Indiana", "United States"] }),
+    job({ id: "acme/2", location: "Bangalore, India", places: ["Bengaluru", "India"] }),
+  ]);
+  assert.equal(filterRoles(roles, { q: "india" })[0].href, "/jobs/acme/2");
+  assert.equal(filterRoles(roles, { q: "Bengaluru" })[0].href, "/jobs/acme/2");
+  assert.equal(filterRoles(roles, { q: "Indiana" })[0].href, "/jobs/acme/1");
+  assert.deepEqual(filterRoles(roles, { q: "Bangal" }), []);
+  assert.deepEqual(filterRoles(groupRoles([job({ location: "Indiana", places: ["Indiana"] })]), { q: "India" }), []);
+  const titleMatch = groupRoles([job({ title: "Indiana Engineer" })]);
+  assert.deepEqual(filterRoles(titleMatch, { q: "India" }), titleMatch);
+  const companyMatch = groupRoles([job({ company: "Indiana AI" })]);
+  assert.deepEqual(filterRoles(companyMatch, { q: "India" }), companyMatch);
+});
+
 test("groups roles by company, companies A-Z", () => {
   const role = (companySlug: string, title: string) => ({
     key: `${companySlug}:${title}`,
@@ -71,6 +111,7 @@ test("groups roles by company, companies A-Z", () => {
     postedAt: null,
     href: "",
     search: "",
+    postings: [],
   });
   const groups = groupByCompany([role("b", "FDE"), role("a", "FDE"), role("b", "Senior FDE")]);
   assert.deepEqual(
@@ -116,4 +157,29 @@ test("page URLs round-trip", () => {
   assert.equal(pageFromPath("/page/3"), 3);
   assert.equal(pageFromPath("/"), 1);
   assert.equal(pageFromPath("/jobs/acme/1"), 1);
+});
+
+test("new-only pagination starts at page one with separate restored list state", () => {
+  assert.equal(roleListKey({}, 3), "/@3");
+  assert.equal(roleListKey({}, 3, true), "/@1:new");
+  assert.equal(roleListKey({}, 1, true), roleListKey({}, 3, true));
+  assert.notEqual(roleListKey({}, 1), roleListKey({}, 1, true));
+  for (const f of [{ place: "Remote" }, { company: "acme" }, { q: "engineer" }]) {
+    assert.equal(roleListKey(f, 3), `${filtersHref(f)}@1`);
+    assert.equal(roleListKey(f, 3, true), `${filtersHref(f)}@1:new`);
+  }
+});
+
+test("filtering new keys before pagination keeps unseen roles beyond the first page reachable", () => {
+  const roles = groupRoles(Array.from({ length: 250 }, (_, i) => job({
+    id: `company${i}/1`,
+    company: `Company ${String(i).padStart(3, "0")}`,
+    companySlug: `company${i}`,
+  })));
+  const pages = paginate(groupByCompany(roles));
+  const newKeys = new Set([pages[0][0].roles[0].key, pages[2][0].roles[0].key]);
+  const matching = filterRoles(roles, { q: "engineer" }).filter((r) => newKeys.has(r.key));
+  const newPages = paginate(groupByCompany(matching));
+  assert.equal(newPages.length, 1);
+  assert.deepEqual(new Set(newPages.flat().flatMap((g) => g.roles.map((r) => r.key))), newKeys);
 });
