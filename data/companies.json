@@ -1,6 +1,11 @@
 [
   {
     "ats": "greenhouse",
+    "slug": "540",
+    "name": "540"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "66degrees",
     "name": "66degrees"
   },
@@ -23,6 +28,11 @@
     "slug": "adyen",
     "ats": "greenhouse",
     "name": "Adyen"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "agilerobotsse",
+    "name": "Agile Robots SE"
   },
   {
     "ats": "lever",
@@ -93,6 +103,11 @@
     "ats": "greenhouse",
     "slug": "andurilindustries",
     "name": "Anduril Industries"
+  },
+  {
+    "ats": "ashby",
+    "slug": "anterior",
+    "name": "Anterior"
   },
   {
     "slug": "anthropic",
@@ -220,6 +235,11 @@
     "name": "August"
   },
   {
+    "ats": "greenhouse",
+    "slug": "auterion",
+    "name": "Auterion"
+  },
+  {
     "ats": "ashby",
     "slug": "automat",
     "name": "Automat"
@@ -260,6 +280,11 @@
     "name": "Banyan Software"
   },
   {
+    "ats": "greenhouse",
+    "slug": "baselayer",
+    "name": "Baselayer"
+  },
+  {
     "slug": "baseten",
     "ats": "ashby",
     "name": "Baseten"
@@ -288,6 +313,11 @@
     "ats": "ashby",
     "slug": "blp-digital",
     "name": "BLP Digital AG"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "blueskyinnovators",
+    "name": "Blue Sky Innovators"
   },
   {
     "ats": "greenhouse",
@@ -400,6 +430,11 @@
     "name": "CHAOS Industries"
   },
   {
+    "ats": "lever",
+    "slug": "ciandt",
+    "name": "CI&T"
+  },
+  {
     "ats": "ashby",
     "slug": "cinder",
     "name": "Cinder"
@@ -425,6 +460,11 @@
     "name": "CLEAR"
   },
   {
+    "ats": "greenhouse",
+    "slug": "cleartelligence",
+    "name": "Cleartelligence"
+  },
+  {
     "slug": "cloudflare",
     "ats": "greenhouse",
     "name": "Cloudflare"
@@ -433,6 +473,11 @@
     "ats": "ashby",
     "slug": "withclutch",
     "name": "Clutch"
+  },
+  {
+    "ats": "ashby",
+    "slug": "code-metal",
+    "name": "Code Metal"
   },
   {
     "ats": "ashby",
@@ -498,6 +543,11 @@
     "ats": "ashby",
     "slug": "concourse",
     "name": "Concourse"
+  },
+  {
+    "ats": "ashby",
+    "slug": "condor-software",
+    "name": "Condor Software"
   },
   {
     "ats": "ashby",
@@ -686,6 +736,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "echeloncareers",
+    "name": "Echelon"
+  },
+  {
+    "ats": "ashby",
     "slug": "Edison Scientific",
     "name": "Edison Scientific"
   },
@@ -728,6 +783,11 @@
     "ats": "ashby",
     "slug": "endgame",
     "name": "Endgame"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "eonio",
+    "name": "Eon"
   },
   {
     "ats": "ashby",
@@ -895,6 +955,11 @@
     "name": "Glimpse"
   },
   {
+    "ats": "ashby",
+    "slug": "goaly",
+    "name": "Goaly"
+  },
+  {
     "ats": "greenhouse",
     "slug": "goodfire",
     "name": "Goodfire"
@@ -1045,6 +1110,11 @@
     "name": "Hippocratic AI"
   },
   {
+    "ats": "ashby",
+    "slug": "hopper",
+    "name": "Hopper"
+  },
+  {
     "ats": "greenhouse",
     "slug": "hops",
     "name": "Hops"
@@ -1063,6 +1133,11 @@
     "ats": "greenhouse",
     "slug": "idme",
     "name": "ID.me"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "indiciumai",
+    "name": "Indicium AI"
   },
   {
     "ats": "greenhouse",
@@ -1128,6 +1203,11 @@
     "ats": "ashby",
     "slug": "kong",
     "name": "Kong"
+  },
+  {
+    "ats": "ashby",
+    "slug": "kota",
+    "name": "Kota"
   },
   {
     "slug": "labelbox",
@@ -1335,6 +1415,11 @@
     "name": "Moment"
   },
   {
+    "ats": "ashby",
+    "slug": "monday.com",
+    "name": "monday.com"
+  },
+  {
     "slug": "mongodb",
     "ats": "greenhouse",
     "name": "MongoDB"
@@ -1445,6 +1530,11 @@
     "name": "Notion"
   },
   {
+    "ats": "ashby",
+    "slug": "novita-ai",
+    "name": "Novita AI"
+  },
+  {
     "ats": "greenhouse",
     "slug": "ocrolusinc",
     "name": "Ocrolus"
@@ -1493,6 +1583,11 @@
     "ats": "greenhouse",
     "slug": "ophelos",
     "name": "Ophelos"
+  },
+  {
+    "ats": "ashby",
+    "slug": "originhq",
+    "name": "Origin"
   },
   {
     "slug": "oscilar",
@@ -1618,6 +1713,11 @@
     "ats": "ashby",
     "slug": "PointOne",
     "name": "PointOne"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "polyai",
+    "name": "PolyAI"
   },
   {
     "ats": "greenhouse",
@@ -1891,6 +1991,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "sea12",
+    "name": "Sea12 Technologies"
+  },
+  {
+    "ats": "ashby",
     "slug": "seamflow",
     "name": "Seamflow"
   },
@@ -2116,6 +2221,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "talkdesk2",
+    "name": "Talkdesk"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "tavily",
     "name": "Tavily"
   },
@@ -2273,6 +2383,11 @@
     "ats": "greenhouse",
     "slug": "ujet",
     "name": "UJET"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "unframe",
+    "name": "Unframe"
   },
   {
     "ats": "lever",
