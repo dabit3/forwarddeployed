@@ -17,7 +17,7 @@ export function getCompany(slug: string): Company | undefined {
 
 // Re-filter and re-place after the cache so rule changes apply without waiting for revalidation.
 async function getBoard(company: Company): Promise<Job[]> {
-  const jobs = await unstable_cache(() => fetchBoard(company), ["board-v1", company.ats, company.slug], {
+  const jobs = await unstable_cache(() => fetchBoard(company), ["board-v2-workplace", company.ats, company.slug], {
     revalidate: REVALIDATE_SECONDS,
     tags: ["jobs"],
   })();
@@ -61,7 +61,7 @@ async function buildRoles(): Promise<Role[]> {
 const COMPANIES_KEY = createHash("sha1").update(JSON.stringify(companies)).digest("hex").slice(0, 12);
 
 export const getRoles = cache(async (): Promise<Role[]> => {
-  const roles = await unstable_cache(buildRoles, ["roles-v2", COMPANIES_KEY], {
+  const roles = await unstable_cache(buildRoles, ["roles-v3", COMPANIES_KEY], {
     revalidate: REVALIDATE_SECONDS,
     tags: ["jobs"],
   })();

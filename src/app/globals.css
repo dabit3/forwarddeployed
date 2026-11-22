@@ -247,6 +247,42 @@ article > header a:hover {
 
 /* - Role list ----------------------------------------------------- */
 
+.visit-notice {
+  margin-top: var(--unit-lg);
+  font-size: var(--font-sm);
+}
+
+.visit-notice p {
+  margin: var(--unit-sm) 0;
+}
+
+.visit-notice button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: var(--unit-sm) 0;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.visit-notice summary {
+  cursor: pointer;
+}
+
+.new-mark {
+  display: inline-block;
+  margin-left: var(--unit-sm);
+  padding: 0 var(--unit-xs);
+  border: 1px solid var(--color-light-accent);
+  border-radius: 2px;
+  color: var(--color-light-text);
+  font-size: var(--font-sm);
+  font-weight: normal;
+  white-space: nowrap;
+}
+
 .roles {
   list-style: none;
   padding: 0;
@@ -428,6 +464,18 @@ footer .built-by {
   align-items: center;
   gap: 0.6em;
   text-decoration: none;
+}
+
+footer .github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.github-logo {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
 
 /* The lockup is white on transparent; masking lets it take the footer's text color. */

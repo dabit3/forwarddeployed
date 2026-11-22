@@ -14,6 +14,7 @@ export interface Job {
   location: string;
   places: string[];
   remote: boolean;
+  workplace?: string;
   team: string | null;
   compensation: string | null;
   url: string;
@@ -161,6 +162,18 @@ function jobId(company: Company, id: string | number): string {
   return `${company.slug}/${id}`;
 }
 
+function workplaceLabel(value?: string | null): Job["workplace"] {
+  const match = /^(remote|hybrid|on-?site)(\s+\([^()]+\))?$/i.exec(value?.trim() ?? "");
+  if (!match) return undefined;
+  const qualifier = match[2] ?? "";
+  switch (match[1].toLowerCase()) {
+    case "remote": return `Remote${qualifier}`;
+    case "hybrid": return `Hybrid${qualifier}`;
+    case "onsite":
+    case "on-site": return `On-site${qualifier}`;
+  }
+}
+
 interface GreenhouseJob {
   id: number;
   title: string;
@@ -177,6 +190,10 @@ function fromGreenhouse(company: Company, j: GreenhouseJob): Job {
   const location = j.location?.name?.trim() || "";
   const locationType = j.metadata?.find((m) => /location type|workplace/i.test(m.name))?.value;
   const remote = /remote/i.test(location) || (typeof locationType === "string" && /remote/i.test(locationType));
+  const workplace = j.metadata
+    ?.filter((m) => /location type|workplace|^work (type|arrangement)$/i.test(m.name.trim()))
+    .map((m) => workplaceLabel(typeof m.value === "string" ? m.value : undefined))
+    .find(Boolean);
   return {
     id: jobId(company, j.id),
     title: j.title.trim(),
@@ -185,6 +202,7 @@ function fromGreenhouse(company: Company, j: GreenhouseJob): Job {
     location,
     places: splitPlaces([location], remote),
     remote,
+    workplace,
     team: j.departments?.[0]?.name ?? null,
     compensation: null,
     url: j.absolute_url,
@@ -224,6 +242,7 @@ function fromLever(company: Company, j: LeverJob): Job {
     location,
     places: splitPlaces(locations, remote),
     remote,
+    workplace: workplaceLabel(j.workplaceType),
     team: j.categories?.team ?? null,
     compensation: s?.min && s?.max ? `${money(s.min, s.currency)} – ${money(s.max, s.currency)}` : null,
     url: j.hostedUrl,
@@ -260,6 +279,7 @@ function fromAshby(company: Company, j: AshbyJob): Job {
     location,
     places: splitPlaces(locations, remote),
     remote,
+    workplace: workplaceLabel(j.workplaceType),
     team: j.department || j.team || null,
     compensation: j.compensation?.scrapeableCompensationSalarySummary || j.compensation?.compensationTierSummary || null,
     url: j.jobUrl,
