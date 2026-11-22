@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useDeferredValue, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useCallback, useDeferredValue, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Company } from "@/lib/ats";
+import { debounceScrollSave, roleScrollTop } from "@/lib/scroll";
 import {
   chunk,
   countBy,
@@ -152,6 +153,32 @@ export default function Board({ roles, companies, page = 1 }: { roles: Role[]; c
   const hasMore = last < pageCount;
   // On phones companies start collapsed, unless the filters already narrowed things down.
   const openAll = newOnly || groups.length <= 3 || Boolean(active.company);
+
+  useLayoutEffect(() => {
+    const column = listRef.current?.closest("article");
+    if (!column) return;
+    if (window.matchMedia(WIDE).matches) {
+      column.scrollTop = roleScrollTop(window.history.state, list);
+    }
+    const saver = debounceScrollSave(() => {
+      window.history.replaceState({
+        ...window.history.state,
+        roleScroll: { list, top: column.scrollTop },
+      }, "");
+    });
+    const navigate = (event: MouseEvent) => {
+      if (event.target instanceof Element && event.target.closest('a[href^="/jobs/"]')) saver.flush();
+    };
+    column.addEventListener("scroll", saver.schedule);
+    column.addEventListener("click", navigate, true);
+    window.addEventListener("pagehide", saver.flush);
+    return () => {
+      saver.cancel();
+      column.removeEventListener("scroll", saver.schedule);
+      column.removeEventListener("click", navigate, true);
+      window.removeEventListener("pagehide", saver.flush);
+    };
+  }, [list]);
 
   const showMore = useCallback(() => {
     const next = { list, count: count + 1 };
