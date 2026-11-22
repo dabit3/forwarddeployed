@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { isForwardDeployedEngineer, isInvestorBoard, parseBoardUrl, splitPlaces } from "./ats.ts";
+import { fetchBoard, isForwardDeployedEngineer, isInvestorBoard, parseBoardUrl, splitPlaces } from "./ats.ts";
 
 test("keeps forward deployed engineering titles", () => {
   for (const t of [
@@ -63,6 +63,37 @@ test("normalizes places", () => {
   assert.deepEqual(splitPlaces(["Remote - India"], false), ["Remote", "India"]);
   assert.deepEqual(splitPlaces(["Singapore"], false), ["Singapore"]);
   assert.deepEqual(splitPlaces(["Hybrid"], false), []);
+});
+
+test("uses the ATS workplace type separately from the location filters", async (t) => {
+  const title = "Forward Deployed Engineer";
+  const url = "https://example.com/job";
+  const lever = { text: title, hostedUrl: url, categories: { location: "United States" } };
+  t.mock.method(globalThis, "fetch", async (url: string) => {
+    if (url.includes("lever.co")) return Response.json([
+      { ...lever, id: "1", workplaceType: "remote" },
+      { ...lever, id: "2", workplaceType: "unspecified" },
+    ]);
+    if (url.includes("ashbyhq.com")) return Response.json({ jobs: [
+      { id: "1", title, jobUrl: url, location: "New York", isRemote: true, workplaceType: "Hybrid" },
+    ] });
+    return Response.json({ jobs: [
+      { id: 1, title, absolute_url: url, metadata: [{ name: "Workplace", value: "On-site" }] },
+      { id: 2, title, absolute_url: url, metadata: [{ name: "Location Type", value: null }, { name: "Work Type", value: "Remote" }] },
+      { id: 3, title, absolute_url: url, metadata: [{ name: "Work Arrangement", value: "Hybrid" }] },
+      { id: 4, title, absolute_url: url, metadata: [{ name: "Location Type", value: "Hybrid (Travel-Required)" }] },
+    ] });
+  });
+
+  const [remote, unspecified] = await fetchBoard({ ats: "lever", slug: "thinkahead", name: "AHEAD" });
+  assert.deepEqual(remote.places, ["United States", "Remote"]);
+  assert.equal(remote.workplace, "Remote");
+  assert.equal(unspecified.workplace, undefined);
+
+  const [hybrid] = await fetchBoard({ ats: "ashby", slug: "example", name: "Example" });
+  assert.equal(hybrid.workplace, "Hybrid");
+  const greenhouse = await fetchBoard({ ats: "greenhouse", slug: "example", name: "Example" });
+  assert.deepEqual(greenhouse.map((j) => j.workplace), ["On-site", "Remote", "Hybrid", "Hybrid (Travel-Required)"]);
 });
 
 test("parses board urls", () => {
