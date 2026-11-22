@@ -193,6 +193,20 @@ article > header p {
   color: var(--color-light-text-dim);
 }
 
+article > header .sort {
+  margin-top: var(--unit-sm);
+  font-size: var(--font-sm);
+}
+
+article > header .sort a {
+  text-decoration-color: transparent;
+}
+
+article > header .sort a[aria-current] {
+  color: var(--color-light-text);
+  text-decoration-color: var(--color-light-text-dim);
+}
+
 article > header,
 .article-body {
   width: 100%;

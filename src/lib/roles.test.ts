@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import type { Job } from "./ats.ts";
 import {
+  chunk,
   filterRoles,
   filtersFromSearch,
   filtersHref,
@@ -12,6 +13,7 @@ import {
   pageFromPath,
   pageHref,
   paginate,
+  sortByPosted,
   roleListKey,
   type CompanyGroup,
 } from "./roles.ts";
@@ -159,12 +161,29 @@ test("page URLs round-trip", () => {
   assert.equal(pageFromPath("/jobs/acme/1"), 1);
 });
 
+test("sorts roles by posting date, newest first and undated last", () => {
+  const roles = groupRoles([
+    job({ id: "a/1", title: "A", postedAt: "2026-10-01T00:00:00Z" }),
+    job({ id: "b/1", title: "B", companySlug: "beta", company: "Beta", postedAt: null }),
+    job({ id: "c/1", title: "C", companySlug: "gamma", company: "Gamma", postedAt: "2026-11-01T00:00:00Z" }),
+  ]);
+  assert.deepEqual(sortByPosted([...roles].reverse()).map((r) => r.title), ["C", "A", "B"]);
+  assert.deepEqual(chunk([1, 2, 3, 4, 5], 2), [[1, 2], [3, 4], [5]]);
+  assert.deepEqual(chunk([], 2), []);
+});
+
+test("keeps the date sort in the URL", () => {
+  assert.equal(filtersHref({ place: "Remote", sort: "newest" }), "/?place=Remote&sort=newest");
+  assert.equal(filtersFromSearch("?sort=newest").sort, "newest");
+  assert.equal(filtersFromSearch("?sort=bogus").sort, undefined);
+});
+
 test("new-only pagination starts at page one with separate restored list state", () => {
   assert.equal(roleListKey({}, 3), "/@3");
   assert.equal(roleListKey({}, 3, true), "/@1:new");
   assert.equal(roleListKey({}, 1, true), roleListKey({}, 3, true));
   assert.notEqual(roleListKey({}, 1), roleListKey({}, 1, true));
-  for (const f of [{ place: "Remote" }, { company: "acme" }, { q: "engineer" }]) {
+  for (const f of [{ place: "Remote" }, { company: "acme" }, { q: "engineer" }, { sort: "newest" as const }]) {
     assert.equal(roleListKey(f, 3), `${filtersHref(f)}@1`);
     assert.equal(roleListKey(f, 3, true), `${filtersHref(f)}@1:new`);
   }
