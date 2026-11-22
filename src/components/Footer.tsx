@@ -7,7 +7,7 @@ export default function Footer() {
       </p>
       <p>
         <a className="built-by" href="https://devin.ai/">
-          Built by <span className="devin-logo" role="img" aria-label="Devin" />
+          Maintained by <span className="devin-logo" role="img" aria-label="Devin" />
         </a>
       </p>
     </footer>
