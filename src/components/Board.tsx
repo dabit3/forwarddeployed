@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useDeferredValue, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useCallback, useDeferredValue, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Company } from "@/lib/ats";
+import { roleScrollTop } from "@/lib/scroll";
 import {
   chunk,
   countBy,
@@ -153,6 +154,13 @@ export default function Board({ roles, companies, page = 1 }: { roles: Role[]; c
   // On phones companies start collapsed, unless the filters already narrowed things down.
   const openAll = newOnly || groups.length <= 3 || Boolean(active.company);
 
+  useLayoutEffect(() => {
+    const column = listRef.current?.closest("article");
+    if (column && window.matchMedia(WIDE).matches) {
+      column.scrollTop = roleScrollTop(window.history.state, list);
+    }
+  }, [list]);
+
   const showMore = useCallback(() => {
     const next = { list, count: count + 1 };
     setMore(next);
@@ -189,7 +197,12 @@ export default function Board({ roles, companies, page = 1 }: { roles: Role[]; c
           hideOnMobile
         />
       )}
-      <article>
+      <article onScroll={(event) => {
+        window.history.replaceState({
+          ...window.history.state,
+          roleScroll: { list, top: event.currentTarget.scrollTop },
+        }, "");
+      }}>
         <header>
           <h2>{heading(active, companies)}</h2>
           <h3>
