@@ -4,3 +4,23 @@ export function roleScrollTop(state: unknown, list: string): number {
     ? saved.top
     : 0;
 }
+
+export function debounceScrollSave(save: () => void) {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const cancel = () => {
+    clearTimeout(timer);
+    timer = undefined;
+  };
+  const flush = () => {
+    cancel();
+    save();
+  };
+  return {
+    schedule() {
+      cancel();
+      timer = setTimeout(flush, 150);
+    },
+    flush,
+    cancel,
+  };
+}

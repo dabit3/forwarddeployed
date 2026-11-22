@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCallback, useDeferredValue, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Company } from "@/lib/ats";
-import { roleScrollTop } from "@/lib/scroll";
+import { debounceScrollSave, roleScrollTop } from "@/lib/scroll";
 import {
   chunk,
   countBy,
@@ -156,9 +156,28 @@ export default function Board({ roles, companies, page = 1 }: { roles: Role[]; c
 
   useLayoutEffect(() => {
     const column = listRef.current?.closest("article");
-    if (column && window.matchMedia(WIDE).matches) {
+    if (!column) return;
+    if (window.matchMedia(WIDE).matches) {
       column.scrollTop = roleScrollTop(window.history.state, list);
     }
+    const saver = debounceScrollSave(() => {
+      window.history.replaceState({
+        ...window.history.state,
+        roleScroll: { list, top: column.scrollTop },
+      }, "");
+    });
+    const navigate = (event: MouseEvent) => {
+      if (event.target instanceof Element && event.target.closest('a[href^="/jobs/"]')) saver.flush();
+    };
+    column.addEventListener("scroll", saver.schedule);
+    column.addEventListener("click", navigate, true);
+    window.addEventListener("pagehide", saver.flush);
+    return () => {
+      saver.cancel();
+      column.removeEventListener("scroll", saver.schedule);
+      column.removeEventListener("click", navigate, true);
+      window.removeEventListener("pagehide", saver.flush);
+    };
   }, [list]);
 
   const showMore = useCallback(() => {
@@ -197,12 +216,7 @@ export default function Board({ roles, companies, page = 1 }: { roles: Role[]; c
           hideOnMobile
         />
       )}
-      <article onScroll={(event) => {
-        window.history.replaceState({
-          ...window.history.state,
-          roleScroll: { list, top: event.currentTarget.scrollTop },
-        }, "");
-      }}>
+      <article>
         <header>
           <h2>{heading(active, companies)}</h2>
           <h3>
