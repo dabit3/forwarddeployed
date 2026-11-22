@@ -316,6 +316,11 @@
   },
   {
     "ats": "greenhouse",
+    "slug": "blueskyinnovators",
+    "name": "Blue Sky Innovators"
+  },
+  {
+    "ats": "greenhouse",
     "slug": "bluefishai",
     "name": "Bluefish AI"
   },
@@ -1698,6 +1703,11 @@
     "ats": "ashby",
     "slug": "PointOne",
     "name": "PointOne"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "polyai",
+    "name": "PolyAI"
   },
   {
     "ats": "greenhouse",
