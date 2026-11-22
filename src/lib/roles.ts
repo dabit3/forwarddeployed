@@ -14,14 +14,28 @@ export interface Role {
   search: string;
 }
 
+export type Sort = "newest";
+
 export interface Filters {
   place?: string;
   company?: string;
   q?: string;
+  /** Unset lists roles under their companies, A-Z. */
+  sort?: Sort;
 }
 
 function titleKey(title: string): string {
   return title.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function postedTime(r: { postedAt: string | null }): number {
+  const t = r.postedAt ? Date.parse(r.postedAt) : NaN;
+  return Number.isNaN(t) ? 0 : t;
+}
+
+/** Most recently posted first; roles without a date go last. */
+export function sortByPosted(roles: Role[]): Role[] {
+  return [...roles].sort((a, b) => postedTime(b) - postedTime(a) || a.title.localeCompare(b.title));
 }
 
 function newest(a: string | null, b: string | null): string | null {
@@ -57,12 +71,12 @@ export function groupRoles(jobs: Job[]): Role[] {
     role.postedAt = newest(role.postedAt, job.postedAt);
     for (const p of job.places) if (!role.places.includes(p)) role.places.push(p);
   }
-  return [...roles.values()]
-    .map(({ text, ...r }) => ({ ...r, search: `${r.title} ${r.company} ${r.places.join(" ")} ${text.join(" ")}`.toLowerCase() }))
-    .sort(
-      (a, b) =>
-        (b.postedAt ? Date.parse(b.postedAt) : 0) - (a.postedAt ? Date.parse(a.postedAt) : 0) || a.title.localeCompare(b.title),
-    );
+  return sortByPosted(
+    [...roles.values()].map(({ text, ...r }) => ({
+      ...r,
+      search: `${r.title} ${r.company} ${r.places.join(" ")} ${text.join(" ")}`.toLowerCase(),
+    })),
+  );
 }
 
 export function filterRoles(roles: Role[], f: Filters): Role[] {
@@ -79,6 +93,7 @@ export function filtersHref(f: Filters): string {
   if (f.place) p.set("place", f.place);
   if (f.company) p.set("company", f.company);
   if (f.q) p.set("q", f.q);
+  if (f.sort) p.set("sort", f.sort);
   const qs = p.toString();
   return qs ? `/?${qs}` : "/";
 }
@@ -86,7 +101,9 @@ export function filtersHref(f: Filters): string {
 export function filtersFromSearch(search: string): Filters {
   const p = new URLSearchParams(search);
   const one = (k: string) => p.get(k)?.trim() || undefined;
-  return { place: one("place"), company: one("company"), q: one("q") };
+  const filters: Filters = { place: one("place"), company: one("company"), q: one("q") };
+  if (one("sort") === "newest") filters.sort = "newest";
+  return filters;
 }
 
 export function countBy(roles: Role[], keys: (r: Role) => string[]): [string, number][] {
@@ -156,6 +173,13 @@ export function paginate(groups: CompanyGroup[], size = PAGE_SIZE): CompanyGroup
     }
   }
   if (page.length) pages.push(page);
+  return pages;
+}
+
+/** The date-sorted list has no companies to break between, so its pages are plain runs of roles. */
+export function chunk<T>(items: T[], size = PAGE_SIZE): T[][] {
+  const pages: T[][] = [];
+  for (let i = 0; i < items.length; i += size) pages.push(items.slice(i, i + size));
   return pages;
 }
 

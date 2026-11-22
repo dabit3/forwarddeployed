@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useDeferredValue, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Company } from "@/lib/ats";
 import {
+  chunk,
   countBy,
   filterRoles,
   filtersFromSearch,
@@ -14,6 +15,7 @@ import {
   pageFromPath,
   pageHref,
   paginate,
+  sortByPosted,
   summarizePlaces,
   type Filters,
   type Role,
@@ -52,7 +54,7 @@ function useWide(): boolean | null {
 }
 
 function listKey(f: Filters, page: number): string {
-  return `${filtersHref(f)}@${f.place || f.company || f.q ? 1 : page}`;
+  return `${filtersHref(f)}@${f.place || f.company || f.q || f.sort ? 1 : page}`;
 }
 
 interface Shown {
@@ -130,15 +132,21 @@ export default function Board({ roles, companies, page = 1 }: { roles: Role[]; c
   const query = shownFilters.q?.trim();
   const active = { ...shownFilters, q: query };
   const filtered = Boolean(active.place || active.company || active.q);
+  const byDate = active.sort === "newest";
+  // Only the default company list has its own /page/n URLs; any other view starts at its top.
+  const linked = !filtered && !byDate;
   const shown = filterRoles(roles, active);
   const groups = groupByCompany(shown);
-  const pages = paginate(groups);
-  const first = Math.max(1, Math.min(filtered ? 1 : firstPage, pages.length));
+  const datePages = byDate ? chunk(sortByPosted(shown)) : [];
+  const companyPages = byDate ? [] : paginate(groups);
+  const pageCount = byDate ? datePages.length : companyPages.length;
+  const first = Math.max(1, Math.min(linked ? firstPage : 1, pageCount));
   const list = listKey(active, first);
   const count = more.list === list ? more.count : 1;
-  const last = Math.min(first + count - 1, pages.length);
-  const visible = pages.slice(first - 1, last).flat();
-  const hasMore = last < pages.length;
+  const last = Math.min(first + count - 1, pageCount);
+  const visible = companyPages.slice(first - 1, last).flat();
+  const visibleRoles = datePages.slice(first - 1, last).flat();
+  const hasMore = last < pageCount;
   // On phones companies start collapsed, unless the filters already narrowed things down.
   const openAll = groups.length <= 3 || Boolean(active.company);
 
@@ -185,16 +193,43 @@ export default function Board({ roles, companies, page = 1 }: { roles: Role[]; c
             {shown.length} open {shown.length === 1 ? "role" : "roles"}
             {query ? ` matching \u201c${query}\u201d` : ""}
           </h3>
+          <p className="sort">
+            Sort by{" "}
+            <FilterLink to={{ ...active, sort: undefined }} onSelect={select} current={!byDate}>
+              company
+            </FilterLink>
+            {" \u00b7 "}
+            <FilterLink to={{ ...active, sort: "newest" }} onSelect={select} current={byDate}>
+              date posted
+            </FilterLink>
+          </p>
         </header>
         <div className="article-body" ref={listRef}>
-          {!filtered && first > 1 ? (
+          {linked && first > 1 ? (
             <p className="more">
               <Link href={pageHref(first - 1)} prefetch={false}>
                 Earlier roles
               </Link>
             </p>
           ) : null}
-          {shown.length ? (
+          {shown.length && byDate ? (
+            <ul className="roles by-date">
+              {visibleRoles.map((r) => (
+                <li key={r.key}>
+                  <Link href={r.href}>
+                    <span>
+                      {r.title}
+                      <span className="meta">
+                        {r.company}
+                        {r.places.length ? ` \u00b7 ${summarizePlaces(r.places)}` : ""}
+                      </span>
+                    </span>
+                    <span className="time">{formatDate(r.postedAt)}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : shown.length ? (
             visible.map((g) => {
               const expanded = openAll || open.has(g.slug);
               return (
@@ -233,14 +268,14 @@ export default function Board({ roles, companies, page = 1 }: { roles: Role[]; c
           ) : (
             <p className="empty">
               No roles match.{" "}
-              <FilterLink to={{}} onSelect={select}>
+              <FilterLink to={{ sort: active.sort }} onSelect={select}>
                 Clear filters
               </FilterLink>
             </p>
           )}
           {hasMore ? (
             <p className="more" ref={moreRef}>
-              {filtered ? (
+              {!linked ? (
                 <button type="button" onClick={showMore}>
                   More roles
                 </button>
