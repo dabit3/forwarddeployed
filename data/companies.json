@@ -1101,11 +1101,6 @@
   },
   {
     "ats": "ashby",
-    "slug": "hilberts",
-    "name": "Hilbert's AI"
-  },
-  {
-    "ats": "ashby",
     "slug": "Hippocratic AI",
     "name": "Hippocratic AI"
   },
@@ -1300,8 +1295,8 @@
     "name": "Luminai"
   },
   {
-    "ats": "lever",
-    "slug": "lyrebirdhealth",
+    "ats": "ashby",
+    "slug": "lyrebird-health",
     "name": "Lyrebird Health"
   },
   {
