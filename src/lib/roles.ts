@@ -12,6 +12,20 @@ export interface Role {
   href: string;
   /** Lowercased text that search matches against. */
   search: string;
+  postings: RolePosting[];
+}
+
+interface RolePosting {
+  places: string[];
+  remote: boolean;
+  postedAt: string | null;
+  href: string;
+  text: string;
+  locationWords: string[];
+}
+
+function locationWords(text: string): string[] {
+  return text.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? [];
 }
 
 export interface Filters {
@@ -36,6 +50,14 @@ export function groupRoles(jobs: Job[]): Role[] {
   for (const job of jobs) {
     const key = `${job.companySlug}:${titleKey(job.title)}`;
     const text = `${job.location} ${job.team ?? ""}`;
+    const posting: RolePosting = {
+      places: [...job.places],
+      remote: job.remote,
+      postedAt: job.postedAt,
+      href: postingHref(job),
+      text: `${job.title} ${job.company} ${job.team ?? ""}`.toLowerCase(),
+      locationWords: locationWords(`${job.location} ${job.places.join(" ")}`),
+    };
     const role = roles.get(key);
     if (!role) {
       roles.set(key, {
@@ -49,29 +71,50 @@ export function groupRoles(jobs: Job[]): Role[] {
         href: postingHref(job),
         search: "",
         text: [text],
+        postings: [posting],
       });
       continue;
     }
     role.text.push(text);
+    role.postings.push(posting);
     role.remote ||= job.remote;
     role.postedAt = newest(role.postedAt, job.postedAt);
     for (const p of job.places) if (!role.places.includes(p)) role.places.push(p);
   }
   return [...roles.values()]
     .map(({ text, ...r }) => ({ ...r, search: `${r.title} ${r.company} ${r.places.join(" ")} ${text.join(" ")}`.toLowerCase() }))
-    .sort(
-      (a, b) =>
-        (b.postedAt ? Date.parse(b.postedAt) : 0) - (a.postedAt ? Date.parse(a.postedAt) : 0) || a.title.localeCompare(b.title),
-    );
+    .sort(newestFirst);
+}
+
+function newestFirst(a: Role, b: Role): number {
+  return (b.postedAt ? Date.parse(b.postedAt) : 0) - (a.postedAt ? Date.parse(a.postedAt) : 0) || a.title.localeCompare(b.title);
 }
 
 export function filterRoles(roles: Role[], f: Filters): Role[] {
   const words = (f.q ?? "").toLowerCase().split(/\s+/).filter(Boolean);
-  return roles.filter((r) => {
-    if (f.company && r.companySlug !== f.company) return false;
-    if (f.place && !r.places.includes(f.place)) return false;
-    return words.every((w) => r.search.includes(w));
+  let narrowed = false;
+  const result = roles.flatMap((r) => {
+    if (f.company && r.companySlug !== f.company) return [];
+    if (!f.place && !words.length) return [r];
+    const postings = r.postings.filter((p) => {
+      if (f.place && !p.places.includes(f.place)) return false;
+      return words.every((w) => p.text.includes(w) || (
+        locationWords(w).length > 0 && locationWords(w).every((part) => p.locationWords.includes(part))
+      ));
+    });
+    if (!postings.length) return [];
+    if (postings.length === r.postings.length) return [r];
+    narrowed = true;
+    return [{
+      ...r,
+      postings,
+      places: [...new Set(postings.flatMap((p) => p.places))],
+      href: postings[0].href,
+      remote: postings.some((p) => p.remote),
+      postedAt: postings.reduce<string | null>((date, p) => newest(date, p.postedAt), null),
+    }];
   });
+  return narrowed ? result.sort(newestFirst) : result;
 }
 
 export function filtersHref(f: Filters): string {

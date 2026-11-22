@@ -61,6 +61,45 @@ test("formats dates like the archive list", () => {
   assert.equal(formatDate(null), "");
 });
 
+test("narrows grouped locations and links to the first matching posting", () => {
+  const roles = groupRoles([
+    job({ id: "acme/8899736002", location: "Munich, Germany", places: ["Munich", "Germany"] }),
+    job({ id: "acme/8503068002", location: "Remote - India", places: ["Remote", "India"], remote: true }),
+    job({ id: "acme/3", location: "Bangalore, India", places: ["Bengaluru", "India"] }),
+  ]);
+  for (const filters of [{ place: "India" }, { q: "India" }, { q: "engineer INDIA", place: "India" }]) {
+    const [role] = filterRoles(roles, filters);
+    assert.deepEqual(role.places, ["Remote", "India", "Bengaluru"]);
+    assert.equal(role.href, "/jobs/acme/8503068002");
+    assert.equal(role.remote, true);
+    assert.equal(role.postings.length, 2);
+  }
+  for (const filters of [{}, { q: "deploy" }, { q: "acm" }, { q: "   " }]) {
+    assert.deepEqual(filterRoles(roles, filters), roles);
+  }
+  assert.deepEqual(filterRoles(roles, { place: "Germany", q: "India" }), []);
+  assert.deepEqual(filterRoles(roles, { q: "Munich Bangalore" }), []);
+  assert.deepEqual(filterRoles(roles, { q: "unknown" }), []);
+  assert.deepEqual(filterRoles([], { q: "India" }), []);
+  assert.deepEqual(roles[0].places, ["Munich", "Germany", "Remote", "India", "Bengaluru"]);
+});
+
+test("matches whole location words and normalized places, but title and company substrings", () => {
+  const roles = groupRoles([
+    job({ id: "acme/1", location: "Indiana", places: ["Indiana", "United States"] }),
+    job({ id: "acme/2", location: "Bangalore, India", places: ["Bengaluru", "India"] }),
+  ]);
+  assert.equal(filterRoles(roles, { q: "india" })[0].href, "/jobs/acme/2");
+  assert.equal(filterRoles(roles, { q: "Bengaluru" })[0].href, "/jobs/acme/2");
+  assert.equal(filterRoles(roles, { q: "Indiana" })[0].href, "/jobs/acme/1");
+  assert.deepEqual(filterRoles(roles, { q: "Bangal" }), []);
+  assert.deepEqual(filterRoles(groupRoles([job({ location: "Indiana", places: ["Indiana"] })]), { q: "India" }), []);
+  const titleMatch = groupRoles([job({ title: "Indiana Engineer" })]);
+  assert.deepEqual(filterRoles(titleMatch, { q: "India" }), titleMatch);
+  const companyMatch = groupRoles([job({ company: "Indiana AI" })]);
+  assert.deepEqual(filterRoles(companyMatch, { q: "India" }), companyMatch);
+});
+
 test("groups roles by company, companies A-Z", () => {
   const role = (companySlug: string, title: string) => ({
     key: `${companySlug}:${title}`,
@@ -72,6 +111,7 @@ test("groups roles by company, companies A-Z", () => {
     postedAt: null,
     href: "",
     search: "",
+    postings: [],
   });
   const groups = groupByCompany([role("b", "FDE"), role("a", "FDE"), role("b", "Senior FDE")]);
   assert.deepEqual(
