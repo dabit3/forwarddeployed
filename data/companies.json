@@ -565,6 +565,11 @@
     "name": "CoreWeave"
   },
   {
+    "ats": "greenhouse",
+    "slug": "coursera",
+    "name": "Coursera"
+  },
+  {
     "ats": "ashby",
     "slug": "credal",
     "name": "Credal"
@@ -1713,6 +1718,16 @@
     "ats": "greenhouse",
     "slug": "polyai",
     "name": "PolyAI"
+  },
+  {
+    "ats": "ashby",
+    "slug": "polygon-labs",
+    "name": "Polygon Labs"
+  },
+  {
+    "ats": "ashby",
+    "slug": "pramaana-labs",
+    "name": "Pramaana Labs"
   },
   {
     "ats": "greenhouse",
