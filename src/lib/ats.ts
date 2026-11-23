@@ -367,16 +367,17 @@ interface AshbyJob {
 function fromAshby(company: Company, j: AshbyJob): Job {
   const locations = [j.location ?? "", ...(j.secondaryLocations ?? []).map((l) => l.location ?? "")].filter(Boolean);
   const location = locations.join("; ");
-  const remote = Boolean(j.isRemote) || j.workplaceType === "Remote" || /remote/i.test(location);
+  const workplace = workplaceLabel(j.workplaceType);
+  const remote = workplace ? workplace.startsWith("Remote") : Boolean(j.isRemote) || /remote/i.test(location);
   return {
     id: jobId(company, j.id),
     title: j.title.trim(),
     company: company.name,
     companySlug: company.slug,
     location,
-    places: splitPlaces(locations, remote),
+    places: splitPlaces(locations, remote).filter((place) => !workplace || remote || place !== "Remote"),
     remote,
-    workplace: workplaceLabel(j.workplaceType),
+    workplace,
     team: j.department || j.team || null,
     compensation: j.compensation?.scrapeableCompensationSalarySummary || j.compensation?.compensationTierSummary || null,
     url: j.jobUrl,
