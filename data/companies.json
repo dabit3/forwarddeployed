@@ -411,6 +411,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "certa",
+    "name": "Certa"
+  },
+  {
+    "ats": "ashby",
     "slug": "chainalysis-careers",
     "name": "Chainalysis"
   },
@@ -568,6 +573,11 @@
     "ats": "greenhouse",
     "slug": "coursera",
     "name": "Coursera"
+  },
+  {
+    "ats": "ashby",
+    "slug": "coverbase",
+    "name": "Coverbase"
   },
   {
     "ats": "ashby",
@@ -1515,6 +1525,11 @@
     "name": "NODA AI"
   },
   {
+    "ats": "lever",
+    "slug": "nodal-networks",
+    "name": "Nodal Networks"
+  },
+  {
     "ats": "ashby",
     "slug": "nooks",
     "name": "Nooks"
@@ -2303,6 +2318,11 @@
     "ats": "ashby",
     "slug": "generalintelligencecompany",
     "name": "The General Intelligence Company of New York"
+  },
+  {
+    "ats": "lever",
+    "slug": "theodo",
+    "name": "Theodo"
   },
   {
     "ats": "ashby",
