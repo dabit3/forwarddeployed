@@ -1660,6 +1660,11 @@
     "name": "Parloa"
   },
   {
+    "ats": "greenhouse",
+    "slug": "pendo",
+    "name": "Pendo"
+  },
+  {
     "ats": "ashby",
     "slug": "percepta",
     "name": "Percepta"
@@ -1756,6 +1761,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "PrimeIntellect",
+    "name": "Prime Intellect"
+  },
+  {
+    "ats": "ashby",
     "slug": "prior-labs",
     "name": "Prior Labs"
   },
@@ -1773,6 +1783,11 @@
     "ats": "ashby",
     "slug": "profound",
     "name": "Profound"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "prolific",
+    "name": "Prolific"
   },
   {
     "ats": "ashby",
