@@ -63,7 +63,7 @@ async function buildRoles(): Promise<Role[]> {
 const COMPANIES_KEY = createHash("sha1").update(JSON.stringify(companies)).digest("hex").slice(0, 12);
 
 export const getRoles = cache(async (): Promise<Role[]> => {
-  const roles = await unstable_cache(buildRoles, ["roles-v4-matching-workplace", COMPANIES_KEY], {
+  const roles = await unstable_cache(buildRoles, ["roles-v5-normalized-locations", COMPANIES_KEY], {
     revalidate: REVALIDATE_SECONDS,
     tags: ["jobs"],
   })();
