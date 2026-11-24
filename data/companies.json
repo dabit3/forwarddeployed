@@ -175,6 +175,11 @@
     "name": "Arize AI"
   },
   {
+    "ats": "greenhouse",
+    "slug": "armada",
+    "name": "Armada"
+  },
+  {
     "ats": "ashby",
     "slug": "Armory",
     "name": "Armory"
@@ -1878,6 +1883,11 @@
     "ats": "ashby",
     "slug": "revin",
     "name": "Revin"
+  },
+  {
+    "ats": "ashby",
+    "slug": "rivet",
+    "name": "Rivet Industries"
   },
   {
     "ats": "ashby",
