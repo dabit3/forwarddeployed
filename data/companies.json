@@ -646,6 +646,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "DatologyAI",
+    "name": "DatologyAI"
+  },
+  {
+    "ats": "ashby",
     "slug": "david-ai",
     "name": "David AI"
   },
@@ -1183,6 +1188,11 @@
     "ats": "greenhouse",
     "slug": "jazzx-ai",
     "name": "JazzX AI"
+  },
+  {
+    "ats": "lever",
+    "slug": "tryjeeves",
+    "name": "Jeeves"
   },
   {
     "ats": "greenhouse",
