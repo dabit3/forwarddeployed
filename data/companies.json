@@ -885,6 +885,11 @@
     "name": "First Resonance"
   },
   {
+    "ats": "ashby",
+    "slug": "firstwork",
+    "name": "FirstWork"
+  },
+  {
     "ats": "greenhouse",
     "slug": "fleetio",
     "name": "Fleetio"
@@ -2441,6 +2446,11 @@
   },
   {
     "ats": "ashby",
+    "slug": "typesafe-ai",
+    "name": "TypeSafe AI"
+  },
+  {
+    "ats": "ashby",
     "slug": "uipath",
     "name": "UiPath"
   },
@@ -2528,6 +2538,11 @@
     "ats": "ashby",
     "slug": "vooma",
     "name": "Vooma"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "voyagertechnologiesinc",
+    "name": "Voyager Technologies"
   },
   {
     "ats": "lever",
