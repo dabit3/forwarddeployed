@@ -229,6 +229,15 @@ test("normalizes places", () => {
   assert.deepEqual(splitPlaces(["Hybrid"], false), []);
 });
 
+test("normalizes country-coded cities and remote regions", () => {
+  assert.deepEqual(splitPlaces(["GB-London"], false), ["London", "United Kingdom"]);
+  assert.deepEqual(splitPlaces(["JP-Tokyo"], false), ["Tokyo", "Japan"]);
+  assert.deepEqual(splitPlaces(["AU-Melbourne; Sydney"], false), ["Melbourne", "Australia", "Sydney"]);
+  assert.deepEqual(splitPlaces(["NZ-New Zealand-Remote"], false), ["Remote", "New Zealand"]);
+  assert.deepEqual(splitPlaces(["NL-Netherlands-Remote; DE-Germany-Remote"], false), ["Remote", "Netherlands", "Germany"]);
+  assert.deepEqual(splitPlaces(["XX-London"], false), ["XX-London"]);
+});
+
 test("uses the ATS workplace type separately from the location filters", async (t) => {
   const title = "Forward Deployed Engineer";
   const url = "https://example.com/job";

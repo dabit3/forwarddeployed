@@ -213,14 +213,19 @@ export function countryOf(raw: string, place: string | null): string | null {
   return null;
 }
 
+const REGION_NAMES = new Intl.DisplayNames("en", { type: "region", fallback: "none" });
+
 export function splitPlaces(locations: string[], remote: boolean): string[] {
   const out = new Set<string>();
   for (const loc of locations) {
-    for (const part of loc.split(/\s*[;|/•]\s*|\s+or\s+/i)) {
-      if (/remote/i.test(part)) out.add("Remote");
+    for (const raw of loc.split(/\s*[;|/•]\s*|\s+or\s+/i)) {
+      const [, code, location] = /^([A-Z]{2})-(?![A-Z]{2}-)([A-Z].*?)(?:-Remote)?$/.exec(raw.trim()) ?? [];
+      const region = code && code !== "ZZ" ? REGION_NAMES.of(code) : undefined;
+      const part = region ? location : raw;
+      if (/remote/i.test(raw)) out.add("Remote");
       const place = normalizePlace(part);
       if (place) out.add(place);
-      const country = countryOf(part, place);
+      const country = region ?? countryOf(part, place);
       if (country) out.add(country);
     }
   }
