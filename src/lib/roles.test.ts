@@ -35,14 +35,14 @@ const job = (o: Partial<Job>): Job => ({
 
 test("groups per-city postings into one role", () => {
   const roles = groupRoles([
-    job({ id: "a/1" }),
-    job({ id: "a/2", title: "Forward  Deployed Engineer ", places: ["Paris"], postedAt: "2026-10-05T00:00:00Z" }),
+    job({ id: "acme/1" }),
+    job({ id: "acme/2", title: "Forward  Deployed Engineer ", places: ["Paris"], postedAt: "2026-10-05T00:00:00Z" }),
     job({ id: "b/1", companySlug: "beta", company: "Beta" }),
   ]);
   assert.equal(roles.length, 2);
   const acme = roles.find((r) => r.companySlug === "acme")!;
   assert.deepEqual(acme.places, ["London", "Paris"]);
-  assert.ok(acme.href.startsWith("/jobs/acme/"));
+  assert.equal(acme.href, "/jobs/acme/2");
   assert.ok(acme.search.includes("paris"));
   assert.equal(acme.postedAt, "2026-10-05T00:00:00Z");
 });
@@ -63,16 +63,17 @@ test("formats dates like the archive list", () => {
   assert.equal(formatDate(null), "");
 });
 
-test("narrows grouped locations and links to the first matching posting", () => {
+test("narrows grouped locations and links to the newest matching posting", () => {
   const roles = groupRoles([
-    job({ id: "acme/8899736002", location: "Munich, Germany", places: ["Munich", "Germany"] }),
+    job({ id: "acme/8899736002", location: "Munich, Germany", places: ["Munich", "Germany"], postedAt: "2026-10-15T00:00:00Z" }),
     job({ id: "acme/8503068002", location: "Remote - India", places: ["Remote", "India"], remote: true }),
-    job({ id: "acme/3", location: "Bangalore, India", places: ["Bengaluru", "India"] }),
+    job({ id: "acme/3", location: "Bangalore, India", places: ["Bengaluru", "India"], postedAt: "2026-10-07T00:00:00Z" }),
   ]);
   for (const filters of [{ place: "India" }, { q: "India" }, { q: "engineer INDIA", place: "India" }]) {
     const [role] = filterRoles(roles, filters);
     assert.deepEqual(role.places, ["Remote", "India", "Bengaluru"]);
-    assert.equal(role.href, "/jobs/acme/8503068002");
+    assert.equal(role.href, "/jobs/acme/3");
+    assert.equal(role.postedAt, "2026-10-07T00:00:00Z");
     assert.equal(role.remote, true);
     assert.equal(role.postings.length, 2);
   }
