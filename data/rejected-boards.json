@@ -1,0 +1,32 @@
+{
+  "ashby": {
+    "arcade-ai": "Unrelated lookalike of the listed Arcade board (ashby/arcadeai).",
+    "bubble": "Reviewed role is internal, not customer-facing deployment.",
+    "doctolib": "Reviewed role is internal, not customer-facing deployment.",
+    "forward financing": "Reviewed role is internal, not customer-facing deployment.",
+    "level": "Reviewed role is internal AI work.",
+    "lightfield": "Reviewed role is internal, not customer-facing deployment.",
+    "opengov": "Reviewed role is internal, not customer-facing deployment.",
+    "plaud": "Reviewed role automates internal business systems.",
+    "squadai": "Reviewed role is internal ML and product engineering.",
+    "stackone": "Reviewed Sales role scopes deployments rather than engineering them."
+  },
+  "greenhouse": {
+    "cais": "Reviewed Applied AI Engineer role is internal technology work.",
+    "deepintent": "Reviewed role automates internal commercial operations.",
+    "distantjob": "Staffing agency, not the direct employer.",
+    "getnet": "Reviewed role is internal, not customer-facing deployment.",
+    "logicalintelligence": "Reviewed role is internal, not customer-facing deployment.",
+    "lyratechgroup": "Deploys to its own portfolio companies.",
+    "pathward": "Reviewed role is internal, not customer-facing deployment.",
+    "privateequityinsights": "Reviewed role is internal, not customer-facing deployment.",
+    "redcellpartners": "Venture studio board lists portfolio roles.",
+    "systemstechnologyresearch": "Reviewed STR role is defense R&D, not customer deployment.",
+    "techgrovebybanyansoftware": "Reviewed role is internal, not customer-facing deployment.",
+    "zscaler": "Reviewed role is internal, not customer-facing deployment."
+  },
+  "lever": {
+    "esrtreit": "Reviewed role is internal, not customer-facing deployment.",
+    "jobgether": "Job aggregator, not the direct employer."
+  }
+}

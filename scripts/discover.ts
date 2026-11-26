@@ -1,7 +1,8 @@
 // Finds companies hiring forward deployed engineers (or the same role under another name) with xAI web search,
 // verifies each board against its public ATS API, and adds new ones to data/companies.json.
 import { readFile, writeFile } from "node:fs/promises";
-import { fetchBoard, isInvestorBoard, parseBoardUrl, type Company } from "../src/lib/ats.ts";
+import { fetchBoard, type Company } from "../src/lib/ats.ts";
+import { discoveryCandidates, type Found } from "../src/lib/discovery.ts";
 import { findFailingBoards, formatFailures } from "../src/lib/health.ts";
 
 const FILE = new URL("../data/companies.json", import.meta.url);
@@ -63,11 +64,6 @@ const SCHEMA = {
   },
 };
 
-interface Found {
-  company: string;
-  url: string;
-}
-
 async function search(query: string, known: string[]): Promise<Found[]> {
   const key = process.env.XAI_API_KEY;
   if (!key) throw new Error("XAI_API_KEY is not set");
@@ -110,7 +106,6 @@ function parseFirstJson(text: string): unknown {
 }
 
 const existing = JSON.parse(await readFile(FILE, "utf8")) as Company[];
-const seen = new Set(existing.map((c) => `${c.ats}:${c.slug.toLowerCase()}`));
 const knownNames = existing.map((c) => c.name);
 
 // Moved or deleted boards fail silently on the site, so report them on every refresh.
@@ -119,22 +114,17 @@ console.log(formatFailures(failing, existing.length));
 await writeFile(FAILING_FILE, `${JSON.stringify(failing, null, 2)}\n`);
 
 const results = await Promise.allSettled(QUERIES.map((q) => search(q, knownNames)));
-const candidates = new Map<string, Company>();
-results.forEach((r, i) => {
-  if (r.status === "rejected") return console.warn(`search "${QUERIES[i]}" failed: ${r.reason}`);
-  for (const f of r.value) {
-    const board = parseBoardUrl(f.url);
-    if (!board || isInvestorBoard(board.slug) || isInvestorBoard(f.company)) continue;
-    const id = `${board.ats}:${board.slug.toLowerCase()}`;
-    const name = f.company.replace(/,?\s+(Inc\.?|GmbH|Corporation|Corp\.?|LLC|Ltd\.?)$/i, "").trim();
-    if (!seen.has(id) && !candidates.has(id)) candidates.set(id, { ...board, name });
-  }
+const postings = results.flatMap((r, i) => {
+  if (r.status === "fulfilled") return r.value;
+  console.warn(`search "${QUERIES[i]}" failed: ${r.reason}`);
+  return [];
 });
-console.log(`${candidates.size} new boards to verify`);
+const candidates = discoveryCandidates(postings, existing);
+console.log(`${candidates.length} new boards to verify`);
 
 const added: Company[] = [];
 await Promise.all(
-  [...candidates.values()].map(async (c) => {
+  candidates.map(async (c) => {
     try {
       const jobs = await fetchBoard(c);
       if (jobs.length) {

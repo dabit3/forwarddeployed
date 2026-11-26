@@ -3,7 +3,8 @@
   "git": {
     "deploymentEnabled": {
       "devin/1794987656-fix-workplace-labels": false,
-      "devin/1795419900-match-role-date-link": false
+      "devin/1795419900-match-role-date-link": false,
+      "devin/1795678796-skip-rejected-discovery-boards": false
     }
   }
 }
