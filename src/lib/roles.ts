@@ -8,7 +8,7 @@ export interface Role {
   places: string[];
   remote: boolean;
   postedAt: string | null;
-  /** Detail page of the first posting. */
+  /** Detail page of the posting whose date is shown. */
   href: string;
   /** Lowercased text that search matches against. */
   search: string;
@@ -44,7 +44,7 @@ function titleKey(title: string): string {
 
 function postedTime(r: { postedAt: string | null }): number {
   const t = r.postedAt ? Date.parse(r.postedAt) : NaN;
-  return Number.isNaN(t) ? 0 : t;
+  return Number.isNaN(t) ? Number.NEGATIVE_INFINITY : t;
 }
 
 /** Most recently posted first; roles without a date go last. */
@@ -52,15 +52,16 @@ export function sortByPosted(roles: Role[]): Role[] {
   return [...roles].sort((a, b) => postedTime(b) - postedTime(a) || a.title.localeCompare(b.title));
 }
 
-function newest(a: string | null, b: string | null): string | null {
-  if (!a) return b;
-  if (!b) return a;
-  return Date.parse(a) >= Date.parse(b) ? a : b;
+function postingSummary(postings: RolePosting[]): Pick<Role, "href" | "postedAt"> {
+  const { href, postedAt } = postings.reduce((latest, posting) =>
+    postedTime(posting) > postedTime(latest) ? posting : latest,
+  );
+  return { href, postedAt };
 }
 
 /** Companies often post one listing per city; fold those into a single role. */
 export function groupRoles(jobs: Job[]): Role[] {
-  const roles = new Map<string, Role & { text: string[] }>();
+  const roles = new Map<string, Omit<Role, "href" | "postedAt"> & { text: string[] }>();
   for (const job of jobs) {
     const key = `${job.companySlug}:${titleKey(job.title)}`;
     const text = `${job.location} ${job.team ?? ""}`;
@@ -81,8 +82,6 @@ export function groupRoles(jobs: Job[]): Role[] {
         companySlug: job.companySlug,
         places: [...job.places],
         remote: job.remote,
-        postedAt: job.postedAt,
-        href: postingHref(job),
         search: "",
         text: [text],
         postings: [posting],
@@ -92,12 +91,12 @@ export function groupRoles(jobs: Job[]): Role[] {
     role.text.push(text);
     role.postings.push(posting);
     role.remote ||= job.remote;
-    role.postedAt = newest(role.postedAt, job.postedAt);
     for (const p of job.places) if (!role.places.includes(p)) role.places.push(p);
   }
   return sortByPosted(
     [...roles.values()].map(({ text, ...r }) => ({
       ...r,
+      ...postingSummary(r.postings),
       search: `${r.title} ${r.company} ${r.places.join(" ")} ${text.join(" ")}`.toLowerCase(),
     })),
   );
@@ -122,9 +121,8 @@ export function filterRoles(roles: Role[], f: Filters): Role[] {
       ...r,
       postings,
       places: [...new Set(postings.flatMap((p) => p.places))],
-      href: postings[0].href,
       remote: postings.some((p) => p.remote),
-      postedAt: postings.reduce<string | null>((date, p) => newest(date, p.postedAt), null),
+      ...postingSummary(postings),
     }];
   });
   return narrowed ? sortByPosted(result) : result;
