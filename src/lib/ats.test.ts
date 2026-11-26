@@ -249,6 +249,10 @@ test("uses the ATS workplace type separately from the location filters", async (
     ]);
     if (url.includes("ashbyhq.com")) return Response.json({ jobs: [
       { id: "1", title, jobUrl: url, location: "New York", isRemote: true, workplaceType: "Hybrid" },
+      { id: "2", title, jobUrl: url, location: "Remote - New York", isRemote: true, workplaceType: "OnSite" },
+      { id: "3", title, jobUrl: url, location: "New York", isRemote: false, workplaceType: "Remote" },
+      { id: "4", title, jobUrl: url, location: "New York", isRemote: true },
+      { id: "5", title, jobUrl: url, location: "Remote - US", workplaceType: "Unspecified" },
     ] });
     return Response.json({ jobs: [
       { id: 1, title, absolute_url: url, metadata: [{ name: "Workplace", value: "On-site" }] },
@@ -263,8 +267,15 @@ test("uses the ATS workplace type separately from the location filters", async (
   assert.equal(remote.workplace, "Remote");
   assert.equal(unspecified.workplace, undefined);
 
-  const [hybrid] = await fetchBoard({ ats: "ashby", slug: "example", name: "Example" });
+  const [hybrid, onSite, ashbyRemote, legacyRemote, locationRemote] = await fetchBoard({ ats: "ashby", slug: "example", name: "Example" });
   assert.equal(hybrid.workplace, "Hybrid");
+  assert.deepEqual(hybrid.places, ["New York", "United States"]);
+  assert.equal(onSite.workplace, "On-site");
+  assert.deepEqual(onSite.places, ["United States"]);
+  assert.deepEqual(ashbyRemote.places, ["New York", "United States", "Remote"]);
+  assert.deepEqual(legacyRemote.places, ["New York", "United States", "Remote"]);
+  assert.deepEqual(locationRemote.places, ["Remote", "United States"]);
+  assert.deepEqual([hybrid, onSite, ashbyRemote, legacyRemote, locationRemote].map((j) => j.remote), [false, false, true, true, true]);
   const greenhouse = await fetchBoard({ ats: "greenhouse", slug: "example", name: "Example" });
   assert.deepEqual(greenhouse.map((j) => j.workplace), ["On-site", "Remote", "Hybrid", "Hybrid (Travel-Required)"]);
 });
