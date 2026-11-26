@@ -1240,6 +1240,11 @@
     "name": "Kota"
   },
   {
+    "ats": "ashby",
+    "slug": "krakentech",
+    "name": "Kraken"
+  },
+  {
     "slug": "labelbox",
     "ats": "greenhouse",
     "name": "Labelbox"
@@ -1388,6 +1393,11 @@
     "ats": "greenhouse",
     "slug": "medeloop",
     "name": "Medeloop"
+  },
+  {
+    "ats": "ashby",
+    "slug": "mercor",
+    "name": "Mercor"
   },
   {
     "ats": "ashby",
@@ -1613,6 +1623,11 @@
     "ats": "ashby",
     "slug": "openrouter",
     "name": "OpenRouter"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "openteams",
+    "name": "OpenTeams"
   },
   {
     "ats": "greenhouse",
