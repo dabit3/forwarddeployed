@@ -238,6 +238,24 @@ test("normalizes country-coded cities and remote regions", () => {
   assert.deepEqual(splitPlaces(["XX-London"], false), ["XX-London"]);
 });
 
+test("indexes each explicitly named country for remote postings", () => {
+  for (const location of ["United States & Canada", "US and Canada"]) {
+    assert.deepEqual(splitPlaces([location], true), ["United States", "Canada", "Remote"], location);
+  }
+  for (const location of [
+    "Remote in the US",
+    "Remote in the USA",
+    "Remote – USA",
+    "United States -Remote",
+    "Remote (USA - New York City, NY)",
+  ]) {
+    assert.deepEqual(splitPlaces([location], false), ["Remote", "United States"], location);
+  }
+  assert.deepEqual(splitPlaces(["Remote"], true), ["Remote"]);
+  assert.deepEqual(splitPlaces(["Remote in the Americas"], true), ["Remote"]);
+  assert.deepEqual(splitPlaces(["Research and Development"], false), ["Research and Development"]);
+});
+
 test("uses the ATS workplace type separately from the location filters", async (t) => {
   const title = "Forward Deployed Engineer";
   const url = "https://example.com/job";

@@ -190,7 +190,10 @@ const COUNTRIES: [RegExp, string][] = [
   [/^(portugal|lisbon)$/i, "Portugal"],
 ];
 
-const COUNTRY_NAMES = new Set(["united states", "united kingdom", ...COUNTRIES.map(([, name]) => name.toLowerCase())]);
+const COUNTRY_NAMES = new Map(
+  ["United States", "United Kingdom", ...COUNTRIES.map(([, name]) => name)]
+    .map((name) => [name.toLowerCase(), name]),
+);
 
 export function isCountry(place: string): boolean {
   return COUNTRY_NAMES.has(place.toLowerCase());
@@ -215,6 +218,25 @@ export function countryOf(raw: string, place: string | null): string | null {
 
 const REGION_NAMES = new Intl.DisplayNames("en", { type: "region", fallback: "none" });
 
+function namedCountries(raw: string): string[] {
+  const location = raw.trim();
+  const qualification =
+    /^remote(?:\s+in\s+(?:the\s+)?|\s*[-–]\s*)(.+)$/i.exec(location)?.[1] ??
+    /^(.+?)\s*-\s*remote$/i.exec(location)?.[1] ??
+    /^remote\s*\(([^)]+)\)$/i.exec(location)?.[1].split(/\s+-\s+/)[0];
+  const parts = (qualification ?? location).split(/\s*(?:&|\band\b)\s*/i);
+  if (!qualification && parts.length === 1) return [];
+  const countries: string[] = [];
+  for (const part of parts) {
+    const name = part.trim().toLowerCase();
+    const country = /^(us|usa|u\.s\.)$/.test(name) ? "United States" :
+      name === "uk" ? "United Kingdom" : COUNTRY_NAMES.get(name);
+    if (!country) return [];
+    countries.push(country);
+  }
+  return countries;
+}
+
 export function splitPlaces(locations: string[], remote: boolean): string[] {
   const out = new Set<string>();
   for (const loc of locations) {
@@ -223,6 +245,11 @@ export function splitPlaces(locations: string[], remote: boolean): string[] {
       const region = code && code !== "ZZ" ? REGION_NAMES.of(code) : undefined;
       const part = region ? location : raw;
       if (/remote/i.test(raw)) out.add("Remote");
+      const countries = region ? [] : namedCountries(part);
+      if (countries.length) {
+        for (const country of countries) out.add(country);
+        continue;
+      }
       const place = normalizePlace(part);
       if (place) out.add(place);
       const country = region ?? countryOf(part, place);
