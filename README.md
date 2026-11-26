@@ -23,6 +23,8 @@ npm run dev
 `npm run discover` uses xAI web search, run once for each of those titles, to find Greenhouse, Lever, and Ashby boards that are not yet in `data/companies.json`.
 It checks each candidate board's public API and adds a company only if the board has a matching forward deployed engineering role.
 
+If a reviewer drops a candidate as a false positive, add its board slug and the reason under its ATS in `data/rejected-boards.json` so later runs skip it before verification. Discovery matches ATS and slug (case-insensitively for the slug), not the company name. Remove the entry to reconsider that board.
+
 ```sh
 XAI_API_KEY=... npm run discover
 ```

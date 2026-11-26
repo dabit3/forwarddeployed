@@ -2,7 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "git": {
     "deploymentEnabled": {
-      "devin/1794987656-fix-workplace-labels": false
+      "devin/1794987656-fix-workplace-labels": false,
+      "devin/1795678796-skip-rejected-discovery-boards": false
     }
   }
 }
