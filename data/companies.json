@@ -622,7 +622,20 @@
   {
     "slug": "cursor",
     "ats": "ashby",
-    "name": "Cursor"
+    "name": "Cursor",
+    "applyUrl": "https://cursor.com/careers",
+    "applyUrls": {
+      "0473120a-7dd7-4604-b5f6-0b834cc6e782": "https://cursor.com/careers/regional-director-forward-deployed-engineering-public-sector#apply",
+      "34cecd0c-c392-4454-8ef5-261310541011": "https://cursor.com/careers/forward-deployed-engineer#apply",
+      "44264403-5674-40b7-8b8d-e60b0a86e9ec": "https://cursor.com/careers/forward-deployed-engineer-australiasingapore#apply",
+      "5f17ee48-29e8-4f48-bbc4-dc250731250b": "https://cursor.com/careers/forward-deployed-engineer-india#apply",
+      "6960dfef-6dc1-4dbb-887b-0fc9e6e4292e": "https://cursor.com/careers/forward-deployed-strategist-new-york-ny-remote-san-francisco-ca#apply",
+      "7678325b-cd6c-4cf6-97af-26ba37e615ab": "https://cursor.com/careers/forward-deployed-engineer-japan#apply",
+      "9b897011-11bc-4d8f-beb4-d2155d36e941": "https://cursor.com/careers/forward-deployed-strategist-london-new-york-ny-remote#apply",
+      "9f5d7596-501a-4934-9a25-daba53412e95": "https://cursor.com/careers/regional-director-forward-deployed-engineering-financial-services#apply",
+      "c30b1b69-518a-4fdd-a316-667380bcd608": "https://cursor.com/careers/regional-director-forward-deployed-engineering-singapore#apply",
+      "c4afc6fd-b8c8-413f-9010-0000323304aa": "https://cursor.com/careers/forward-deployed-engineer-western-europe#apply"
+    }
   },
   {
     "ats": "ashby",
@@ -2042,7 +2055,8 @@
   {
     "slug": "saronic",
     "ats": "ashby",
-    "name": "Saronic"
+    "name": "Saronic",
+    "applyUrl": "https://www.saronic.com/careers/joblistings?ashby_jid={id}"
   },
   {
     "ats": "ashby",

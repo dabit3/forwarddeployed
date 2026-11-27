@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { decodeEntities, fetchBoard, isForwardDeployedEngineer, isInvestorBoard, parseBoardUrl, splitPlaces } from "./ats.ts";
+import { decodeEntities, fetchBoard, isForwardDeployedEngineer, isInvestorBoard, parseBoardUrl, resolveApplyUrl, splitPlaces } from "./ats.ts";
 
 test("keeps forward deployed engineering titles", () => {
   for (const t of [
@@ -313,4 +313,14 @@ test("flags venture capital portfolio boards", () => {
   for (const s of ["fundamental", "vercel", "capitalone", "anthropic", "advanced", "indexify"]) {
     assert.equal(isInvestorBoard(s), false, s);
   }
+});
+
+test("prefers posting-specific Apply links, then company overrides, then the ATS link", () => {
+  const company = { ats: "ashby", slug: "acme", name: "Acme" } as const;
+  const job = { id: "acme/123+abc", url: "https://jobs.ashbyhq.com/acme/123+abc" };
+  const careers = "https://example.com/careers";
+  assert.equal(resolveApplyUrl(company, job), job.url);
+  assert.equal(resolveApplyUrl({ ...company, applyUrl: careers }, job), careers);
+  assert.equal(resolveApplyUrl({ ...company, applyUrl: `${careers}?job={id}` }, job), `${careers}?job=123%2Babc`);
+  assert.equal(resolveApplyUrl({ ...company, applyUrl: careers, applyUrls: { "123+abc": `${careers}/engineering#apply` } }, job), `${careers}/engineering#apply`);
 });
