@@ -18,7 +18,7 @@ export function getCompany(slug: string): Company | undefined {
 // Bump both board and role cache keys when matching changes: these caches contain filtered data.
 // Re-filtering alone can remove old matches, but cannot recover previously excluded postings.
 async function getBoard(company: Company): Promise<Job[]> {
-  const jobs = await unstable_cache(() => fetchBoard(company), ["board-v6-workplace-qualified-locations", company.ats, company.slug], {
+  const jobs = await unstable_cache(() => fetchBoard(company), ["board-v7-workplace-qualified-locations", company.ats, company.slug], {
     revalidate: REVALIDATE_SECONDS,
     tags: ["jobs"],
   })();
@@ -63,7 +63,7 @@ async function buildRoles(): Promise<Role[]> {
 const COMPANIES_KEY = createHash("sha1").update(JSON.stringify(companies)).digest("hex").slice(0, 12);
 
 export const getRoles = cache(async (): Promise<Role[]> => {
-  const roles = await unstable_cache(buildRoles, ["roles-v8-workplace-qualified-locations", COMPANIES_KEY], {
+  const roles = await unstable_cache(buildRoles, ["roles-v9-workplace-qualified-locations", COMPANIES_KEY], {
     revalidate: REVALIDATE_SECONDS,
     tags: ["jobs"],
   })();
