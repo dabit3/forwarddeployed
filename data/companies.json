@@ -2139,6 +2139,11 @@
     "name": "Shield AI"
   },
   {
+    "ats": "lever",
+    "slug": "shyftlabs",
+    "name": "ShyftLabs"
+  },
+  {
     "ats": "ashby",
     "slug": "sieve",
     "name": "Sieve"
