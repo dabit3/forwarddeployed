@@ -4,6 +4,8 @@ export interface Company {
   slug: string;
   ats: Ats;
   name: string;
+  applyUrl?: string;
+  applyUrls?: Record<string, string>;
 }
 
 export interface Job {
@@ -20,6 +22,11 @@ export interface Job {
   url: string;
   postedAt: string | null;
   descriptionHtml?: string;
+}
+
+export function resolveApplyUrl(company: Company, job: Pick<Job, "id" | "url">): string {
+  const id = job.id.slice(company.slug.length + 1);
+  return company.applyUrls?.[id] ?? company.applyUrl?.replace("{id}", encodeURIComponent(id)) ?? job.url;
 }
 
 // Match words, not arbitrary substrings; ATS titles use Unicode dashes, NBSPs and full-width text.

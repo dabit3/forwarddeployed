@@ -3,7 +3,7 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import sanitizeHtml from "sanitize-html";
 import companiesData from "../../data/companies.json";
-import { fetchBoard, fetchGreenhouseDescription, isForwardDeployedEngineer, splitPlaces, type Company, type Job } from "./ats";
+import { fetchBoard, fetchGreenhouseDescription, isForwardDeployedEngineer, resolveApplyUrl, splitPlaces, type Company, type Job } from "./ats";
 import { groupRoles, type Role } from "./roles";
 
 export const REVALIDATE_SECONDS = 3600;
@@ -111,5 +111,5 @@ export async function getPosting(companySlug: string, id: string): Promise<Posti
   if (!raw && company.ats === "greenhouse") raw = await getGreenhouseDescription(company, id).catch(() => undefined);
   const key = job.title.toLowerCase().replace(/\s+/g, " ").trim();
   const siblings = board.filter((j) => j.id !== job.id && j.title.toLowerCase().replace(/\s+/g, " ").trim() === key);
-  return { job, html: raw ? clean(raw) : "", siblings };
+  return { job: { ...job, url: resolveApplyUrl(company, job) }, html: raw ? clean(raw) : "", siblings };
 }
