@@ -12,12 +12,12 @@ import {
   filtersHref,
   formatDate,
   groupByCompany,
-  localPlaces,
   pageFromPath,
   pageHref,
   paginate,
-  sortByPosted,
   roleListKey,
+  rolePlaces,
+  sortByPosted,
   summarizePlaces,
   type Filters,
   type Role,
@@ -250,21 +250,24 @@ export default function Board({ roles, companies, page = 1 }: { roles: Role[]; c
           ) : null}
           {shown.length && byDate ? (
             <ul className="roles by-date">
-              {visibleRoles.map((r) => (
-                <li key={r.key}>
-                  <Link href={r.href}>
-                    <span>
-                      {r.title}
-                      {visit?.newKeys.has(r.key) && <span className="new-mark">New</span>}
-                      <span className="meta">
-                        {r.company}
-                        {r.places.length ? ` \u00b7 ${summarizePlaces(r.places)}` : ""}
+              {visibleRoles.map((r) => {
+                const places = rolePlaces(r);
+                return (
+                  <li key={r.key}>
+                    <Link href={r.href}>
+                      <span>
+                        {r.title}
+                        {visit?.newKeys.has(r.key) && <span className="new-mark">New</span>}
+                        <span className="meta">
+                          {r.company}
+                          {places.length ? ` \u00b7 ${summarizePlaces(places)}` : ""}
+                        </span>
                       </span>
-                    </span>
-                    <span className="time">{formatDate(r.postedAt)}</span>
-                  </Link>
-                </li>
-              ))}
+                      <span className="time">{formatDate(r.postedAt)}</span>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           ) : shown.length ? (
             visible.map((g) => {
@@ -282,7 +285,7 @@ export default function Board({ roles, companies, page = 1 }: { roles: Role[]; c
                       <span>
                         {g.name}
                         {newCount > 0 && <span className="new-mark">{newCount} new</span>}
-                        <span className="meta">{summarizePlaces(localPlaces(countBy(g.roles, (r) => r.places).map(([p]) => p)))}</span>
+                        <span className="meta">{summarizePlaces(countBy(g.roles, rolePlaces).map(([p]) => p))}</span>
                       </span>
                       <small>
                         {g.roles.length} {expanded ? "\u2212" : "+"}
@@ -290,18 +293,21 @@ export default function Board({ roles, companies, page = 1 }: { roles: Role[]; c
                     </button>
                   </h4>
                   <ul className="roles">
-                    {g.roles.map((r) => (
-                      <li key={r.key}>
-                        <Link href={r.href}>
-                          <span>
-                            {r.title}
-                            {visit?.newKeys.has(r.key) && <span className="new-mark">New</span>}
-                            {r.places.length ? <span className="meta">{summarizePlaces(r.places)}</span> : null}
-                          </span>
-                          <span className="time">{formatDate(r.postedAt)}</span>
-                        </Link>
-                      </li>
-                    ))}
+                    {g.roles.map((r) => {
+                      const places = rolePlaces(r);
+                      return (
+                        <li key={r.key}>
+                          <Link href={r.href}>
+                            <span>
+                              {r.title}
+                              {visit?.newKeys.has(r.key) && <span className="new-mark">New</span>}
+                              {places.length ? <span className="meta">{summarizePlaces(places)}</span> : null}
+                            </span>
+                            <span className="time">{formatDate(r.postedAt)}</span>
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </section>
               );

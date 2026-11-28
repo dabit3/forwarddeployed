@@ -13,8 +13,10 @@ import {
   pageFromPath,
   pageHref,
   paginate,
-  sortByPosted,
   roleListKey,
+  rolePlaces,
+  sortByPosted,
+  summarizePlaces,
   type CompanyGroup,
 } from "./roles.ts";
 
@@ -137,6 +139,30 @@ test("localPlaces shows cities ahead of their countries", () => {
   assert.deepEqual(localPlaces(["United States", "New York", "San Francisco", "Remote"]), ["New York", "San Francisco", "Remote"]);
   assert.deepEqual(localPlaces(["Canada", "CANADA", "Mexico"]), ["Canada", "Mexico"]);
   assert.deepEqual(localPlaces(["United States", "Remote"]), ["United States", "Remote"]);
+});
+
+test("rolePlaces omits derived countries while keeping standalone country postings", () => {
+  const [threeCities] = groupRoles([
+    job({ id: "acme/1", location: "Munich, Germany", places: ["Munich", "Germany"] }),
+    job({ id: "acme/2", location: "London, UK", places: ["London", "United Kingdom"] }),
+    job({ id: "acme/3", location: "Paris, France", places: ["Paris", "France"] }),
+  ]);
+  assert.deepEqual(rolePlaces(threeCities), ["Munich", "London", "Paris"]);
+  assert.equal(summarizePlaces(rolePlaces(threeCities)), "Munich, London, Paris");
+
+  const [mixed] = groupRoles([
+    job({ id: "acme/1", location: "Cambridge, MA", places: ["Cambridge", "United States"] }),
+    job({ id: "acme/2", location: "India", places: ["India"] }),
+    job({ id: "acme/3", location: "London, UK", places: ["London", "United Kingdom"] }),
+    job({ id: "acme/4", location: "Remote", places: ["Remote"], remote: true }),
+  ]);
+  assert.deepEqual(rolePlaces(mixed), ["Cambridge", "India", "London", "Remote"]);
+  assert.equal(summarizePlaces(rolePlaces(mixed)), "Cambridge, India, London +1");
+
+  const [countryRemote] = groupRoles([
+    job({ id: "acme/1", location: "Remote - United States", places: ["Remote", "United States"], remote: true }),
+  ]);
+  assert.deepEqual(rolePlaces(countryRemote), ["Remote", "United States"]);
 });
 
 test("pages break between companies once a page is full", () => {

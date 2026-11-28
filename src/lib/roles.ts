@@ -174,6 +174,23 @@ export function localPlaces(places: string[]): string[] {
   return local.some((p) => p !== "Remote") ? local : unique;
 }
 
+/** Display places for a role: drops countries derived from cities while keeping standalone country postings. */
+export function rolePlaces(role: Pick<Role, "places" | "postings">): string[] {
+  if (!role.postings.length) return localPlaces(role.places);
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const posting of role.postings) {
+    for (const place of localPlaces(posting.places)) {
+      const key = place.toLowerCase();
+      if (!seen.has(key)) {
+        seen.add(key);
+        out.push(place);
+      }
+    }
+  }
+  return out;
+}
+
 export function postingHref(p: { companySlug: string; id: string }): string {
   const jobId = p.id.slice(p.companySlug.length + 1);
   return `/jobs/${encodeURIComponent(p.companySlug)}/${encodeURIComponent(jobId)}`;
