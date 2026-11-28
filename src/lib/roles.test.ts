@@ -164,6 +164,16 @@ test("rolePlaces omits derived countries while keeping standalone country postin
   ]);
   assert.deepEqual(rolePlaces(countryRemote), ["Remote", "United States"]);
 
+  const [commaRemote] = groupRoles([
+    job({ id: "acme/1", location: "Remote, United States", places: ["Remote", "United States"], remote: true }),
+  ]);
+  assert.deepEqual(rolePlaces(commaRemote), ["Remote", "United States"]);
+
+  const [codedRemote] = groupRoles([
+    job({ id: "acme/1", location: "US-Remote", places: ["Remote", "United States"], remote: true }),
+  ]);
+  assert.deepEqual(rolePlaces(codedRemote), ["Remote", "United States"]);
+
   const [mixedSinglePosting] = groupRoles([
     job({
       id: "acme/1",

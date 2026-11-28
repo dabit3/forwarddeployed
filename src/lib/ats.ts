@@ -263,7 +263,7 @@ export function splitPlaces(locations: string[], remote: boolean, includeDerived
       }
       const place = normalizePlace(part);
       if (place) out.add(place);
-      if (includeDerivedCountries || !place) {
+      if (includeDerivedCountries || !place || place === "Remote") {
         const country = region ?? countryOf(part, place);
         if (country) out.add(country);
       }
