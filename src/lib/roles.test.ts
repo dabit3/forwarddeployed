@@ -163,6 +163,26 @@ test("rolePlaces omits derived countries while keeping standalone country postin
     job({ id: "acme/1", location: "Remote - United States", places: ["Remote", "United States"], remote: true }),
   ]);
   assert.deepEqual(rolePlaces(countryRemote), ["Remote", "United States"]);
+
+  const [mixedSinglePosting] = groupRoles([
+    job({
+      id: "acme/1",
+      location: "London, UK; Remote - India",
+      places: ["London", "United Kingdom", "Remote", "India"],
+      remote: true,
+    }),
+  ]);
+  assert.deepEqual(rolePlaces(mixedSinglePosting), ["London", "Remote", "India"]);
+
+  const [europeCountries] = groupRoles([
+    job({
+      id: "acme/1",
+      location: "Belgium; Germany; Netherlands; United Kingdom",
+      places: ["Belgium", "Germany", "Netherlands", "Remote", "United Kingdom"],
+      remote: true,
+    }),
+  ]);
+  assert.deepEqual(rolePlaces(europeCountries), ["Belgium", "Germany", "Netherlands", "Remote", "United Kingdom"]);
 });
 
 test("pages break between companies once a page is full", () => {

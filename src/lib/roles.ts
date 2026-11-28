@@ -1,4 +1,4 @@
-import { isCountry, type Job } from "./ats.ts";
+import { isCountry, splitPlaces, type Job } from "./ats.ts";
 
 export interface Role {
   key: string;
@@ -17,6 +17,7 @@ export interface Role {
 
 interface RolePosting {
   places: string[];
+  displayPlaces?: string[];
   remote: boolean;
   postedAt: string | null;
   href: string;
@@ -59,6 +60,13 @@ function postingSummary(postings: RolePosting[]): Pick<Role, "href" | "postedAt"
   return { href, postedAt };
 }
 
+function postingDisplayPlaces(job: Job): string[] {
+  if (!job.location) return localPlaces(job.places);
+  const explicit = new Set(splitPlaces([job.location], job.remote, false).map((p) => p.toLowerCase()));
+  const matched = job.places.filter((p) => explicit.has(p.toLowerCase()));
+  return matched.length ? matched : localPlaces(job.places);
+}
+
 /** Companies often post one listing per city; fold those into a single role. */
 export function groupRoles(jobs: Job[]): Role[] {
   const roles = new Map<string, Omit<Role, "href" | "postedAt"> & { text: string[] }>();
@@ -67,6 +75,7 @@ export function groupRoles(jobs: Job[]): Role[] {
     const text = `${job.location} ${job.team ?? ""}`;
     const posting: RolePosting = {
       places: [...job.places],
+      displayPlaces: postingDisplayPlaces(job),
       remote: job.remote,
       postedAt: job.postedAt,
       href: postingHref(job),
@@ -174,13 +183,13 @@ export function localPlaces(places: string[]): string[] {
   return local.some((p) => p !== "Remote") ? local : unique;
 }
 
-/** Display places for a role: drops countries derived from cities while keeping standalone country postings. */
+/** Display places for a role: drops countries derived from cities while keeping explicit country postings. */
 export function rolePlaces(role: Pick<Role, "places" | "postings">): string[] {
   if (!role.postings.length) return localPlaces(role.places);
   const seen = new Set<string>();
   const out: string[] = [];
   for (const posting of role.postings) {
-    for (const place of localPlaces(posting.places)) {
+    for (const place of posting.displayPlaces ?? localPlaces(posting.places)) {
       const key = place.toLowerCase();
       if (!seen.has(key)) {
         seen.add(key);

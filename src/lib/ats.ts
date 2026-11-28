@@ -244,7 +244,7 @@ function namedCountries(raw: string): string[] {
   return countries;
 }
 
-export function splitPlaces(locations: string[], remote: boolean): string[] {
+export function splitPlaces(locations: string[], remote: boolean, includeDerivedCountries = true): string[] {
   const out = new Set<string>();
   for (const loc of locations) {
     for (const raw of loc.split(/\s*[;|/•]\s*|\s+or\s+/i)) {
@@ -263,8 +263,10 @@ export function splitPlaces(locations: string[], remote: boolean): string[] {
       }
       const place = normalizePlace(part);
       if (place) out.add(place);
-      const country = region ?? countryOf(part, place);
-      if (country) out.add(country);
+      if (includeDerivedCountries || !place) {
+        const country = region ?? countryOf(part, place);
+        if (country) out.add(country);
+      }
     }
   }
   if (remote) out.add("Remote");
