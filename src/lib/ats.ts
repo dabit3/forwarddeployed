@@ -248,9 +248,13 @@ export function splitPlaces(locations: string[], remote: boolean): string[] {
   const out = new Set<string>();
   for (const loc of locations) {
     for (const raw of loc.split(/\s*[;|/•]\s*|\s+or\s+/i)) {
-      const [, code, location] = /^([A-Z]{2})-(?![A-Z]{2}-)([A-Z].*?)(?:-Remote)?$/.exec(raw.trim()) ?? [];
+      const geographic = raw.trim().replace(
+        /^(?:hybrid|on-?site)(?:\s*[-–:]\s*|\s+|$)|(?:\s*[-–:]\s*|\s+)(?:hybrid|on-?site)$/gi,
+        "",
+      );
+      const [, code, location] = /^([A-Z]{2})-(?![A-Z]{2}-)([A-Z].*?)(?:-Remote)?$/.exec(geographic) ?? [];
       const region = code && code !== "ZZ" ? REGION_NAMES.of(code) : undefined;
-      const part = region ? location : raw;
+      const part = region ? location : geographic;
       if (/remote/i.test(raw)) out.add("Remote");
       const countries = region ? [] : namedCountries(part);
       if (countries.length) {

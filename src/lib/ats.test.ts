@@ -229,6 +229,15 @@ test("normalizes places", () => {
   assert.deepEqual(splitPlaces(["Hybrid"], false), []);
 });
 
+test("normalizes locations with hybrid and on-site qualifiers", () => {
+  assert.deepEqual(splitPlaces(["Hybrid - New York, NY"], false), ["New York", "United States"]);
+  assert.deepEqual(splitPlaces(["Hybrid: Arlington, VA"], false), ["Washington, DC", "United States"]);
+  assert.deepEqual(splitPlaces(["Hybrid Austin"], false), ["Austin", "United States"]);
+  assert.deepEqual(splitPlaces(["Colorado Springs - ONSITE"], false), ["Colorado Springs"]);
+  assert.deepEqual(splitPlaces(["San Mateo On-site"], false), ["San Mateo"]);
+  assert.deepEqual(splitPlaces(["On-site"], false), []);
+});
+
 test("normalizes country-coded cities and remote regions", () => {
   assert.deepEqual(splitPlaces(["GB-London"], false), ["London", "United Kingdom"]);
   assert.deepEqual(splitPlaces(["JP-Tokyo"], false), ["Tokyo", "Japan"]);
